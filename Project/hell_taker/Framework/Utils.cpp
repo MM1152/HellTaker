@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Utils.h"
 #include "GameObject.h"
-
+#include "rapidcsv.h"
 void Utils::SetOrigins(sf::Sprite& sp , Origins ori)
 {
 	sf::FloatRect rect = sp.getLocalBounds();
@@ -26,17 +26,22 @@ void Utils::SetOrigins(sf::Text& sp, Origins ori)
 
 void Utils::WriteFile(const std::string filePath , std::vector<std::string> write)
 {
-	 std::ofstream file(filePath);
+	rapidcsv::Document document;
+	//document.SetCell(0, 0, "MapData");
+	
+	for (int i = 0; i < write.size(); i++) {
+		for (int j = 0; j < write[i].size(); j++) {
+			document.SetCell(j, i, write[i][j]);
+		}
+	}
 
-	 if (file.is_open()) {
-		 for (int i = 0; i < write.size(); i++) {
-			 file << write[i];
-		 }
-		 file.close();
-	 }
-	 else {
-		 std::cout << "READ FILE FAIL" << std::endl;
-	 }
+	std::ifstream file(filePath);
+	if (file.good()) {
+		std::cout << "REMOVE FILE" << std::endl;
+		remove(filePath.c_str());
+	}
+	std::cout << "CREATE FILE" << std::endl;
+	document.Save(filePath);
 }
 
 std::list<std::string> Utils::ReadFile(const std::string filePath)

@@ -7,6 +7,7 @@ protected:
 	sf::Vector2f gridSize;
 	sf::Vector2f gridCount;
 	std::vector<std::vector<Grid*>> grids;
+
 	Types type = Types::NONE;
 
 public:

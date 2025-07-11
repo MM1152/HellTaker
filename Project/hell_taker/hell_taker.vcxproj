@@ -166,6 +166,7 @@
     <ClInclude Include="Framework.h" />
     <ClInclude Include="Framework\Define.h" />
     <ClInclude Include="Framework\GameObject.h" />
+    <ClInclude Include="Framework\rapidcsv.h" />
     <ClInclude Include="GameObjects\SpriteGo.h" />
     <ClInclude Include="Framework\Singleton.h" />
     <ClInclude Include="Framework\ResourceMgr.h" />

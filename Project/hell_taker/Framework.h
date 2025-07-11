@@ -17,4 +17,4 @@ public:
 	sf::RenderWindow& GetWindow() { return window; };
 };
 
-#define FRAMEWORDK Framework::Instance()
+#define FRAMEWORK Framework::Instance()

@@ -3,9 +3,9 @@
 #include "GameScene.h"
 int main()
 {
-    FRAMEWORDK.Init({1920 , 1080});
-    FRAMEWORDK.Update();
-    FRAMEWORDK.Release();
+    FRAMEWORK.Init({1920 , 1080});
+    FRAMEWORK.Update();
+    FRAMEWORK.Release();
   
     return 0;
 }

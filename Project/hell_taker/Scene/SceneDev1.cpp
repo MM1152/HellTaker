@@ -40,7 +40,16 @@ void SceneDev1::Init()
 	saveBNT->SetToggle(false);
 	saveBNT->SetPosition({1920 - 350.f , 1080 - 200.f});
 	saveBNT->SetCallBack([this]() {
-		
+		std::vector<std::string> write;
+		for (int i = 0; i < gridCount.y; i++) {
+			std::string word;
+			for (int j = 0; j < gridCount.x; j++) {
+				word += std::to_string((int)grids[i][j]->GetType());
+			}
+			write.push_back(word);
+		}
+
+		UTILS.WriteFile("GameData/MapData1.csv" , write);
 	});
 	spriteGo->SetScale({ 0.7f , 0.7f });
 
@@ -153,6 +162,7 @@ void SceneDev1::DrawGrid(sf::Vector2f cellSize, sf::Vector2f cellCount)
 			Grid* grid = new Grid(cellSize);
 			grid->Init();
 			grid->SetPosition({ cellSize.x * j , cellSize.y * i });
+			AddGameObject(grid);
 			vec.push_back(grid);
 		}
 		grids.push_back(vec);
