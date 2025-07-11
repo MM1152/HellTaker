@@ -4,6 +4,7 @@
 #include "SpriteGo.h"
 #include "Grid.h"
 #include "Button.h"
+#include "InputText.h"
 //GRIDSIZE (101,81)
 //GRIDCOUNT(19,12)
 SceneDev1::SceneDev1()
@@ -51,6 +52,10 @@ void SceneDev1::Init()
 
 		UTILS.WriteFile("GameData/MapData1.csv" , write);
 	});
+
+	InputText* input = new InputText(FONT_PATH"Amiri-Regular.ttf");
+	input->SetPosition({ 1920 / 2 , 1080 / 2 });
+
 	spriteGo->SetScale({ 0.7f , 0.7f });
 
 	
@@ -64,6 +69,7 @@ void SceneDev1::Init()
 	AddGameObject(button1);
 	AddGameObject(spriteGo);
 	AddGameObject(textGo);
+	AddGameObject(input);
 	DrawGrid(gridSize, gridCount);
 	Scene::Init();
 }

@@ -16,6 +16,8 @@ protected:
 
 	sf::Vector2i mousePosition;
 
+
+
 	bool Contain(std::vector<int> vector, sf::Keyboard::Key key);
 	bool Contain(std::vector<int> vector, sf::Mouse::Button key);
 public:
@@ -33,7 +35,6 @@ public:
 	bool GetMouseDown(sf::Mouse::Button key);
 	bool GetMouse(sf::Mouse::Button key);
 	bool GetMouseUp(sf::Mouse::Button key);
-
 
 	sf::FloatRect GetMouseGlobalBound() { return mouseRect->GetGlobalBound(); };
 	sf::Vector2i GetMousePosition() { return mousePosition; };

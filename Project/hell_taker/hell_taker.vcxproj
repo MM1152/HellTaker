@@ -142,7 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="GameObjects\Button.cpp" />
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="Framework\GameObject.cpp" />
     <ClCompile Include="Framework\InputMgr.cpp" />
@@ -162,7 +162,7 @@
     <ClCompile Include="GameObjects\TextGo.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Button.h" />
+    <ClInclude Include="GameObjects\Button.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="Framework\Define.h" />
     <ClInclude Include="Framework\GameObject.h" />
