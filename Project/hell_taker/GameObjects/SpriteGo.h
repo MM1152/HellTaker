@@ -18,6 +18,7 @@ public:
 	void SetOrigin(Origins preset) override;
 	void SetOrigin(sf::Vector2f ori) override;
 
+	void Exit() override;
 	void Init() override;
 	void Reset() override;
 	void Update(float dt) override;
@@ -25,5 +26,7 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 
 	sf::Sprite& GetSprite() { return sprite; };
+
+
 };
 

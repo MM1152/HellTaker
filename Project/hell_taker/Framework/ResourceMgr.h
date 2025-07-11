@@ -21,7 +21,11 @@ public:
 			map.insert({ id , item });
 		}
 	}
-
+	void Load(const std::vector<std::string> ids) {
+		for (std::string : ids) {
+			Load(ids);
+		}
+	}
 	T& Get(const std::string id) {
 		if (map.find(id) == map.end()) {
 			std::cout << "FAIL TO LOAD " << id << std::endl;

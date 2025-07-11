@@ -1,20 +1,15 @@
 #include "stdafx.h"
 #include "SpriteGo.h"
-
+#include "GameScene.h"
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(1280, 720), "SFML works!");
 
     INPUT_MGR.Init();
     
-
-    TEXTURE_MGR.Load(SPRITE_PATH"assets100V20053.png");
-
-    SpriteGo sp(SPRITE_PATH"assets100V20053.png");
-    sp.Reset();
-
-    UTILS.SetOrigins(sp.GetSprite(), Origins::MC);
-    sp.SetPosition({ 1280 / 2 , 720 / 2 });
+    GameScene Scene;
+    Scene.Init();
+    Scene.Reset();
 
     
     while (window.isOpen())
@@ -34,10 +29,10 @@ int main()
             std::cout << "A Å° ´­¸²" << std::endl;
         }
 
+        Scene.Update(0);
         
-
         window.clear();
-        sp.Draw(window);
+        Scene.Draw(window);
         window.display();
     }
 

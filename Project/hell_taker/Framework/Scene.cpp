@@ -1,8 +1,16 @@
 #include "stdafx.h"
 #include "Scene.h"
 
+Scene::Scene(SceneIds id)
+	:sceneId(id)
+{
+}
+
 void Scene::Init()
 {
+	for (auto obj : gameObjects) {
+		obj->Init();
+	}
 }
 
 void Scene::Update(float dt)
@@ -22,9 +30,30 @@ void Scene::Draw(sf::RenderWindow& window)
 
 void Scene::Reset()
 {
+	TEXTURE_MGR.Load(texIds);
+
 	for (auto obj : gameObjects) {
 		obj->Reset();
 	}
+}
+
+void Scene::Exit()
+{
+	TEXTURE_MGR.UnLoad();
+
+	for (auto obj : gameObjects) {
+		obj->Exit();
+	}
+}
+
+void Scene::Release()
+{
+	for (auto obj : gameObjects) {
+		obj->Release();
+		delete obj;
+	}
+
+	gameObjects.clear();
 }
 
 void Scene::AddGameObject(GameObject* obj)
@@ -43,8 +72,15 @@ void Scene::AddGameObject(GameObject* obj)
 			break;
 		}
 		else if ((*iter)->GetSortingLayer() == (obj->GetSortingLayer())) {
-			gameObjects
+			if ((*iter)->GetSortingOrder() >= obj->GetSortingOrder()) {
+				gameObjects.insert(iter, obj);
+				isInput = true;
+				break;
+			}
 		}
 		iter++;
 	}
+
+	if (!isInput)
+		gameObjects.push_back(obj);
 }
