@@ -2,8 +2,10 @@
 #include "Button.h"
 
 Button::Button(const std::string fontId, const std::string name)
-	:TextGo(fontId , name)
+	:TextGo(fontId, name)
+	, toggle(true)
 {
+	
 }
 
 void Button::SetCharacterSize(size_t size)
@@ -15,7 +17,7 @@ void Button::SetCharacterSize(size_t size)
 void Button::SetString(const std::string tex)
 {
 	TextGo::SetString(tex);
-	rect.setSize({(float)tex.size() * text.getCharacterSize() * 0.6f , (float)text.getCharacterSize() * 1.5f});
+	rect.setSize({(float)tex.size() * text.getCharacterSize() * 0.75f , (float)text.getCharacterSize() * 1.5f});
 }
 
 void Button::SetPosition(const sf::Vector2f pos)
@@ -57,7 +59,26 @@ void Button::SetScale(sf::Vector2f scale)
 
 void Button::Update(float dt)
 {
-	
+	if (toggle) {
+		if (!rect.getGlobalBounds().intersects(INPUT_MGR.GetMouseGlobalBound()) && INPUT_MGR.GetMouse(MOUSE::Left)) {
+			rect.setFillColor(sf::Color::White);
+		}
+		if (rect.getGlobalBounds().intersects(INPUT_MGR.GetMouseGlobalBound()) && INPUT_MGR.GetMouse(MOUSE::Left)) {
+			rect.setFillColor(sf::Color::Blue);
+		}
+	}
+	else {
+		if (rect.getGlobalBounds().intersects(INPUT_MGR.GetMouseGlobalBound()) && INPUT_MGR.GetMouse(MOUSE::Left)) {
+			rect.setFillColor(sf::Color::Blue);
+		}
+		if (rect.getGlobalBounds().intersects(INPUT_MGR.GetMouseGlobalBound()) && INPUT_MGR.GetMouseUp(MOUSE::Left)) {
+			rect.setFillColor(sf::Color::White);
+		}
+	}
+
+	if (rect.getGlobalBounds().intersects(INPUT_MGR.GetMouseGlobalBound()) && INPUT_MGR.GetMouseUp(MOUSE::Left)) {
+		OnClick();
+	}
 }
 
 void Button::Draw(sf::RenderWindow& window)

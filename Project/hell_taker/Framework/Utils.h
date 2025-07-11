@@ -12,7 +12,7 @@ public:
 	void SetOrigins(sf::Sprite& sp , Origins ori);
 	void SetOrigins(sf::Text& sp, Origins ori);
 
-	void WriteFile(const std::string filePath);
+	void WriteFile(const std::string filePath , std::vector<std::string> write);
 	std::list<std::string> ReadFile(const std::string filePath);
 };
 

@@ -6,7 +6,7 @@ TextGo::TextGo(const std::string fontId, const std::string name)
     ,fontId(fontId)
 {
     SetSortingLayer(SortingLayers::UI);
-    
+    SetFillColor(sf::Color::Black);
 }
 
 void TextGo::SetString(const std::string tex)

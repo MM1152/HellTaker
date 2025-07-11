@@ -4,7 +4,7 @@ class Button : public TextGo
 {
 protected:
 	sf::RectangleShape rect;
-
+	bool toggle;
 	std::function<void()> callback;
 public:
 
@@ -12,6 +12,7 @@ public:
 	Button(const std::string fontId = "", const std::string name = "");
 	~Button() override = default;
 
+	void SetToggle(bool toggle) { this->toggle = toggle; };
 	void SetCharacterSize(size_t size) override;
 	void SetString(const std::string tex) override;
 	void SetPosition(const sf::Vector2f pos) override;

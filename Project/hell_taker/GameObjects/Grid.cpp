@@ -44,7 +44,7 @@ void Grid::Init()
     rectangle.setSize({gridSize.x , gridSize.y});
     rectangle.setFillColor(sf::Color::Transparent);
     rectangle.setOutlineColor(sf::Color::Green);
-    rectangle.setOutlineThickness(1.f);
+    rectangle.setOutlineThickness(0.5f);
    
 }
 
@@ -54,7 +54,12 @@ void Grid::Reset()
 
 void Grid::Update(float dt)
 {
-    
+    if (type == Types::WALL) {
+        SetOutLineColor(sf::Color::Red);
+    }
+    if (type == Types::TILE) {
+        SetOutLineColor(sf::Color::Blue);
+    }
 }
 
 void Grid::Exit()

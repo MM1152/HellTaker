@@ -6,7 +6,9 @@ class SceneDev1 : public Scene
 protected:
 	sf::Vector2f gridSize;
 	sf::Vector2f gridCount;
-	std::vector<Grid*> grids;
+	std::vector<std::vector<Grid*>> grids;
+	Types type = Types::NONE;
+
 public:
 	SceneDev1();
 	~SceneDev1() = default;

@@ -17,16 +17,31 @@ void SceneDev1::Init()
 {
 	fontIds.push_back(FONT_PATH"Amiri-Regular.ttf");
 	texIds.push_back(SPRITE_PATH"chapterBG0003.png");
+
 	TextGo* textGo = new TextGo(FONT_PATH"Amiri-Regular.ttf");
 	SpriteGo* spriteGo = new SpriteGo(SPRITE_PATH"chapterBG0003.png");
 	Button* button = new Button(FONT_PATH"Amiri-Regular.ttf");
-	
-	button->SetOrigin(Origins::LT);
-	button->SetCharacterSize(50);
-	button->SetString("ASDASD");
-	button->SetFillColor(sf::Color::Black);
-	button->SetPosition({ 1920 / 2, 1080 / 2 });
-	
+	Button* button1 = new Button(FONT_PATH"Amiri-Regular.ttf");
+	Button* saveBNT = new Button(FONT_PATH"Amiri-Regular.ttf");
+
+	button->SetString("WALL");
+	button->SetPosition({ 1920 - 500.f, 0 });
+	button->SetCallBack([this]() {
+		this->type = Types::WALL;
+	});
+
+	button1->SetString("TILE");
+	button1->SetPosition({ 1920 - 200.f, 0 });
+	button1->SetCallBack([this]() {
+		this->type = Types::TILE;
+	});
+
+	saveBNT->SetString("SAVE");
+	saveBNT->SetToggle(false);
+	saveBNT->SetPosition({1920 - 350.f , 1080 - 200.f});
+	saveBNT->SetCallBack([this]() {
+		
+	});
 	spriteGo->SetScale({ 0.7f , 0.7f });
 
 	
@@ -35,7 +50,9 @@ void SceneDev1::Init()
 
 	textGo->SetString("DEV1");
 
+	AddGameObject(saveBNT);
 	AddGameObject(button);
+	AddGameObject(button1);
 	AddGameObject(spriteGo);
 	AddGameObject(textGo);
 	DrawGrid(gridSize, gridCount);
@@ -58,13 +75,13 @@ void SceneDev1::Update(float dt)
 	}
 
 
-	for (Grid* grid : grids) {
-		if (grid->GetGlobalBound().intersects(INPUT_MGR.GetMouseGlobalBound())) {
-			grid->SetOutLineColor(sf::Color::Red);
+	for (int i = 0; i < grids.size(); i++) {
+		for (int j = 0; j < grids[i].size(); j++) {
+			if (grids[i][j]->GetGlobalBound().intersects(INPUT_MGR.GetMouseGlobalBound()) && INPUT_MGR.GetMouse(MOUSE::Left)) {
+				grids[i][j]->SetTypes(type);
+			}
 		}
-		else {
-			grid->SetOutLineColor(sf::Color::Green);
-		}
+	
 	}
 
 	
@@ -122,19 +139,22 @@ void SceneDev1::Draw(sf::RenderWindow& window)
 
 void SceneDev1::DrawGrid(sf::Vector2f cellSize, sf::Vector2f cellCount)
 {
-	for (auto grid : grids) {
-		RemoveGameObject(grid);
+	for (int i = 0; i < grids.size(); i++) {
+		for (int j = 0; j < grids[i].size(); i++) {
+			RemoveGameObject(grids[i][j]);
+		}		
 	}
 
 	grids.clear();
 
 	for (int i = 0; i < cellCount.y; i++) {
+		std::vector<Grid*> vec;
 		for (int j = 0; j < cellCount.x; j++) {
 			Grid* grid = new Grid(cellSize);
 			grid->Init();
 			grid->SetPosition({ cellSize.x * j , cellSize.y * i });
-			AddGameObject(grid);
-			grids.push_back(grid);
+			vec.push_back(grid);
 		}
+		grids.push_back(vec);
 	}
 }

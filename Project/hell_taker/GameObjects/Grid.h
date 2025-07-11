@@ -37,5 +37,7 @@ public:
 
 	// GameObject을(를) 통해 상속됨
 	void SetScale(sf::Vector2f scale) override;
+	void SetTypes(Types type) { this->type = type; };
+	Types GetType() { return this->type; };
 };
 

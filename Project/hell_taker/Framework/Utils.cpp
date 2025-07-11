@@ -24,12 +24,14 @@ void Utils::SetOrigins(sf::Text& sp, Origins ori)
 	sp.setOrigin(origin);
 }
 
-void Utils::WriteFile(const std::string filePath)
+void Utils::WriteFile(const std::string filePath , std::vector<std::string> write)
 {
 	 std::ofstream file(filePath);
 
 	 if (file.is_open()) {
-		 file << "HIHI";
+		 for (int i = 0; i < write.size(); i++) {
+			 file << write[i];
+		 }
 		 file.close();
 	 }
 	 else {
