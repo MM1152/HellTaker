@@ -1,10 +1,13 @@
 #pragma once
 #include "Scene.h"
+class Grid;
 class SceneDev1 : public Scene
 {
 protected:
-
-
+	sf::Vector2f gridSize;
+	sf::Vector2f gridCount;
+	std::vector<Grid*> grids;
+	Grid* mouseRect;
 public:
 	SceneDev1();
 	~SceneDev1() = default;
@@ -12,7 +15,6 @@ public:
 	void Init() override;
 	void Reset() override;
 	void Update(float dt) override;
-
 	void DrawGrid(sf::Vector2f cellSize , sf::Vector2f cellCount);
 };
 

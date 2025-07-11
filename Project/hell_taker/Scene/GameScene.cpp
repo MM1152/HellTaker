@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include "SpriteGo.h"
 #include "TextGo.h"
+#include "Grid.h"
 GameScene::GameScene()
 	:Scene(SceneIds::SceneGame)
 {
@@ -9,8 +10,10 @@ GameScene::GameScene()
 
 void GameScene::Init()
 {
+	
 	texIds.push_back(SPRITE_PATH"assets100V20053.png");
 	fontIds.push_back(FONT_PATH"Amiri-Regular.ttf");
+
 
 	sp = new SpriteGo(SPRITE_PATH"assets100V20053.png");
 	TextGo* text = new TextGo(FONT_PATH"Amiri-Regular.ttf");
@@ -26,6 +29,9 @@ void GameScene::Update(float dt)
 	Scene::Update(dt);
 	if (INPUT_MGR.GetKeyDown(KEY::Enter)) {
 		SCENE_MGR.ChangeScene(SceneIds::Dev1);
+	}
+	if (INPUT_MGR.GetMouseDown(MOUSE::Left)) {
+		std::cout << "MOUSE LEFT DOWN" << std::endl;
 	}
 }
 

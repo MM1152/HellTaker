@@ -4,6 +4,7 @@
 #define SPRITE_PATH "Resources/Sprite/"
 #define FONT_PATH "Resources/Font/"
 #define KEY sf::Keyboard::Key 
+#define MOUSE sf::Mouse
 
 #include <iostream>
 #include <algorithm>
@@ -12,6 +13,7 @@
 #include <list>
 #include <map>
 #include <assert.h>
+#include <fstream>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>

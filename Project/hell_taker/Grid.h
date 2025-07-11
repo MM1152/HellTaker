@@ -5,6 +5,8 @@ class Grid : public GameObject
 protected:
 	sf::RectangleShape rectangle;
 	sf::Vector2f gridSize;
+
+	sf::Sprite sp;
 public:
 	Grid(const sf::Vector2f gridSize , const std::string name = "");
 	~Grid() override = default;
@@ -21,5 +23,7 @@ public:
 	void Draw(sf::RenderWindow& window) override;
 	sf::FloatRect GetLocalBound() override;
 	sf::FloatRect GetGlobalBound() override;
+
+	void SetOutLineColor(sf::Color color);
 };
 

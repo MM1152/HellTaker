@@ -20,5 +20,6 @@ public:
 	virtual void Release();
 
 	void AddGameObject(GameObject* obj);
+	void RemoveGameObject(GameObject* obj);
 };
 

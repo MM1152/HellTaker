@@ -5,6 +5,7 @@ Grid::Grid(const sf::Vector2f gridSize , const std::string name)
     :GameObject(name)
     ,gridSize(gridSize)
 {
+    SetSortingLayer(SortingLayers::UI);
 }
 
 void Grid::SetPosition(const sf::Vector2f pos)
@@ -37,10 +38,11 @@ void Grid::SetOrigin(sf::Vector2f ori)
 
 void Grid::Init()
 {
-    rectangle.setFillColor(sf::Color::Green);
+    rectangle.setSize({gridSize.x , gridSize.y});
+    rectangle.setFillColor(sf::Color::Transparent);
     rectangle.setOutlineColor(sf::Color::Green);
-    rectangle.setOutlineThickness(5.f);
-    rectangle.setSize(gridSize);
+    rectangle.setOutlineThickness(1.f);
+   
 }
 
 void Grid::Reset()
@@ -49,6 +51,7 @@ void Grid::Reset()
 
 void Grid::Update(float dt)
 {
+    
 }
 
 void Grid::Exit()
@@ -66,10 +69,15 @@ void Grid::Draw(sf::RenderWindow& window)
 
 sf::FloatRect Grid::GetLocalBound()
 {
-    return sf::FloatRect();
+    return rectangle.getLocalBounds();
 }
 
 sf::FloatRect Grid::GetGlobalBound()
 {
-    return sf::FloatRect();
+    return rectangle.getGlobalBounds();
+}
+
+void Grid::SetOutLineColor(sf::Color color)
+{
+    rectangle.setOutlineColor(color);
 }

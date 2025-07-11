@@ -42,6 +42,7 @@ void Scene::Exit()
 {
 	TEXTURE_MGR.UnLoad();
 	FONT_MGR.UnLoad();
+
 	for (auto obj : gameObjects) {
 		obj->Exit();
 	}
@@ -84,4 +85,10 @@ void Scene::AddGameObject(GameObject* obj)
 
 	if (!isInput)
 		gameObjects.push_back(obj);
+}
+
+void Scene::RemoveGameObject(GameObject* obj)
+{
+	gameObjects.remove(obj);
+	delete obj;
 }
