@@ -65,6 +65,12 @@ sf::FloatRect SpriteGo::GetGlobalBound()
 	return sprite.getGlobalBounds();
 }
 
+void SpriteGo::SetScale(sf::Vector2f scale)
+{
+	this->scale = scale;
+	sprite.setScale(scale);
+}
+
 void SpriteGo::Exit()
 {
 }

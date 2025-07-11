@@ -8,6 +8,7 @@ protected:
 
 	sf::Vector2f position;
 	sf::Vector2f origin;
+	sf::Vector2f scale;
 	float rotation;
 
 	Origins originPreset;
@@ -27,6 +28,8 @@ public:
 	virtual void SetRotaion(const float rot) = 0;
 	virtual void SetOrigin(Origins preset) = 0;
 	virtual void SetOrigin(sf::Vector2f ori) = 0;
+	virtual void SetScale(sf::Vector2f scale) = 0;
+
 	void SetSortingOrder(int ord) { sortingOrder = ord; };
 	void SetSortingLayer(SortingLayers layer) { sortingLayer = layer; };
 	void SetActive(bool active) { isActive = active; };
@@ -45,6 +48,7 @@ public:
 	int GetSortingOrder() { return sortingOrder; };
 	SortingLayers GetSortingLayer() { return sortingLayer; };
 	bool GetActive() { return isActive; };
+	sf::Vector2f GetScale() { return scale; };
 	virtual sf::FloatRect GetLocalBound() = 0;
 	virtual sf::FloatRect GetGlobalBound() = 0;
 };

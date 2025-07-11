@@ -7,7 +7,7 @@ class SceneMgr : public Singleton<SceneMgr>
 protected:
 	friend Singleton<SceneMgr>;
 
-	SceneIds startScene = SceneIds::SceneGame;
+	SceneIds startScene = SceneIds::Dev1;
 	SceneIds currentScene = SceneIds::None;
 	SceneIds nextScene = SceneIds::None;
 

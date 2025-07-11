@@ -1,10 +1,19 @@
 #pragma once
 #include "GameObject.h"
+
+enum class Types {
+	WALL,
+	TILE,
+	NONE,
+};
+
 class Grid : public GameObject
 {
 protected:
 	sf::RectangleShape rectangle;
 	sf::Vector2f gridSize;
+
+	Types type;
 
 	sf::Sprite sp;
 public:
@@ -25,5 +34,8 @@ public:
 	sf::FloatRect GetGlobalBound() override;
 
 	void SetOutLineColor(sf::Color color);
+
+	// GameObject을(를) 통해 상속됨
+	void SetScale(sf::Vector2f scale) override;
 };
 

@@ -6,6 +6,7 @@ TextGo::TextGo(const std::string fontId, const std::string name)
     ,fontId(fontId)
 {
     SetSortingLayer(SortingLayers::UI);
+    
 }
 
 void TextGo::SetString(const std::string tex)
@@ -85,4 +86,15 @@ sf::FloatRect TextGo::GetLocalBound()
 sf::FloatRect TextGo::GetGlobalBound()
 {
     return text.getGlobalBounds();
+}
+
+void TextGo::SetFillColor(sf::Color color)
+{
+    text.setFillColor(color);
+}
+
+void TextGo::SetScale(sf::Vector2f scale)
+{
+    this->scale = scale;
+    text.setScale(scale);
 }

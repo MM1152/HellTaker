@@ -17,6 +17,7 @@ public:
 	void SetRotaion(const float rot) override;
 	void SetOrigin(Origins preset) override;
 	void SetOrigin(sf::Vector2f ori) override;
+	void SetScale(sf::Vector2f scale) override;
 
 	void Exit() override;
 	void Init() override;
@@ -29,5 +30,6 @@ public:
 
 	sf::FloatRect GetLocalBound() override;
 	sf::FloatRect GetGlobalBound() override;
+
 };
 

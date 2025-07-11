@@ -4,6 +4,7 @@
 Grid::Grid(const sf::Vector2f gridSize , const std::string name)
     :GameObject(name)
     ,gridSize(gridSize)
+    ,type(Types::NONE)
 {
     SetSortingLayer(SortingLayers::UI);
 }
@@ -27,6 +28,8 @@ void Grid::SetOrigin(Origins preset)
     sf::FloatRect rect = rectangle.getLocalBounds();
     origin.x = rect.width * (((int)preset % 3) * 0.5f);
     origin.y = rect.height * (((int)preset / 3) * 0.5f);
+
+    rectangle.setOrigin(origin);
 }
 
 void Grid::SetOrigin(sf::Vector2f ori)
@@ -80,4 +83,10 @@ sf::FloatRect Grid::GetGlobalBound()
 void Grid::SetOutLineColor(sf::Color color)
 {
     rectangle.setOutlineColor(color);
+}
+
+void Grid::SetScale(sf::Vector2f scale)
+{
+    this->scale = scale;
+    rectangle.setScale(scale);
 }

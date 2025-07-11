@@ -3,27 +3,38 @@
 #include "TextGo.h"
 #include "SpriteGo.h"
 #include "Grid.h"
-
+#include "Button.h"
 //GRIDSIZE (101,81)
 //GRIDCOUNT(19,12)
 SceneDev1::SceneDev1()
 	:Scene(SceneIds::Dev1)
 {
 	gridSize = { 101, 81};
-	gridCount = { 19 , 12 };
+	gridCount = { 19 , 13 };
 }
 
 void SceneDev1::Init()
 {
 	fontIds.push_back(FONT_PATH"Amiri-Regular.ttf");
-	texIds.push_back(SPRITE_PATH"chapterBG0001.png");
+	texIds.push_back(SPRITE_PATH"chapterBG0003.png");
 	TextGo* textGo = new TextGo(FONT_PATH"Amiri-Regular.ttf");
-	SpriteGo* spriteGo = new SpriteGo(SPRITE_PATH"chapterBG0001.png");
-	mouseRect = new Grid({10 , 10});
+	SpriteGo* spriteGo = new SpriteGo(SPRITE_PATH"chapterBG0003.png");
+	Button* button = new Button(FONT_PATH"Amiri-Regular.ttf");
+	button->SetPosition({ 1920 / 2, 1080 / 2 });
+	button->SetOrigin(Origins::LT);
+	button->SetCharacterSize(50);
+	button->SetString("ASDASD");
+	button->SetFillColor(sf::Color::Black);
+	
+	spriteGo->SetScale({ 0.7f , 0.7f });
 
+	mouseRect = new Grid({10 , 10});
+	gridSize.x *= spriteGo->GetScale().x;
+	gridSize.y *= spriteGo->GetScale().y;
 
 	textGo->SetString("DEV1");
 
+	AddGameObject(button);
 	AddGameObject(spriteGo);
 	AddGameObject(textGo);
 	DrawGrid(gridSize, gridCount);
@@ -35,6 +46,9 @@ void SceneDev1::Reset()
 {
 	
 	Scene::Reset();
+
+	
+
 }
 
 void SceneDev1::Update(float dt)
@@ -55,6 +69,8 @@ void SceneDev1::Update(float dt)
 			grid->SetOutLineColor(sf::Color::Green);
 		}
 	}
+
+	
 
 	//if (INPUT_MGR.GetKeyDown(KEY::Right)) {
 	//	std::cout << "GRIDSIZE : " << gridSize.x << " ," << gridSize.y << std::endl;
@@ -114,7 +130,6 @@ void SceneDev1::DrawGrid(sf::Vector2f cellSize, sf::Vector2f cellCount)
 			Grid* grid = new Grid(cellSize);
 			grid->Init();
 			grid->SetPosition({ cellSize.x * j , cellSize.y * i });
-			std::cout << grid->GetLocalBound().width << ", " << grid->GetLocalBound().height << std::endl;
 			AddGameObject(grid);
 			grids.push_back(grid);
 		}

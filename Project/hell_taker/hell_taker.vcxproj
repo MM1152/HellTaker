@@ -142,11 +142,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Framework.cpp" />
     <ClCompile Include="Framework\GameObject.cpp" />
     <ClCompile Include="Framework\InputMgr.cpp" />
     <ClCompile Include="Framework\SceneMgr.cpp" />
-    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="GameObjects\Grid.cpp" />
+    <ClCompile Include="GameObjects\InputText.cpp" />
     <ClCompile Include="Scene\SceneDev1.cpp" />
     <ClCompile Include="Scene\GameScene.cpp" />
     <ClCompile Include="main.cpp" />
@@ -160,6 +162,7 @@
     <ClCompile Include="GameObjects\TextGo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="Framework\Define.h" />
     <ClInclude Include="Framework\GameObject.h" />
@@ -168,7 +171,8 @@
     <ClInclude Include="Framework\ResourceMgr.h" />
     <ClInclude Include="Framework\InputMgr.h" />
     <ClInclude Include="Framework\SceneMgr.h" />
-    <ClInclude Include="Grid.h" />
+    <ClInclude Include="GameObjects\Grid.h" />
+    <ClInclude Include="GameObjects\InputText.h" />
     <ClInclude Include="Scene\SceneDev1.h" />
     <ClInclude Include="Scene\GameScene.h" />
     <ClInclude Include="Framework\Scene.h" />
