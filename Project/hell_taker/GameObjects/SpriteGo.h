@@ -26,6 +26,7 @@ public:
 	void Release() override;
 	void Draw(sf::RenderWindow& window) override;
 
+	void ChangeTexture(const std::string ids);
 	sf::Sprite& GetSprite() { return sprite; };
 
 	sf::FloatRect GetLocalBound() override;

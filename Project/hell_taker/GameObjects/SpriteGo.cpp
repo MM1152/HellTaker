@@ -55,6 +55,12 @@ void SpriteGo::Draw(sf::RenderWindow& window)
 	window.draw(sprite);
 }
 
+void SpriteGo::ChangeTexture(const std::string ids)
+{
+	texId = ids;
+	Reset();
+}
+
 sf::FloatRect SpriteGo::GetLocalBound()
 {
 	return sprite.getLocalBounds();

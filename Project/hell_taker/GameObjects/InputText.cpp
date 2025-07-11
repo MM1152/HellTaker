@@ -37,13 +37,20 @@ void InputText::Update(float dt)
 				SetString(curString);
 			}
 		}
+		if (INPUT_MGR.GetKeyDown(KEY::BackSpace)) {
+			std::string curString = GetString();
+			if (curString.size() > 0) {
+				curString.resize(curString.size() - 1);
+			}
+			SetString(curString);
+		}
 	}
 }
 
 void InputText::Reset()
 {
 	Button::Reset();
-	rect.setSize({200 , 100});
+	rect.setSize({100 , 50});
 }
 
 void InputText::SetString(const std::string tex)

@@ -13,7 +13,7 @@ public:
 	void SetOrigins(sf::Text& sp, Origins ori);
 
 	void WriteFile(const std::string filePath , std::vector<std::string> write);
-	std::list<std::string> ReadFile(const std::string filePath);
+	std::vector<std::string> ReadFile(const std::string filePath);
 };
 
 #define UTILS Utils::Instance()

@@ -28,12 +28,16 @@ void Utils::WriteFile(const std::string filePath , std::vector<std::string> writ
 {
 	rapidcsv::Document document;
 	//document.SetCell(0, 0, "MapData");
-	
-	for (int i = 0; i < write.size(); i++) {
-		for (int j = 0; j < write[i].size(); j++) {
+	int i = 0;
+	int j = 0;
+	for (i = 0; i < write.size() - 2; i++) {
+		for (j = 0; j < write[i].size(); j++) {
 			document.SetCell(j, i, write[i][j]);
 		}
 	}
+	
+	document.SetCell(0, i-1, write[i++]);
+	document.SetCell(1, i-1, write[i]);
 
 	std::ifstream file(filePath);
 	if (file.good()) {
@@ -44,22 +48,36 @@ void Utils::WriteFile(const std::string filePath , std::vector<std::string> writ
 	document.Save(filePath);
 }
 
-std::list<std::string> Utils::ReadFile(const std::string filePath)
+std::vector<std::string> Utils::ReadFile(const std::string filePath)
 {
-	std::string line;
-	std::list<std::string> readText;
 	std::ifstream file(filePath);
-	if (file.is_open()) {
-		while (std::getline(file, line)) {
-			readText.push_back(line);
-		}
-		file.close();
-	}
-	else {
-		std::cout << "FAIL TO OPEN FILE " << filePath << std::endl;
-	}
+	std::vector<std::string> readFileInfo;
 
-	return readText;
+	if (!file.good()) {
+		std::cout << "FAIL TO LOAD FILE " << filePath << std::endl;
+		return readFileInfo;
+	}
+	
+	rapidcsv::Document document(filePath);
+	int i = 0;
+	int j = 0;
+
+	if (document.GetRowCount() == 0) return readFileInfo;
+ 
+	for (i = 0; i < document.GetRowCount() - 1; i++) {
+		auto row = document.GetRow<std::string>(i);
+		std::string word;
+		for (j = 0; j < row.size(); j++) {
+			word += row[j];
+		}
+
+		readFileInfo.push_back(word);
+	}
+	readFileInfo.push_back(document.GetCell<std::string>(0, i ));
+	readFileInfo.push_back(document.GetCell<std::string>(1, i ));
+
+
+	return readFileInfo;
 }
 
 

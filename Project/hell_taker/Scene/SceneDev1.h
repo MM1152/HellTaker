@@ -10,6 +10,11 @@ protected:
 
 	Types type = Types::NONE;
 
+	std::string mapIds[8];
+	std::string mapGridsIds[8];
+	sf::Sprite* mapImage;
+	int mapIndex = 0;
+
 public:
 	SceneDev1();
 	~SceneDev1() = default;
@@ -19,5 +24,6 @@ public:
 	void Update(float dt) override;
 	void Draw(sf::RenderWindow& window) override;
 	void DrawGrid(sf::Vector2f cellSize , sf::Vector2f cellCount);
+	void DrawGrid(std::vector<std::string>& lists);
 };
 
