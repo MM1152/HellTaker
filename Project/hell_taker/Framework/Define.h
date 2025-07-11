@@ -11,5 +11,11 @@ enum class SortingLayers {
 	BACKGROUND,
 	FORGROUND,
 	DEFAULT,
-	UI,
+	UI,		
+};
+
+enum class SceneIds {
+	SceneGame,
+	Dev1,
+	None,
 };

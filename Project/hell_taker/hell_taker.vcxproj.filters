@@ -33,6 +33,27 @@
     <ClCompile Include="Framework\InputMgr.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Framework\Scene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\GameScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\SceneMgr.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneDev1.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\TextGo.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\GameObject.h">
@@ -41,7 +62,7 @@
     <ClInclude Include="stdafx.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Define.h">
+    <ClInclude Include="Framework\Define.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\SpriteGo.h">
@@ -57,6 +78,27 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Framework\InputMgr.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Scene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\GameScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\SceneMgr.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneDev1.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\TextGo.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -31,6 +31,7 @@ void Scene::Draw(sf::RenderWindow& window)
 void Scene::Reset()
 {
 	TEXTURE_MGR.Load(texIds);
+	FONT_MGR.Load(fontIds);
 
 	for (auto obj : gameObjects) {
 		obj->Reset();
@@ -40,7 +41,7 @@ void Scene::Reset()
 void Scene::Exit()
 {
 	TEXTURE_MGR.UnLoad();
-
+	FONT_MGR.UnLoad();
 	for (auto obj : gameObjects) {
 		obj->Exit();
 	}

@@ -15,6 +15,8 @@ protected:
 	SortingLayers sortingLayer;
 	int sortingOrder;
 
+	sf::FloatRect localBound;
+	sf::FloatRect globalBound;
 	bool isActive;
 public:
 
@@ -43,5 +45,7 @@ public:
 	int GetSortingOrder() { return sortingOrder; };
 	SortingLayers GetSortingLayer() { return sortingLayer; };
 	bool GetActive() { return isActive; };
+	virtual sf::FloatRect GetLocalBound() = 0;
+	virtual sf::FloatRect GetGlobalBound() = 0;
 };
 

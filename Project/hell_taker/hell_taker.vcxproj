@@ -111,7 +111,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\SFML-2.6.2\include;.\Framework;.\GameObjects;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\SFML-2.6.2\include;.\Framework;.\GameObjects;$(ProjectDir);.\Scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -129,7 +129,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);.\SFML-2.6.2\include;.\GameObjects;.\Framework;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);.\SFML-2.6.2\include;.\GameObjects;.\Framework;.\Scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -142,25 +142,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Framework.cpp" />
     <ClCompile Include="Framework\GameObject.cpp" />
     <ClCompile Include="Framework\InputMgr.cpp" />
+    <ClCompile Include="Framework\SceneMgr.cpp" />
+    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Scene\SceneDev1.cpp" />
+    <ClCompile Include="Scene\GameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameObjects\SpriteGo.cpp" />
+    <ClCompile Include="Framework\Scene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Framework\Utils.cpp" />
+    <ClCompile Include="GameObjects\TextGo.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Define.h" />
+    <ClInclude Include="Framework.h" />
+    <ClInclude Include="Framework\Define.h" />
     <ClInclude Include="Framework\GameObject.h" />
     <ClInclude Include="GameObjects\SpriteGo.h" />
     <ClInclude Include="Framework\Singleton.h" />
     <ClInclude Include="Framework\ResourceMgr.h" />
     <ClInclude Include="Framework\InputMgr.h" />
+    <ClInclude Include="Framework\SceneMgr.h" />
+    <ClInclude Include="Grid.h" />
+    <ClInclude Include="Scene\SceneDev1.h" />
+    <ClInclude Include="Scene\GameScene.h" />
+    <ClInclude Include="Framework\Scene.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Framework\Utils.h" />
+    <ClInclude Include="GameObjects\TextGo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

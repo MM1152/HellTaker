@@ -22,8 +22,8 @@ public:
 		}
 	}
 	void Load(const std::vector<std::string> ids) {
-		for (std::string : ids) {
-			Load(ids);
+		for (const std::string id : ids) {
+			Load(id);
 		}
 	}
 	T& Get(const std::string id) {
@@ -45,4 +45,4 @@ public:
 };
 
 #define TEXTURE_MGR ResourceMgr<sf::Texture>::Instance()
-
+#define FONT_MGR ResourceMgr<sf::Font>::Instance()

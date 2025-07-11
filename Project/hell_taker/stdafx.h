@@ -2,6 +2,7 @@
 
 #define RESOURCE_PATH "Resources/"
 #define SPRITE_PATH "Resources/Sprite/"
+#define FONT_PATH "Resources/Font/"
 #define KEY sf::Keyboard::Key 
 
 #include <iostream>
@@ -16,7 +17,9 @@
 #include <SFML/Audio.hpp>
 
 #include "Define.h"
+#include "Framework.h"
 #include "Singleton.h"
+#include "SceneMgr.h"
 #include "InputMgr.h"
 #include "ResourceMgr.h"
 #include "Utils.h"

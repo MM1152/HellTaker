@@ -3,15 +3,15 @@
 class Scene
 {
 protected:
-	std::unordered_map<std::string, Scene*> scenes;
 	std::list<GameObject*> gameObjects;
 
 	std::vector<std::string> texIds;
+	std::vector<std::string> fontIds;
 
-	SceneIds startScene = SceneIds::SceneGame;
-	SceneIds currentScene = SceneIds::None;
-	SceneIds nextScene = SceneIds::None;
+	SceneIds sceneId;
 public:
+	Scene(SceneIds id);
+	virtual ~Scene() = default;
 	virtual void Init();
 	virtual void Update(float dt);
 	virtual void Draw(sf::RenderWindow& window);

@@ -22,11 +22,13 @@ void SpriteGo::SetRotaion(const float rot)
 void SpriteGo::SetOrigin(Origins preset)
 {
 	originPreset = preset;
+	UTILS.SetOrigins(sprite, preset);
 }
 
 void SpriteGo::SetOrigin(sf::Vector2f ori)
 {
 	origin = ori;
+	originPreset = Origins::Custom;
 	sprite.setOrigin(ori);
 }
 
@@ -51,4 +53,18 @@ void SpriteGo::Release()
 void SpriteGo::Draw(sf::RenderWindow& window)
 {
 	window.draw(sprite);
+}
+
+sf::FloatRect SpriteGo::GetLocalBound()
+{
+	return sprite.getLocalBounds();
+}
+
+sf::FloatRect SpriteGo::GetGlobalBound()
+{
+	return sprite.getGlobalBounds();
+}
+
+void SpriteGo::Exit()
+{
 }
