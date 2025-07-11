@@ -1,10 +1,14 @@
 #pragma once
 #include "Singleton.h"
+#include "Grid.h"
+
 class InputMgr : public Singleton<InputMgr>
 {
 	friend Singleton<InputMgr>;
 protected:
 	InputMgr() = default;
+
+	Grid* mouseRect;
 
 	std::vector<int> downKeys;
 	std::vector<int> heldKeys;
@@ -19,6 +23,8 @@ public:
 	void Reset();
 	void Update(float dt);
 	void UpdateEvent(sf::Event& event);
+	void Draw(sf::RenderWindow& window);
+	void Release();
 
 	bool GetKeyDown(sf::Keyboard::Key key);
 	bool GetKey(sf::Keyboard::Key key);
@@ -28,6 +34,8 @@ public:
 	bool GetMouse(sf::Mouse::Button key);
 	bool GetMouseUp(sf::Mouse::Button key);
 
+
+	sf::FloatRect GetMouseGlobalBound() { return mouseRect->GetGlobalBound(); };
 	sf::Vector2i GetMousePosition() { return mousePosition; };
 };
 

@@ -5,7 +5,10 @@ class Button : public TextGo
 protected:
 	sf::RectangleShape rect;
 
+	std::function<void()> callback;
 public:
+
+
 	Button(const std::string fontId = "", const std::string name = "");
 	~Button() override = default;
 
@@ -19,5 +22,8 @@ public:
 
 	void Update(float dt) override;
 	void Draw(sf::RenderWindow& window) override;
+
+	void SetCallBack(std::function<void()> callback);
+	void OnClick();
 };
 

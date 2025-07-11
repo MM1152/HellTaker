@@ -7,7 +7,6 @@ protected:
 	sf::Vector2f gridSize;
 	sf::Vector2f gridCount;
 	std::vector<Grid*> grids;
-	Grid* mouseRect;
 public:
 	SceneDev1();
 	~SceneDev1() = default;
@@ -15,6 +14,7 @@ public:
 	void Init() override;
 	void Reset() override;
 	void Update(float dt) override;
+	void Draw(sf::RenderWindow& window) override;
 	void DrawGrid(sf::Vector2f cellSize , sf::Vector2f cellCount);
 };
 

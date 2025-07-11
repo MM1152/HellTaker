@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "InputMgr.h"
+#include "Grid.h"
 
 bool InputMgr::Contain(std::vector<int> vector, sf::Keyboard::Key key)
 {
@@ -13,6 +14,9 @@ bool InputMgr::Contain(std::vector<int> vector, sf::Mouse::Button key)
 
 void InputMgr::Init()
 {
+	mouseRect = new Grid({10 , 10 });
+	mouseRect->Init();
+	mouseRect->Reset();
 	downKeys.resize(sf::Keyboard::KeyCount + sf::Mouse::ButtonCount);
 	heldKeys.resize(sf::Keyboard::KeyCount + sf::Mouse::ButtonCount);
 	upKeys.resize(sf::Keyboard::KeyCount + sf::Mouse::ButtonCount);
@@ -28,6 +32,8 @@ void InputMgr::Update(float dt)
 {
 	Reset();
 	mousePosition = sf::Mouse::getPosition();
+
+	mouseRect->SetPosition({ (float)GetMousePosition().x - 10.f, (float)GetMousePosition().y - 30.f });
 }
 
 void InputMgr::UpdateEvent(sf::Event& event)
@@ -55,6 +61,16 @@ void InputMgr::UpdateEvent(sf::Event& event)
 		upKeys[(int)event.mouseButton.button + KEY::KeyCount] = 1;
 		break;
 	}
+}
+
+void InputMgr::Draw(sf::RenderWindow& window)
+{
+	mouseRect->Draw(window);
+}
+
+void InputMgr::Release()
+{
+	delete mouseRect;
 }
 
 bool InputMgr::GetKeyDown(sf::Keyboard::Key key)

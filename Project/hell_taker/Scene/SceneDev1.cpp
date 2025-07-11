@@ -20,15 +20,16 @@ void SceneDev1::Init()
 	TextGo* textGo = new TextGo(FONT_PATH"Amiri-Regular.ttf");
 	SpriteGo* spriteGo = new SpriteGo(SPRITE_PATH"chapterBG0003.png");
 	Button* button = new Button(FONT_PATH"Amiri-Regular.ttf");
-	button->SetPosition({ 1920 / 2, 1080 / 2 });
+	
 	button->SetOrigin(Origins::LT);
 	button->SetCharacterSize(50);
 	button->SetString("ASDASD");
 	button->SetFillColor(sf::Color::Black);
+	button->SetPosition({ 1920 / 2, 1080 / 2 });
 	
 	spriteGo->SetScale({ 0.7f , 0.7f });
 
-	mouseRect = new Grid({10 , 10});
+	
 	gridSize.x *= spriteGo->GetScale().x;
 	gridSize.y *= spriteGo->GetScale().y;
 
@@ -38,7 +39,6 @@ void SceneDev1::Init()
 	AddGameObject(spriteGo);
 	AddGameObject(textGo);
 	DrawGrid(gridSize, gridCount);
-	AddGameObject(mouseRect);
 	Scene::Init();
 }
 
@@ -46,8 +46,6 @@ void SceneDev1::Reset()
 {
 	
 	Scene::Reset();
-
-	
 
 }
 
@@ -59,10 +57,9 @@ void SceneDev1::Update(float dt)
 		SCENE_MGR.ChangeScene(SceneIds::SceneGame);
 	}
 
-	mouseRect->SetPosition({ INPUT_MGR.GetMousePosition().x - 10.f , INPUT_MGR.GetMousePosition().y - 30.f});
 
 	for (Grid* grid : grids) {
-		if (grid->GetGlobalBound().intersects(mouseRect->GetGlobalBound())) {
+		if (grid->GetGlobalBound().intersects(INPUT_MGR.GetMouseGlobalBound())) {
 			grid->SetOutLineColor(sf::Color::Red);
 		}
 		else {
@@ -113,6 +110,12 @@ void SceneDev1::Update(float dt)
 	//	gridCount.y--;
 	//	DrawGrid(gridSize, gridCount);
 	//}
+}
+
+void SceneDev1::Draw(sf::RenderWindow& window)
+{
+	Scene::Draw(window);
+	
 }
 
 

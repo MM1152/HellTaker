@@ -15,7 +15,7 @@ void Button::SetCharacterSize(size_t size)
 void Button::SetString(const std::string tex)
 {
 	TextGo::SetString(tex);
-	rect.setSize({(float)tex.size() * text.getCharacterSize() , (float)text.getCharacterSize() * 2});
+	rect.setSize({(float)tex.size() * text.getCharacterSize() * 0.6f , (float)text.getCharacterSize() * 1.5f});
 }
 
 void Button::SetPosition(const sf::Vector2f pos)
@@ -57,10 +57,23 @@ void Button::SetScale(sf::Vector2f scale)
 
 void Button::Update(float dt)
 {
+	
 }
 
 void Button::Draw(sf::RenderWindow& window)
 {
 	window.draw(rect);
 	TextGo::Draw(window);
+}
+
+void Button::SetCallBack(std::function<void()> callback)
+{
+	this->callback = callback;
+}
+
+void Button::OnClick()
+{
+	if (callback) {
+		callback();
+	}
 }

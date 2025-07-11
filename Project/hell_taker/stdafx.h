@@ -14,6 +14,7 @@
 #include <map>
 #include <assert.h>
 #include <fstream>
+#include <functional>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>

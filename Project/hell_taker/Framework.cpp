@@ -34,6 +34,7 @@ void Framework::Update()
 
         window.clear();
         SCENE_MGR.Draw(window);
+        INPUT_MGR.Draw(window);
         window.display();
     }
 }
@@ -41,4 +42,5 @@ void Framework::Update()
 void Framework::Release()
 {
     SCENE_MGR.Release();
+    INPUT_MGR.Release();
 }
