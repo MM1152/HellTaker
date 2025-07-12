@@ -5,6 +5,7 @@
 #include "Grid.h"
 #include "Button.h"
 #include "InputText.h"
+#include "ButtonSprite.h"
 //GRIDSIZE (101,81)
 //GRIDCOUNT(19,12)
 SceneDev1::SceneDev1()
@@ -16,7 +17,8 @@ SceneDev1::SceneDev1()
 
 void SceneDev1::Init()
 {
-	std::vector<std::string> ids = UTILS.ReadFile("GameData/MapData1.csv");
+
+#pragma region TEXTURE , FONT
 	fontIds.push_back(FONT_PATH"Amiri-Regular.ttf");
 
 	texIds.push_back(SPRITE_PATH"chapterBG0001.png");
@@ -27,18 +29,23 @@ void SceneDev1::Init()
 	texIds.push_back(SPRITE_PATH"chapterBG0006.png");
 	texIds.push_back(SPRITE_PATH"chapterBG0007.png");
 	texIds.push_back(SPRITE_PATH"chapterBG0008.png");
-	
+
+	texIds.push_back(SPRITE_PATH"assets100V20053.png");
+	texIds.push_back(SPRITE_PATH"assets100V20081.png");
+#pragma endregion
+
+
 	for (int i = 0; i < 8; i++) {
 		mapIds[i] = SPRITE_PATH"chapterBG000" + std::to_string(i + 1) + ".png";
 	}
 	for (int i = 0; i < 8; i++) {
-		mapGridsIds[i] = "GameData/MapData" + std::to_string(i + 1) + ".csv";
+		mapGridsIds[i] = MAP_DATA(i + 1);
 	}
 
 	TextGo* textGo = new TextGo(FONT_PATH"Amiri-Regular.ttf");
 	
 	SpriteGo* spriteGo = new SpriteGo(SPRITE_PATH"chapterBG0001.png");
-
+	
 	Button* button = new Button(FONT_PATH"Amiri-Regular.ttf");
 	Button* button1 = new Button(FONT_PATH"Amiri-Regular.ttf");
 	Button* saveBNT = new Button(FONT_PATH"Amiri-Regular.ttf");
@@ -46,6 +53,10 @@ void SceneDev1::Init()
 	Button* nextMapBNT = new Button(FONT_PATH"Amiri-Regular.ttf");
 	Button* prevMapBNT = new Button(FONT_PATH"Amiri-Regular.ttf");
 
+	ButtonSprite* deleteButton = new ButtonSprite();
+	ButtonSprite* playerButton = new ButtonSprite(SPRITE_PATH"assets100V20053.png");
+	ButtonSprite* obstacleButton = new ButtonSprite(SPRITE_PATH"assets100V20081.png");
+	
 	InputText* inputWidth = new InputText(FONT_PATH"Amiri-Regular.ttf");
 	InputText* inputHeigth = new InputText(FONT_PATH"Amiri-Regular.ttf");
 
@@ -55,21 +66,25 @@ void SceneDev1::Init()
 	TextGo* gridSizeText = new TextGo(FONT_PATH"Amiri-Regular.ttf");
 	TextGo* gridCountText = new TextGo(FONT_PATH"Amiri-Regular.ttf");
 
+#pragma region BUTTONS
+
 	button->SetString("WALL");
 	button->SetPosition({ 1920 - 400.f, 300 });
 	button->SetCallBack([this]() {
 		this->type = Types::WALL;
-	});
+		spriteType = SpriteTypes::NONE;
+		});
 
 	button1->SetString("TILE");
 	button1->SetPosition({ 1920 - 200.f, 300 });
 	button1->SetCallBack([this]() {
 		this->type = Types::TILE;
-	});
+		spriteType = SpriteTypes::NONE;
+		});
 
 	prevMapBNT->SetString("Prev");
 	prevMapBNT->SetPosition({ 500.f , 1080.f - 200.f });
-	prevMapBNT->SetCallBack([this , spriteGo]() {
+	prevMapBNT->SetCallBack([this, spriteGo]() {
 		if (mapIndex > 0) {
 			mapIndex--;
 			std::vector<std::string> list = UTILS.ReadFile(mapGridsIds[mapIndex]);
@@ -84,11 +99,11 @@ void SceneDev1::Init()
 			spriteGo->ChangeTexture(mapIds[mapIndex]);
 		}
 
-	});
+		});
 
 	nextMapBNT->SetString("Next");
 	nextMapBNT->SetPosition({ 600.f , 1080.f - 200.f });
-	nextMapBNT->SetCallBack([this , spriteGo]() {
+	nextMapBNT->SetCallBack([this, spriteGo]() {
 		if (mapIndex < 7) {
 			mapIndex++;
 			std::vector<std::string> list = UTILS.ReadFile(mapGridsIds[mapIndex]);
@@ -102,17 +117,22 @@ void SceneDev1::Init()
 			}
 			spriteGo->ChangeTexture(mapIds[mapIndex]);
 		}
-		
-	});
+
+		});
 	saveBNT->SetString("SAVE");
 	saveBNT->SetToggle(false);
-	saveBNT->SetPosition({1920 - 350.f , 1080 - 200.f});
+	saveBNT->SetPosition({ 1920 - 350.f , 1080 - 200.f });
 	saveBNT->SetCallBack([this]() {
 		std::vector<std::string> write;
 		for (int i = 0; i < gridCount.y; i++) {
 			std::string word;
 			for (int j = 0; j < gridCount.x; j++) {
-				word += std::to_string((int)grids[i][j]->GetType())	;
+				if (grids[i][j]->GetSpriteTypes() != SpriteTypes::NONE && grids[i][j]->GetSpriteTypes() != SpriteTypes::DELETE) {
+					word += std::to_string((int)grids[i][j]->GetSpriteTypes() + (int)Types::TYPECOUTN);
+				}
+				else {
+					word += std::to_string((int)grids[i][j]->GetType());
+				}
 			}
 			write.push_back(word);
 		}
@@ -120,13 +140,13 @@ void SceneDev1::Init()
 		write.push_back(std::to_string((int)gridSize.y));
 		write.push_back(std::to_string((int)gridSize.x));
 
-		UTILS.WriteFile("GameData/MapData" + std::to_string(mapIndex + 1) + ".csv" , write);
-	});
+		UTILS.WriteFile("GameData/MapData" + std::to_string(mapIndex + 1) + ".csv", write);
+		});
 
 	changeGridSize->SetString("Change");
 	changeGridSize->SetToggle(false);
-	changeGridSize->SetPosition({1920 - 320.f , 200});
-	changeGridSize->SetCallBack([this, inputWidth , inputHeigth , inputGridSizeHeight , inputGridSizeWidth]() {
+	changeGridSize->SetPosition({ 1920 - 320.f , 200 });
+	changeGridSize->SetCallBack([this, inputWidth, inputHeigth, inputGridSizeHeight, inputGridSizeWidth]() {
 		if (inputHeigth->GetString() == "" || inputWidth->GetString() == "" || inputGridSizeHeight->GetString() == "" || inputGridSizeWidth->GetString() == "") return;
 
 		int width = std::stoi(inputWidth->GetString());
@@ -136,18 +156,21 @@ void SceneDev1::Init()
 		int sizeY = std::stoi(inputGridSizeHeight->GetString());
 
 		if (width && height && sizeX && sizeY) {
-			this->gridCount = { (float)width , (float)height};
+			this->gridCount = { (float)width , (float)height };
 			this->gridSize = { (float)sizeX , (float)sizeY };
-			DrawGrid(gridSize , gridCount);
+			DrawGrid(gridSize, gridCount);
 		}
-	});
+		});
 
+#pragma endregion
+#pragma region INPUTTEXTS
 	inputWidth->SetPosition({ 1920 - 400.f , 0 });
 	inputHeigth->SetPosition({ 1920 - 200.f , 0 });
 
 	inputGridSizeWidth->SetPosition({ 1920 - 400.f , 100 });
 	inputGridSizeHeight->SetPosition({ 1920 - 200.f , 100 });
-
+#pragma endregion
+#pragma region TEXTS
 	gridSizeText->SetPosition({ 1920 - 340.f , 50 });
 	gridSizeText->SetString("GRID COUNT");
 	gridSizeText->SetFillColor(sf::Color::White);
@@ -155,11 +178,30 @@ void SceneDev1::Init()
 	gridCountText->SetPosition({ 1920 - 320.f , 150 });
 	gridCountText->SetString("GRID SIZE");
 	gridCountText->SetFillColor(sf::Color::White);
+	
+#pragma endregion
+#pragma region BUTTONSPITE
+	deleteButton->SetPosition({ 1920 - 450.f , 400.f });
+	deleteButton->SetCallBack([this]() {
+		spriteType = SpriteTypes::DELETE;
+		type = Types::NONE;
+	});
+
+	playerButton->SetPosition({1920 - 350.f , 400.f});
+	playerButton->SetCallBack([this]() {
+		spriteType = SpriteTypes::PLAYER;
+		type = Types::NONE;
+	});
+	
+	obstacleButton->SetPosition({1920 - 250.f , 400.f});
+	obstacleButton->SetCallBack([this]() {
+		spriteType = SpriteTypes::OBSTACLE;
+		type = Types::NONE;
+	});
+#pragma endregion
+	
 	spriteGo->SetScale({ 0.7f , 0.7f });
-
-
-	textGo->SetString("DEV1");
-
+#pragma region ADDGAMEOBJECT
 	AddGameObject(saveBNT);
 	AddGameObject(button);
 	AddGameObject(button1);
@@ -174,6 +216,21 @@ void SceneDev1::Init()
 	AddGameObject(gridCountText);
 	AddGameObject(prevMapBNT);
 	AddGameObject(nextMapBNT);
+	AddGameObject(playerButton);
+	AddGameObject(deleteButton);
+	AddGameObject(obstacleButton);
+#pragma endregion
+
+
+
+	Scene::Init();
+}
+
+void SceneDev1::Reset()
+{
+	std::vector<std::string> ids = UTILS.ReadFile("GameData/MapData1.csv");
+
+	Scene::Reset();
 
 	if (ids.size() != 0) {
 		DrawGrid(ids);
@@ -181,13 +238,7 @@ void SceneDev1::Init()
 	else {
 		DrawGrid(gridSize, gridCount);
 	}
-	
-	Scene::Init();
-}
 
-void SceneDev1::Reset()
-{
-	Scene::Reset();
 }
 
 void SceneDev1::Update(float dt)
@@ -198,17 +249,16 @@ void SceneDev1::Update(float dt)
 		SCENE_MGR.ChangeScene(SceneIds::SceneGame);
 	}
 
-
 	for (int i = 0; i < grids.size(); i++) {
 		for (int j = 0; j < grids[i].size(); j++) {
-			if (grids[i][j]->GetGlobalBound().intersects(INPUT_MGR.GetMouseGlobalBound()) && INPUT_MGR.GetMouse(MOUSE::Left)) {
+			if (type != Types::NONE && grids[i][j]->GetGlobalBound().intersects(INPUT_MGR.GetMouseGlobalBound()) && INPUT_MGR.GetMouse(MOUSE::Left) ) {	
 				grids[i][j]->SetTypes(type);
 			}
+			if (spriteType != SpriteTypes::NONE && grids[i][j]->GetGlobalBound().intersects(INPUT_MGR.GetMouseGlobalBound()) && INPUT_MGR.GetMouseDown(MOUSE::Left)) {
+				grids[i][j]->SetTypes(spriteType);
+			}
 		}
-	
 	}
-
-	
 
 	if (INPUT_MGR.GetKeyDown(KEY::Right)) {
 		gridSize.x++;
@@ -278,24 +328,17 @@ void SceneDev1::DrawGrid(sf::Vector2f cellSize, sf::Vector2f cellCount)
 
 void SceneDev1::DrawGrid(std::vector<std::string>& lists)
 {
-	std::vector<std::vector<int>> infos;
-
-	for (int i = 0; i < lists.size() - 2; i++) {
-		std::vector<int> vec;
-		for (int j = 0; j < lists[i].size(); j++) {
-			vec.push_back(lists[i][j] - '0');
-		}
-		infos.push_back(vec);
-	}
-	//FIX XYÃà ¹Ý´ë·ÎµÊ
-	gridCount = { (float)lists[0].size() , (float)lists.size() - 2 };
-	gridSize = {  std::stof(lists[lists.size() - 1]) , std::stof(lists[lists.size() - 2]) };
+	std::vector<std::vector<int>> infos(TranslateMapData(lists));
+	gridSize = GetGridSize();
+	gridCount = GetGridCount();
 
 	DrawGrid(gridSize, gridCount);
 	
 	for (int i = 0; i < grids.size(); i++) {
 		for (int j = 0; j < grids[i].size(); j++) {
-			grids[i][j]->SetTypes((Types)infos[i][j]);
+			if(infos[i][j] < 2) grids[i][j]->SetTypes((Types)infos[i][j]);
+			if (infos[i][j] > 3) grids[i][j]->SetTypes((SpriteTypes)(infos[i][j] - (int)Types::TYPECOUTN));
+			
 		}
 	}
 }

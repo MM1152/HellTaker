@@ -6,9 +6,11 @@ class SceneDev1 : public Scene
 protected:
 	sf::Vector2f gridSize;
 	sf::Vector2f gridCount;
+
 	std::vector<std::vector<Grid*>> grids;
 
 	Types type = Types::NONE;
+	SpriteTypes spriteType = SpriteTypes::NONE;
 
 	std::string mapIds[8];
 	std::string mapGridsIds[8];

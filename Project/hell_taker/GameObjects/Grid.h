@@ -5,6 +5,15 @@ enum class Types {
 	WALL,
 	TILE,
 	NONE,
+	TYPECOUTN,
+};
+
+enum class SpriteTypes {
+	DELETE,
+	PLAYER,
+	OBSTACLE,
+	NONE,
+	SPRITECOUNT,
 };
 
 class Grid : public GameObject
@@ -13,10 +22,14 @@ protected:
 	sf::RectangleShape rectangle;
 	sf::Vector2f gridSize;
 
+	SpriteTypes spriteType;
 	Types type;
 
 	sf::Sprite sp;
+	
 public:
+	static std::unordered_map<SpriteTypes, std::string> textureMap;
+
 	Grid(const sf::Vector2f gridSize , const std::string name = "");
 	~Grid() override = default;
 	// GameObject을(를) 통해 상속됨
@@ -38,6 +51,9 @@ public:
 	// GameObject을(를) 통해 상속됨
 	void SetScale(sf::Vector2f scale) override;
 	void SetTypes(Types type) { this->type = type; };
+	void SetTypes(SpriteTypes types);
 	Types GetType() { return this->type; };
+	SpriteTypes GetSpriteTypes() { return this->spriteType; };
+
 };
 

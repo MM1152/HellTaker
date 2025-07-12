@@ -1,5 +1,6 @@
 #pragma once
 
+
 #define RESOURCE_PATH "Resources/"
 #define SPRITE_PATH "Resources/Sprite/"
 #define FONT_PATH "Resources/Font/"
@@ -27,7 +28,5 @@
 #include "ResourceMgr.h"
 #include "Utils.h"
 
-
-
-
-
+std::string MAP_DATA(int x);
+std::string MAP_IMAGE(int x);

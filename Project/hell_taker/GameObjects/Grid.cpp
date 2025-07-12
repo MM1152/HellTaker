@@ -1,10 +1,14 @@
 #include "stdafx.h"
 #include "Grid.h"
 
+std::unordered_map<SpriteTypes, std::string> Grid::textureMap;
+
 Grid::Grid(const sf::Vector2f gridSize , const std::string name)
     :GameObject(name)
     ,gridSize(gridSize)
-    ,type(Types::NONE)
+    ,type(Types::WALL)
+    ,spriteType(SpriteTypes::NONE)
+  
 {
     SetSortingLayer(SortingLayers::UI);
 }
@@ -46,6 +50,8 @@ void Grid::Init()
     rectangle.setOutlineColor(sf::Color::Green);
     rectangle.setOutlineThickness(0.5f);
    
+    textureMap.insert({SpriteTypes::PLAYER , SPRITE_PATH"assets100V20053.png"});
+    textureMap.insert({SpriteTypes::OBSTACLE , SPRITE_PATH"assets100V20081.png"});
 }
 
 void Grid::Reset()
@@ -73,6 +79,7 @@ void Grid::Release()
 void Grid::Draw(sf::RenderWindow& window)
 {
     window.draw(rectangle);
+    window.draw(sp);
 }
 
 sf::FloatRect Grid::GetLocalBound()
@@ -94,4 +101,20 @@ void Grid::SetScale(sf::Vector2f scale)
 {
     this->scale = scale;
     rectangle.setScale(scale);
+}
+
+void Grid::SetTypes(SpriteTypes types)
+{
+    spriteType = types;
+
+    if (spriteType == SpriteTypes::DELETE) {
+        sp.setColor(sf::Color::Transparent);
+    }
+    else if (spriteType != SpriteTypes::NONE) {
+        sp.setTexture(TEXTURE_MGR.Get(textureMap[types]));
+        sp.setColor(sf::Color::White);
+        sp.setPosition(rectangle.getPosition());
+        sp.setScale({ 0.7f , 0.7f });
+    }
+    
 }
