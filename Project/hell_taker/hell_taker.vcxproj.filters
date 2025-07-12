@@ -48,7 +48,7 @@
     <ClCompile Include="GameObjects\TextGo.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Framework.cpp">
+    <ClCompile Include="Framework\Framework.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="GameObjects\Grid.cpp">
@@ -60,10 +60,16 @@
     <ClCompile Include="GameObjects\Button.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ButtonSprite.cpp">
+    <ClCompile Include="GameObjects\ButtonSprite.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="GameObjects\MoveAbleObject.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Obstacle.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\Player.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -107,7 +113,7 @@
     <ClInclude Include="GameObjects\TextGo.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Framework.h">
+    <ClInclude Include="Framework\Framework.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="GameObjects\Grid.h">
@@ -122,10 +128,16 @@
     <ClInclude Include="Framework\rapidcsv.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ButtonSprite.h">
+    <ClInclude Include="GameObjects\ButtonSprite.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="GameObjects\MoveAbleObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Obstacle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\Player.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

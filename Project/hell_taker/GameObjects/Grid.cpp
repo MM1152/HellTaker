@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Grid.h"
 
-std::unordered_map<SpriteTypes, std::string> Grid::textureMap;
+
 
 Grid::Grid(const sf::Vector2f gridSize , const std::string name)
     :GameObject(name)
@@ -45,17 +45,16 @@ void Grid::SetOrigin(sf::Vector2f ori)
 
 void Grid::Init()
 {
-    rectangle.setSize({gridSize.x , gridSize.y});
+
+    rectangle.setSize({ gridSize.x , gridSize.y });
     rectangle.setFillColor(sf::Color::Transparent);
     rectangle.setOutlineColor(sf::Color::Green);
     rectangle.setOutlineThickness(0.5f);
-   
-    textureMap.insert({SpriteTypes::PLAYER , SPRITE_PATH"assets100V20053.png"});
-    textureMap.insert({SpriteTypes::OBSTACLE , SPRITE_PATH"assets100V20081.png"});
 }
 
 void Grid::Reset()
 {
+ 
 }
 
 void Grid::Update(float dt)
@@ -111,7 +110,7 @@ void Grid::SetTypes(SpriteTypes types)
         sp.setColor(sf::Color::Transparent);
     }
     else if (spriteType != SpriteTypes::NONE) {
-        sp.setTexture(TEXTURE_MGR.Get(textureMap[types]));
+        sp.setTexture(TEXTURE_MGR.Get(UTILS.textureMap[types]));
         sp.setColor(sf::Color::White);
         sp.setPosition(rectangle.getPosition());
         sp.setScale({ 0.7f , 0.7f });

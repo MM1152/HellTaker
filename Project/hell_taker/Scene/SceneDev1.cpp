@@ -337,7 +337,9 @@ void SceneDev1::DrawGrid(std::vector<std::string>& lists)
 	for (int i = 0; i < grids.size(); i++) {
 		for (int j = 0; j < grids[i].size(); j++) {
 			if(infos[i][j] < 2) grids[i][j]->SetTypes((Types)infos[i][j]);
-			if (infos[i][j] > 3) grids[i][j]->SetTypes((SpriteTypes)(infos[i][j] - (int)Types::TYPECOUTN));
+			if (infos[i][j] > 3) {
+				grids[i][j]->SetTypes((SpriteTypes)(infos[i][j] - (int)Types::TYPECOUTN));
+			}
 			
 		}
 	}

@@ -3,7 +3,12 @@
 #include "SpriteGo.h"
 #include "TextGo.h"
 #include "Grid.h"
+#include "MoveAbleObject.h"
 #include "Player.h"
+#include "Obstacle.h"
+
+std::vector<std::vector<int>> GameScene::mapData;
+
 GameScene::GameScene()
 	:Scene(SceneIds::SceneGame)
 {
@@ -30,6 +35,10 @@ void GameScene::Init()
 	SpriteGo* backGround = new SpriteGo(MAP_IMAGE(mapIndex + 1));
 	backGround->SetSortingLayer(SortingLayers::BACKGROUND);
 
+	player = new Player(UTILS.textureMap[SpriteTypes::PLAYER]);
+	player->SetSortingLayer(SortingLayers::FORGROUND);
+
+	AddGameObject(player);
 	AddGameObject(backGround);
 	Scene::Init();
 }
@@ -59,15 +68,20 @@ void GameScene::Reset()
 	for (int i = 0; i < mapData.size(); i++) {
 		for (int j = 0; j < mapData[i].size(); j++) {
 			if (mapData[i][j] > 3) {
-				if (!player) {
-					player = new Player(Grid::textureMap[(SpriteTypes)(mapData[i][j] - (int)Types::TYPECOUTN)]);
-					player->Init();
-					player->Reset();
-					player->SetSortingLayer(SortingLayers::FORGROUND);
-					AddGameObject(player);
+				if (mapData[i][j] == (int)SpriteTypes::PLAYER + (int)Types::TYPECOUTN) {
+					player->SetPosition({ gridSize.x * j , gridSize.y * i });
+					player->SetMapData(gridSize, j, i , mapData[i][j] - (int)Types::TYPECOUTN);
 				}
-				player->SetPosition({ gridSize.x * j , gridSize.y * i });
-				player->SetMapData(mapData, gridSize, j, i);
+				if (mapData[i][j] == (int)SpriteTypes::OBSTACLE + (int)Types::TYPECOUTN) {
+					Obstacle* ob = new Obstacle(UTILS.textureMap[SpriteTypes::OBSTACLE]);
+					AddGameObject(ob);
+					ob->Init();
+					ob->Reset();
+					ob->SetPosition({gridSize.x * j , gridSize.y * i});
+					ob->SetMapData(gridSize, j, i, mapData[i][j] - (int)Types::TYPECOUTN);
+					player->AddObstacle(ob);
+					
+				}
 			}
 		}
 	}

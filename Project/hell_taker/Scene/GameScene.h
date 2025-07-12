@@ -9,7 +9,7 @@ protected:
 	Player* player = nullptr;
 
 	int mapIndex;
-	std::vector<std::vector<int>> mapData;
+	
 public:
 	GameScene();
 	~GameScene() = default;
@@ -20,5 +20,7 @@ public:
 	void Reset();
 	void Exit();
 	void Release();
+
+	static std::vector<std::vector<int>> mapData;
 };
 

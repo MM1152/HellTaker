@@ -9,6 +9,8 @@ protected:
 	Utils() = default;
 
 public:
+	std::unordered_map<SpriteTypes, std::string> textureMap;
+	void Init();
 	void SetOrigins(sf::Sprite& sp , Origins ori);
 	void SetOrigins(sf::Text& sp, Origins ori);
 

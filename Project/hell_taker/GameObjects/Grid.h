@@ -28,7 +28,7 @@ protected:
 	sf::Sprite sp;
 	
 public:
-	static std::unordered_map<SpriteTypes, std::string> textureMap;
+
 
 	Grid(const sf::Vector2f gridSize , const std::string name = "");
 	~Grid() override = default;
