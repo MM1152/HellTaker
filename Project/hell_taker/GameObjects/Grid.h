@@ -13,6 +13,7 @@ enum class SpriteTypes {
 	PLAYER,
 	OBSTACLE,
 	ENEMY,
+	MAP1NPC,
 	NONE,
 	SPRITECOUNT,
 };

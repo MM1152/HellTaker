@@ -8,6 +8,7 @@ void Utils::Init()
 	textureMap.insert({ SpriteTypes::PLAYER , SPRITE_PATH"assets100V20053.png" });
 	textureMap.insert({ SpriteTypes::ENEMY , SPRITE_PATH"assets100V20225.png" });
 	textureMap.insert({ SpriteTypes::OBSTACLE , SPRITE_PATH"assets100V20081.png" });
+	textureMap.insert({ SpriteTypes::MAP1NPC , SPRITE_PATH"pandemonica_finalModel0001.png" });
 }
 void Utils::SetOrigins(sf::Sprite& sp , Origins ori)
 {

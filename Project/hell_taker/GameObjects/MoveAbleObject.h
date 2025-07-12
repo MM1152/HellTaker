@@ -5,7 +5,7 @@ class MoveAbleObject : public SpriteGo
 protected:
 	sf::Vector2f gridSize;
 	
-	int objectId;
+	SpriteTypes objectId;
 	int x;
 	int y;
 
@@ -14,7 +14,7 @@ public:
 	MoveAbleObject(const std::string texId = "", const std::string name = "");
 	~MoveAbleObject() override = default;
 
-	void SetMapData(sf::Vector2f gridSize , int x , int y , int objectId);
+	void SetMapData(sf::Vector2f gridSize , int x , int y , SpriteTypes objectId);
 	sf::Vector2i GetXY() { return { x , y }; };
 	virtual void Move(int x , int y);
 };

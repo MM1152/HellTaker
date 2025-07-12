@@ -154,6 +154,7 @@
     <ClCompile Include="GameObjects\MoveAbleObject.cpp" />
     <ClCompile Include="GameObjects\Obstacle.cpp" />
     <ClCompile Include="GameObjects\Player.cpp" />
+    <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Scene\SceneDev1.cpp" />
     <ClCompile Include="Scene\GameScene.cpp" />
     <ClCompile Include="main.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="GameObjects\MoveAbleObject.h" />
     <ClInclude Include="GameObjects\Obstacle.h" />
     <ClInclude Include="GameObjects\Player.h" />
+    <ClInclude Include="NPC.h" />
     <ClInclude Include="Scene\SceneDev1.h" />
     <ClInclude Include="Scene\GameScene.h" />
     <ClInclude Include="Framework\Scene.h" />

@@ -15,6 +15,16 @@ void Player::TestPrint()
 }
 bool Player::CheckBound(int row, int height)
 {
+    for (auto obs : obstacleList) {
+        if (obs->GetType() == SpriteTypes::MAP1NPC) {
+            sf::Vector2i pos = obs->GetXY();
+            if (std::abs(pos.x - row) + std::abs(pos.y - height) == 1) {
+                std::cout << "END GAME" << std::endl;
+                return true;
+            }
+        }
+    }
+
     if (!MoveAbleObject::CheckBound(row , height)) {
         return false;
     }

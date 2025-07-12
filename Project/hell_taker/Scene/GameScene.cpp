@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Obstacle.h"
 #include "Enemy.h"
+#include "NPC.h"
 
 std::vector<std::vector<int>> GameScene::mapData;
 
@@ -31,6 +32,7 @@ void GameScene::Init()
 	texIds.push_back(UTILS.textureMap[SpriteTypes::PLAYER]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::OBSTACLE]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::ENEMY]);
+	texIds.push_back(UTILS.textureMap[SpriteTypes::MAP1NPC]);
 	mapIndex = 0;
 
 	SpriteGo* backGround = new SpriteGo(MAP_IMAGE(mapIndex + 1));
@@ -72,7 +74,7 @@ void GameScene::Reset()
 				int curSpriteType = mapData[i][j] - (int)Types::TYPECOUTN;
 				if (curSpriteType == (int)SpriteTypes::PLAYER) {
 					player->SetPosition({ gridSize.x * j , gridSize.y * i });
-					player->SetMapData(gridSize, j, i , mapData[i][j]);
+					player->SetMapData(gridSize, j, i, (SpriteTypes)curSpriteType);
 				}
 				else{
 					Obstacle* ob = nullptr;
@@ -81,6 +83,9 @@ void GameScene::Reset()
 					}
 					else if (curSpriteType == (int)SpriteTypes::ENEMY) {
 						ob = new Enemy(UTILS.textureMap[SpriteTypes::ENEMY]);
+					}
+					else if (curSpriteType == (int)SpriteTypes::MAP1NPC) {
+						ob = new NPC(UTILS.textureMap[SpriteTypes::MAP1NPC]);
 					}
 					DrawObs(ob, (SpriteTypes)curSpriteType, gridSize, i, j);
 				}
@@ -106,6 +111,6 @@ void GameScene::DrawObs(Obstacle* ob, SpriteTypes types , sf::Vector2f gridSize 
 	ob->Init();
 	ob->Reset();
 	ob->SetPosition({ gridSize.x * j , gridSize.y * i });
-	ob->SetMapData(gridSize, j, i, mapData[i][j]);
+	ob->SetMapData(gridSize, j, i, types);
 	player->AddObstacle(ob);
 }
