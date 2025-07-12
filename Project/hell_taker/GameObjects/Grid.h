@@ -12,6 +12,7 @@ enum class SpriteTypes {
 	DELETE,
 	PLAYER,
 	OBSTACLE,
+	ENEMY,
 	NONE,
 	SPRITECOUNT,
 };

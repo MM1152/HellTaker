@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="GameObjects\ButtonSprite.cpp" />
     <ClCompile Include="GameObjects\Button.cpp" />
     <ClCompile Include="Framework\Framework.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="GameObjects\TextGo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="GameObjects\ButtonSprite.h" />
     <ClInclude Include="GameObjects\Button.h" />
     <ClInclude Include="Framework\Framework.h" />

@@ -6,6 +6,7 @@
 #include "MoveAbleObject.h"
 #include "Player.h"
 #include "Obstacle.h"
+#include "Enemy.h"
 
 std::vector<std::vector<int>> GameScene::mapData;
 
@@ -27,9 +28,9 @@ void GameScene::Init()
 	texIds.push_back(SPRITE_PATH"chapterBG0007.png");
 	texIds.push_back(SPRITE_PATH"chapterBG0008.png");
 
-	texIds.push_back(SPRITE_PATH"assets100V20053.png");
-	texIds.push_back(SPRITE_PATH"assets100V20081.png");
-
+	texIds.push_back(UTILS.textureMap[SpriteTypes::PLAYER]);
+	texIds.push_back(UTILS.textureMap[SpriteTypes::OBSTACLE]);
+	texIds.push_back(UTILS.textureMap[SpriteTypes::ENEMY]);
 	mapIndex = 0;
 
 	SpriteGo* backGround = new SpriteGo(MAP_IMAGE(mapIndex + 1));
@@ -68,19 +69,20 @@ void GameScene::Reset()
 	for (int i = 0; i < mapData.size(); i++) {
 		for (int j = 0; j < mapData[i].size(); j++) {
 			if (mapData[i][j] > 3) {
-				if (mapData[i][j] == (int)SpriteTypes::PLAYER + (int)Types::TYPECOUTN) {
+				int curSpriteType = mapData[i][j] - (int)Types::TYPECOUTN;
+				if (curSpriteType == (int)SpriteTypes::PLAYER) {
 					player->SetPosition({ gridSize.x * j , gridSize.y * i });
-					player->SetMapData(gridSize, j, i , mapData[i][j] - (int)Types::TYPECOUTN);
+					player->SetMapData(gridSize, j, i , mapData[i][j]);
 				}
-				if (mapData[i][j] == (int)SpriteTypes::OBSTACLE + (int)Types::TYPECOUTN) {
-					Obstacle* ob = new Obstacle(UTILS.textureMap[SpriteTypes::OBSTACLE]);
-					AddGameObject(ob);
-					ob->Init();
-					ob->Reset();
-					ob->SetPosition({gridSize.x * j , gridSize.y * i});
-					ob->SetMapData(gridSize, j, i, mapData[i][j] - (int)Types::TYPECOUTN);
-					player->AddObstacle(ob);
-					
+				else{
+					Obstacle* ob = nullptr;
+					if (curSpriteType == (int)SpriteTypes::OBSTACLE) {
+						ob = new Obstacle(UTILS.textureMap[SpriteTypes::OBSTACLE]);
+					}
+					else if (curSpriteType == (int)SpriteTypes::ENEMY) {
+						ob = new Enemy(UTILS.textureMap[SpriteTypes::ENEMY]);
+					}
+					DrawObs(ob, (SpriteTypes)curSpriteType, gridSize, i, j);
 				}
 			}
 		}
@@ -96,4 +98,14 @@ void GameScene::Exit()
 void GameScene::Release()
 {
 	Scene::Release();
+}
+
+void GameScene::DrawObs(Obstacle* ob, SpriteTypes types , sf::Vector2f gridSize ,int i , int j)
+{
+	AddGameObject(ob);
+	ob->Init();
+	ob->Reset();
+	ob->SetPosition({ gridSize.x * j , gridSize.y * i });
+	ob->SetMapData(gridSize, j, i, mapData[i][j]);
+	player->AddObstacle(ob);
 }

@@ -32,6 +32,7 @@ void SceneDev1::Init()
 
 	texIds.push_back(SPRITE_PATH"assets100V20053.png");
 	texIds.push_back(SPRITE_PATH"assets100V20081.png");
+	texIds.push_back(SPRITE_PATH"assets100V20225.png");
 #pragma endregion
 
 
@@ -56,7 +57,8 @@ void SceneDev1::Init()
 	ButtonSprite* deleteButton = new ButtonSprite();
 	ButtonSprite* playerButton = new ButtonSprite(SPRITE_PATH"assets100V20053.png");
 	ButtonSprite* obstacleButton = new ButtonSprite(SPRITE_PATH"assets100V20081.png");
-	
+	ButtonSprite* enemyButton = new ButtonSprite(SPRITE_PATH"assets100V20225.png");
+
 	InputText* inputWidth = new InputText(FONT_PATH"Amiri-Regular.ttf");
 	InputText* inputHeigth = new InputText(FONT_PATH"Amiri-Regular.ttf");
 
@@ -198,6 +200,12 @@ void SceneDev1::Init()
 		spriteType = SpriteTypes::OBSTACLE;
 		type = Types::NONE;
 	});
+
+	enemyButton->SetPosition({ 1920 - 450.f , 500.f });
+	enemyButton->SetCallBack([this]() {
+		spriteType = SpriteTypes::ENEMY;
+		type = Types::NONE;
+	});
 #pragma endregion
 	
 	spriteGo->SetScale({ 0.7f , 0.7f });
@@ -219,6 +227,7 @@ void SceneDev1::Init()
 	AddGameObject(playerButton);
 	AddGameObject(deleteButton);
 	AddGameObject(obstacleButton);
+	AddGameObject(enemyButton);
 #pragma endregion
 
 

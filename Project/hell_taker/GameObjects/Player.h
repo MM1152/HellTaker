@@ -3,6 +3,8 @@
 #include "Obstacle.h"
 class Player : public MoveAbleObject
 {
+private:
+	void TestPrint();
 protected:
 	std::list<Obstacle*> obstacleList;
 	sf::Vector2i inputKey;
@@ -15,5 +17,6 @@ public:
 	void Reset() override;
 
 	void AddObstacle(Obstacle* obs);
+	
 };
 
