@@ -6,6 +6,13 @@ NPC::NPC(const std::string texId, const std::string name)
 {
 }
 
+void NPC::ClearMap()
+{
+	if (finGame) {
+		finGame();
+	}
+}
+
 void NPC::Move(int upX, int upY)
 {
 }

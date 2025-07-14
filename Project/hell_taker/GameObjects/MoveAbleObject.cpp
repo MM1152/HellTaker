@@ -30,7 +30,7 @@ void MoveAbleObject::Move(int upX, int upY)
 
 	x += upX;
 	y += upY;
-	SetPosition({x * gridSize.x , y * gridSize.y});
+	SetPosition({x * gridSize.x	, y * gridSize.y});
 	GameScene::mapData[y][x] = (int)objectId;
 }
 

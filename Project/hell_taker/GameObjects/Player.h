@@ -12,6 +12,8 @@ protected:
 	sf::Vector2i inputKey;
 	bool CheckBound(int row, int height) override;
 public:
+	sf::Vector2f plusPos = { 0,0 };
+
 	Player(const std::string texId = "", const std::string name ="");
 	~Player() override = default;
 

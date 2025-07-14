@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Player.h"
+#include "NPC.h"
 #include "GameScene.h"
 void Player::TestPrint()
 {
@@ -20,6 +21,7 @@ bool Player::CheckBound(int row, int height)
             sf::Vector2i pos = obs->GetXY();
             if (std::abs(pos.x - row) + std::abs(pos.y - height) == 1) {
                 std::cout << "END GAME" << std::endl;
+                ((NPC*)obs)->ClearMap();
                 return true;
             }
         }
@@ -60,14 +62,18 @@ void Player::Update(float dt)
     if (INPUT_MGR.GetKeyDown(KEY::Left)) {
         inputKey = { -1,0 };
         if (CheckBound(x - 1, y)) {
+            SetScale({ -(std::abs(GetScale().x)) , GetScale().y });
             Move(-1 , 0);
+            SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y});
             TestPrint();
         }
     }
     if (INPUT_MGR.GetKeyDown(KEY::Right)) {
         inputKey = { 1,0 };
         if (CheckBound(x + 1, y)) {
+            SetScale({ std::abs(GetScale().x) , GetScale().y });
             Move(1 , 0);
+            SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y });
             TestPrint();
         }
     }
@@ -75,6 +81,7 @@ void Player::Update(float dt)
         inputKey = { 0,1 };
         if (CheckBound(x, y + 1)) {
             Move(0 , 1);
+            SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y });
             TestPrint();
         }
     }
@@ -82,6 +89,7 @@ void Player::Update(float dt)
         inputKey = { 0,-1 };
         if (CheckBound(x, y - 1)) {
             Move(0 , -1);
+            SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y });
             TestPrint();
         }
     }
@@ -91,7 +99,8 @@ void Player::Reset()
 {
     MoveAbleObject::Reset();
     obstacleList.clear();
-    
+    SetOrigin(Origins::MC);
+    SetScale({ 0.8f , 0.8f });
     animator.Play(ANI_PATH"playerIdle.csv");
 }
 

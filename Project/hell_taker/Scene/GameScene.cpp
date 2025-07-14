@@ -76,8 +76,10 @@ void GameScene::Reset()
 			if (mapData[i][j] > 3) {
 				int curSpriteType = mapData[i][j] - (int)Types::TYPECOUTN;
 				if (curSpriteType == (int)SpriteTypes::PLAYER) {
+					player->plusPos = { 50.f , 0.f };
 					player->SetPosition({ gridSize.x * j , gridSize.y * i });
 					player->SetMapData(gridSize, j, i, (SpriteTypes)curSpriteType);
+					player->SetPosition({ player->GetPosition().x + player->plusPos.x, player->GetPosition().y + player->plusPos.y });
 				}
 				else{
 					Obstacle* ob = nullptr;
@@ -89,6 +91,7 @@ void GameScene::Reset()
 					}
 					else if (curSpriteType == (int)SpriteTypes::MAP1NPC) {
 						ob = new NPC(UTILS.textureMap[SpriteTypes::MAP1NPC]);
+					
 					}
 					DrawObs(ob, (SpriteTypes)curSpriteType, gridSize, i, j);
 				}
