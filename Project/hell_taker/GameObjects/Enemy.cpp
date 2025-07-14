@@ -10,7 +10,7 @@ void Enemy::Init()
 {
 	Obstacle::Init();
 	animator.SetTarget(&sprite);
-	animator.SetEvent("enemyKicked", [this]() {
+	animator.SetEvent("enemyKicked", -1 , [this]() {
 		animator.Play(ANI_PATH"enemyIdle.csv");
 	});
 }

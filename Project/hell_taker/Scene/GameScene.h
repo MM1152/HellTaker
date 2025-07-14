@@ -11,6 +11,7 @@ class GameScene : public Scene
 protected:
 	Player* player = nullptr;
 	ChangeMapUI* changeMapUI;
+	SpriteGo* backGround;
 
 	SpriteGo* moveCountUI;
 	SpriteGo* moveCountUIBackGround;
@@ -35,5 +36,7 @@ public:
 	void DrawObs(Obstacle* ob, SpriteTypes types, sf::Vector2f gridSize, int i, int j);
 
 	static std::vector<std::vector<int>> mapData;
+
+	void NextMap();
 };
 

@@ -143,8 +143,8 @@ void SceneDev1::Init()
 			write.push_back(word);
 		}
 
-		write.push_back(std::to_string((int)gridSize.y));
-		write.push_back(std::to_string((int)gridSize.x));
+		write.push_back(std::to_string(gridSize.y));
+		write.push_back(std::to_string(gridSize.x));
 		
 		write.push_back(inputMoveCount->GetString());
 
@@ -289,20 +289,20 @@ void SceneDev1::Update(float dt)
 		}
 	}
 
-	if (INPUT_MGR.GetKeyDown(KEY::Right)) {
-		gridSize.x++;
+	if (INPUT_MGR.GetKey(KEY::Right)) {
+		gridSize.x += 0.1f;
 		DrawGrid(gridSize, gridCount);
 	}
-	if (INPUT_MGR.GetKeyDown(KEY::Left)) {
-		gridSize.x--;
+	if (INPUT_MGR.GetKey(KEY::Left)) {
+		gridSize.x -= 0.1f;
 		DrawGrid(gridSize, gridCount);
 	}
-	if (INPUT_MGR.GetKeyDown(KEY::Down)) {
-		gridSize.y++;
+	if (INPUT_MGR.GetKey(KEY::Down)) {
+		gridSize.y += 0.1f;
 		DrawGrid(gridSize, gridCount);
 	}
-	if (INPUT_MGR.GetKeyDown(KEY::Up)) {
-		gridSize.y--;
+	if (INPUT_MGR.GetKey(KEY::Up)) {
+		gridSize.y -= 0.1f;
 		DrawGrid(gridSize, gridCount);
 	}
 

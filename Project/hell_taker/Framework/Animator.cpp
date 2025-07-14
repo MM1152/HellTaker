@@ -3,10 +3,19 @@
 
 
 
-void Animator::SetEvent(const std::string& id,  std::function<void()> event)
-{
-	events.insert({ id , event });
-}
+void Animator::SetEvent(const std::string& id , int checkFrame , std::function<void()> event)
+{	
+	if (events.find(id) == events.end()) {
+		std::vector<int> vec1 = { checkFrame };
+		std::vector<std::function<void()>> vec2 = { event };
+
+		events.insert({ id , vec2 });
+		eventsCheckFrame.insert({ id , vec1 });
+		return;
+	}	
+	events[id].push_back(event);
+	eventsCheckFrame[id].push_back(checkFrame);
+}	
 
 void Animator::Play(const std::string id , bool resetTexuterRect)
 {
@@ -38,10 +47,16 @@ void Animator::Update(float dt)
 	
 	SetFrame(currentFrame);
 
-	for (auto event : events) {
-		if (event.first == GetCurrentClipId() && currentFrame == totalFrame) {
-			if (event.second) {
-				event.second();
+	for (int i = 0; i < events[GetCurrentClipId()].size(); i++) {
+		int checkFrame = eventsCheckFrame[GetCurrentClipId()][i];
+
+		if (checkFrame == -1) {
+			checkFrame = totalFrame;
+		}
+
+		if (currentFrame == checkFrame) {
+			if (events[GetCurrentClipId()][i]) {
+				events[GetCurrentClipId()][i]();
 			}
 		}
 	}

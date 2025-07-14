@@ -46,7 +46,7 @@ void GameScene::Init()
 
 	mapIndex = 0;
 
-	SpriteGo* backGround = new SpriteGo(MAP_IMAGE(mapIndex + 1));
+	backGround = new SpriteGo(MAP_IMAGE(mapIndex + 1));
 	
 	backGround->SetSortingLayer(SortingLayers::BACKGROUND);
 	player = new Player(UTILS.textureMap[SpriteTypes::PLAYER]);
@@ -85,8 +85,6 @@ void GameScene::Init()
 	mapIndexText->SetSortingLayer(SortingLayers::UI);
 	mapIndexText->SetPosition({ 1800.f , 750.f });
 
-	
-
 	AddGameObject(mapIndexText);
 	AddGameObject(moveCountText);
 	AddGameObject(mapIndexUI);
@@ -96,6 +94,8 @@ void GameScene::Init()
 	AddGameObject(player);
 	AddGameObject(backGround);
 	AddGameObject(mapIndexUIBackGround);
+
+	changeMapUI->SetGameScene(this);
 	Scene::Init();
 }
 
@@ -122,15 +122,18 @@ void GameScene::Draw(sf::RenderWindow& window)
 
 void GameScene::Reset()
 {
+	backGround->ChangeTexture(MAP_IMAGE(mapIndex + 1));
 	Scene::Reset();
+	
 	moveCountUI->SetPosition({ 0,1080 - moveCountUI->GetLocalBound().height });
 	mapIndexUI->SetPosition({ 1920, 1080 - moveCountUI->GetLocalBound().height });
 
 	mapIndexUIBackGround->SetPosition({ 1920, 0 });
-	moveCountText->SetString(std::to_string(10));
+	
 	//SETSCALE (0.7 , 0.7) 이라 설정된 그리드 사이즈에 0.7 나누어줘야됌
 	mapData = TranslateMapData(UTILS.ReadFile(MAP_DATA(mapIndex + 1)));
 	mapIndexText->SetString(std::to_string(mapIndex + 1));
+	
 	sf::Vector2f gridSize = GetGridSize() / 0.7f;
 	sf::Vector2f gridCount = GetGridCount();
 	int moveCount = GetMoveCount();
@@ -146,6 +149,7 @@ void GameScene::Reset()
 					player->SetMoveCountFunc([this](int moveCount) {
 						moveCountText->SetString(std::to_string(moveCount));
 					});
+					moveCountText->SetString(std::to_string(moveCount));
 				}
 				else{
 					Obstacle* ob = nullptr;
@@ -192,4 +196,15 @@ void GameScene::DrawObs(Obstacle* ob, SpriteTypes types , sf::Vector2f gridSize 
 	ob->SetPosition({ gridSize.x * j , gridSize.y * i });
 	ob->SetMapData(gridSize, j, i, types);
 	player->AddObstacle(ob);
+}
+
+void GameScene::NextMap()
+{
+	mapIndex++;
+
+	for (auto& i : player->GetObstacleList()) {
+		RemoveGameObject(i);
+	}
+
+	Reset();
 }

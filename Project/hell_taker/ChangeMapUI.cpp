@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "ChangeMapUI.h"
-
+#include "GameScene.h"
 ChangeMapUI::ChangeMapUI(const std::string& texId, const std::string& name)
 	:texId(texId)
 	,TextGo("",name)
@@ -41,20 +41,26 @@ void ChangeMapUI::SetScale(sf::Vector2f scale)
 void ChangeMapUI::Init()
 {
 	animator.SetTarget(&sprite);
+
+	animator.SetEvent("changeMap", -1, [this]() {
+		playAnimation = false;
+		SetActive(false);
+		//gameScene->Reset();
+		});
+	animator.SetEvent("changeMap", 17, [this]() {
+		gameScene->NextMap();
+	});
+
+	
+	SetActive(false);
 }
 
 void ChangeMapUI::Reset()
 {
-	sprite.setTexture(TEXTURE_MGR.Get(texId));
-
-	
+	//sprite.setTexture(TEXTURE_MGR.Get(texId));
 	//SetPosition({ 0 , 1080 - 100 });
-	animator.Play(ANI_PATH"changeMap.csv" , true);
-	SetActive(false);
-	animator.SetEvent("changeMap", [this]() {
-		playAnimation = false;
-		SetActive(false);
-	});
+	
+
 }
 
 void ChangeMapUI::Update(float dt)
@@ -80,6 +86,7 @@ void ChangeMapUI::Draw(sf::RenderWindow& window)
 
 void ChangeMapUI::Play()
 {
+	animator.Play(ANI_PATH"changeMap.csv", true);
 	playAnimation = true;
 	SetActive(true);
 }

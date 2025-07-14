@@ -1,6 +1,9 @@
 #pragma once
 #include "TextGo.h"
 #include "Animator.h"
+
+
+class GameScene;
 class ChangeMapUI : public TextGo
 {
 protected:
@@ -9,6 +12,7 @@ protected:
 
 	Animator animator;
 	bool playAnimation = false;
+	GameScene* gameScene;
 public:
 	ChangeMapUI(const std::string& texId , const std::string& name);
 	~ChangeMapUI() = default;
@@ -26,5 +30,7 @@ public:
 	void Release() override;
 	void Draw(sf::RenderWindow& window) override;
 	void Play();
+
+	void SetGameScene(GameScene* gameScene) { this->gameScene = gameScene; };
 };
 

@@ -123,12 +123,12 @@ void Player::Reset()
     SetOrigin(Origins::MB);
     //SetPosition({ GetPosition().x + plusPos.x , GetPosition().y + plusPos.y });
     animator.Play(ANI_PATH"playerIdle.csv");
-    animator.SetEvent("playerKick" , [this]() {
+    animator.SetEvent("playerKick" , -1 ,[this]() {
         ChangeAnimation(ANI_PATH"playerIdle.csv");
         SetPosition({ GetPosition().x , GetPosition().y});
         isPlayAnimation = false;
     });
-    animator.SetEvent("playerMove", [this]() {
+    animator.SetEvent("playerMove", -1,[this]() {
         ChangeAnimation(ANI_PATH"playerIdle.csv");
         SetPosition({ GetPosition().x , GetPosition().y});
         isPlayAnimation = false;
