@@ -35,12 +35,18 @@ bool Player::CheckBound(int row, int height)
         for (auto obs : obstacleList) {
             if (height == obs->GetXY().y && row == obs->GetXY().x) {
                 obs->Move(inputKey.x, inputKey.y);
+                ChangeAnimation(ANI_PATH"playerKick.csv");
+                SetPosition({ GetPosition().x , GetPosition().y});
+                isPlayAnimation = true;
                 return false;
             }
         }
     }
 
     //플레이어의 추가적인 로직 추가
+    //SetPosition({ GetPosition().x , GetPosition().y + 200.f });
+    ChangeAnimation(ANI_PATH"playerMove.csv");
+   
     return true;
 }
 
@@ -63,38 +69,40 @@ void Player::Init()
 void Player::Update(float dt)
 {
     animator.Update(dt);
-    if (INPUT_MGR.GetKeyDown(KEY::Left)) {
-        inputKey = { -1,0 };
-        if (CheckBound(x - 1, y)) {
-            SetScale({ -(std::abs(GetScale().x)) , GetScale().y });
-            Move(-1 , 0);
-            //SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y});
-            TestPrint();
+    if (!isPlayAnimation) {
+        if (INPUT_MGR.GetKeyDown(KEY::Left)) {
+            inputKey = { -1,0 };
+            if (CheckBound(x - 1, y)) {
+                SetScale({ -(std::abs(GetScale().x)) , GetScale().y });
+                Move(-1, 0);
+                //SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y});
+                TestPrint();
+            }
         }
-    }
-    if (INPUT_MGR.GetKeyDown(KEY::Right)) {
-        inputKey = { 1,0 };
-        if (CheckBound(x + 1, y)) {
-            SetScale({ std::abs(GetScale().x) , GetScale().y });
-            Move(1 , 0);
-           // SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y });
-            TestPrint();
+        if (INPUT_MGR.GetKeyDown(KEY::Right)) {
+            inputKey = { 1,0 };
+            if (CheckBound(x + 1, y)) {
+                SetScale({ std::abs(GetScale().x) , GetScale().y });
+                Move(1, 0);
+                // SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y });
+                TestPrint();
+            }
         }
-    }
-    if (INPUT_MGR.GetKeyDown(KEY::Down)) {
-        inputKey = { 0,1 };
-        if (CheckBound(x, y + 1)) {
-            Move(0 , 1);
-            //SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y });
-            TestPrint();
+        if (INPUT_MGR.GetKeyDown(KEY::Down)) {
+            inputKey = { 0,1 };
+            if (CheckBound(x, y + 1)) {
+                Move(0, 1);
+                //SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y });
+                TestPrint();
+            }
         }
-    }
-    if (INPUT_MGR.GetKeyDown(KEY::Up)) {
-        inputKey = { 0,-1 };
-        if (CheckBound(x, y - 1)) {
-            Move(0 , -1);
-            //SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y });
-            TestPrint();
+        if (INPUT_MGR.GetKeyDown(KEY::Up)) {
+            inputKey = { 0,-1 };
+            if (CheckBound(x, y - 1)) {
+                Move(0, -1);
+                //SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y });
+                TestPrint();
+            }
         }
     }
 }
@@ -103,12 +111,40 @@ void Player::Reset()
 {
     MoveAbleObject::Reset();
     obstacleList.clear();
-    SetOrigin(Origins::MC);
+    SetOrigin(Origins::MB);
     //SetPosition({ GetPosition().x + plusPos.x , GetPosition().y + plusPos.y });
     animator.Play(ANI_PATH"playerIdle.csv");
+    animator.SetEvent("playerKick" , [this]() {
+        ChangeAnimation(ANI_PATH"playerIdle.csv");
+        SetPosition({ GetPosition().x , GetPosition().y});
+        isPlayAnimation = false;
+    });
+    animator.SetEvent("playerMove", [this]() {
+        ChangeAnimation(ANI_PATH"playerIdle.csv");
+        SetPosition({ GetPosition().x , GetPosition().y});
+        isPlayAnimation = false;
+    });
 }
 
 void Player::AddObstacle(Obstacle* obs)
 {
     obstacleList.push_back(obs);
+}
+
+void Player::ChangeAnimation(const std::string& id)
+{
+    if (id == ANI_PATH"playerIdle.csv") {
+        sprite.setTextureRect(sf::IntRect(0, 30, 100, 100));
+    }
+    else {
+        sprite.setTextureRect(sf::IntRect(0, 0, 100, 100));
+    }
+    animator.Play(id);
+    SetOrigin(Origins::MC);
+}
+
+void Player::Move(int upX, int upY)
+{
+    
+    MoveAbleObject::Move(upX , upY);
 }

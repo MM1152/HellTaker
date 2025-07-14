@@ -4,11 +4,12 @@
 class SpriteGo;
 class Player;
 class Obstacle;
+class ChangeMapUI;
 class GameScene : public Scene
 {
 protected:
 	Player* player = nullptr;
-
+	ChangeMapUI* changeMapUI;
 	int mapIndex;
 	
 public:

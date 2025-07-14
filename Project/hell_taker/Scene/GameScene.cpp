@@ -8,7 +8,7 @@
 #include "Obstacle.h"
 #include "Enemy.h"
 #include "NPC.h"
-
+#include "ChangeMapUI.h"
 std::vector<std::vector<int>> GameScene::mapData;
 
 GameScene::GameScene()
@@ -28,7 +28,7 @@ void GameScene::Init()
 	texIds.push_back(SPRITE_PATH"chapterBG0006.png");
 	texIds.push_back(SPRITE_PATH"chapterBG0007.png");
 	texIds.push_back(SPRITE_PATH"chapterBG0008.png");
-
+	
 	texIds.push_back(UTILS.textureMap[SpriteTypes::PLAYER]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::OBSTACLE]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::ENEMY]);
@@ -37,14 +37,22 @@ void GameScene::Init()
 	aniIds.push_back(ANI_PATH"playerIdle.csv");
 	aniIds.push_back(ANI_PATH"enemyIdle.csv");
 	aniIds.push_back(ANI_PATH"enemyKicked.csv");
+	aniIds.push_back(ANI_PATH"playerKick.csv");
+	aniIds.push_back(ANI_PATH"playerMove.csv");
+	aniIds.push_back(ANI_PATH"map1Npc.csv");
+	aniIds.push_back(ANI_PATH"changeMap.csv");
 
 	mapIndex = 0;
 
 	SpriteGo* backGround = new SpriteGo(MAP_IMAGE(mapIndex + 1));
+	
 	backGround->SetSortingLayer(SortingLayers::BACKGROUND);
 	player = new Player(UTILS.textureMap[SpriteTypes::PLAYER]);
 	player->SetSortingLayer(SortingLayers::FORGROUND);
 
+	changeMapUI = new ChangeMapUI("" , "");
+	
+	AddGameObject(changeMapUI);
 	AddGameObject(player);
 	AddGameObject(backGround);
 	Scene::Init();
@@ -78,9 +86,8 @@ void GameScene::Reset()
 			if (mapData[i][j] > 3) {
 				int curSpriteType = mapData[i][j] - (int)Types::TYPECOUTN;
 				if (curSpriteType == (int)SpriteTypes::PLAYER) {
-					player->plusPos = { gridSize.x * 0.4f , gridSize.y * 0.1f };
+					player->plusPos = { gridSize.x * 0.4f , gridSize.y * 0.5f };
 					player->SetMapData(gridSize, j, i, (SpriteTypes)curSpriteType);
-					std::cout << player->GetPosition().x << " , " << player->GetPosition().y << std::endl;
 				}
 				else{
 					Obstacle* ob = nullptr;
@@ -93,7 +100,9 @@ void GameScene::Reset()
 					}
 					else if (curSpriteType == (int)SpriteTypes::MAP1NPC) {
 						ob = new NPC(UTILS.textureMap[SpriteTypes::MAP1NPC]);
-					
+						((NPC*)ob)->SettingCallBack([this]() {
+							changeMapUI->Play();
+						});
 					}
 					DrawObs(ob, (SpriteTypes)curSpriteType, gridSize, i, j);
 				}

@@ -1,0 +1,4 @@
+ID,FPS,"LoopType (0: Single, 1: Loop)		",,,,,,,,,
+npc1,15,1,,,,,,,,,
+,,,,,,,,,,,
+Resources/Sprite/NPC1.png,Resources/Sprite/NPC2.png,Resources/Sprite/NPC3.png,Resources/Sprite/NPC4.png,Resources/Sprite/NPC5.png,Resources/Sprite/NPC6.png,Resources/Sprite/NPC7.png,Resources/Sprite/NPC8.png,Resources/Sprite/NPC9.png,Resources/Sprite/NPC10.png,Resources/Sprite/NPC11.png,Resources/Sprite/NPC12.png

@@ -1,0 +1,4 @@
+ID,FPS,"LoopType (0: Single, 1: Loop)		",,,,
+playerMove,15,1,,,,
+,,,,,,
+Resources/Sprite/move1.png,Resources/Sprite/move2.png,Resources/Sprite/move3.png,Resources/Sprite/move4.png,Resources/Sprite/move4.png,Resources/Sprite/move5.png,Resources/Sprite/move6.png
