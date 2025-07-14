@@ -19,7 +19,6 @@ void Animator::SetEvent(const std::string& id , int checkFrame , std::function<v
 
 void Animator::Play(const std::string id , bool resetTexuterRect)
 {
-	
 	Play(&ANIMATION_MGR.Get(id) , resetTexuterRect);
 }
 

@@ -43,6 +43,8 @@ void GameScene::Init()
 	aniIds.push_back(ANI_PATH"playerMove.csv");
 	aniIds.push_back(ANI_PATH"map1Npc.csv");
 	aniIds.push_back(ANI_PATH"changeMap.csv");
+	aniIds.push_back(ANI_PATH"playerDie.csv");
+	aniIds.push_back(ANI_PATH"moveEffect.csv");
 
 	mapIndex = 0;
 
@@ -96,6 +98,9 @@ void GameScene::Init()
 	AddGameObject(mapIndexUIBackGround);
 
 	changeMapUI->SetGameScene(this);
+	player->SetChangeMapFunc([this]() {
+		changeMapUI->Play();
+	});
 	Scene::Init();
 }
 
@@ -106,13 +111,13 @@ void GameScene::Update(float dt)
 		SCENE_MGR.ChangeScene(SceneIds::Dev1);
 	}
 	
-	if (player->GetMoveCount() == 0) {
+	/*if (player->GetMoveCount() == 0) {
 
 		for (auto& i : player->GetObstacleList()) {
 			RemoveGameObject(i);
 		}
 		Reset();
-	}
+	}*/
 }
 
 void GameScene::Draw(sf::RenderWindow& window)
@@ -164,6 +169,7 @@ void GameScene::Reset()
 						ob = new NPC(UTILS.textureMap[SpriteTypes::MAP1NPC]);
 						((NPC*)ob)->SettingCallBack([this]() {
 							changeMapUI->Play();
+							mapIndex++;
 						});
 					}
 					DrawObs(ob, (SpriteTypes)curSpriteType, gridSize, i, j);
@@ -200,8 +206,6 @@ void GameScene::DrawObs(Obstacle* ob, SpriteTypes types , sf::Vector2f gridSize 
 
 void GameScene::NextMap()
 {
-	mapIndex++;
-
 	for (auto& i : player->GetObstacleList()) {
 		RemoveGameObject(i);
 	}
