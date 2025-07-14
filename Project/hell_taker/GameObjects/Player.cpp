@@ -49,10 +49,14 @@ Player::Player(const std::string texId, const std::string name)
 {
 }
 
+void Player::Exit()
+{
+}
+
 void Player::Init()
 {
     animator.SetTarget(&sprite);
-
+    SetScale({ 0.8f , 0.8f });
     
 }
 
@@ -64,7 +68,7 @@ void Player::Update(float dt)
         if (CheckBound(x - 1, y)) {
             SetScale({ -(std::abs(GetScale().x)) , GetScale().y });
             Move(-1 , 0);
-            SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y});
+            //SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y});
             TestPrint();
         }
     }
@@ -73,7 +77,7 @@ void Player::Update(float dt)
         if (CheckBound(x + 1, y)) {
             SetScale({ std::abs(GetScale().x) , GetScale().y });
             Move(1 , 0);
-            SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y });
+           // SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y });
             TestPrint();
         }
     }
@@ -81,7 +85,7 @@ void Player::Update(float dt)
         inputKey = { 0,1 };
         if (CheckBound(x, y + 1)) {
             Move(0 , 1);
-            SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y });
+            //SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y });
             TestPrint();
         }
     }
@@ -89,7 +93,7 @@ void Player::Update(float dt)
         inputKey = { 0,-1 };
         if (CheckBound(x, y - 1)) {
             Move(0 , -1);
-            SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y });
+            //SetPosition({ GetPosition().x + plusPos.x, GetPosition().y + plusPos.y });
             TestPrint();
         }
     }
@@ -100,7 +104,7 @@ void Player::Reset()
     MoveAbleObject::Reset();
     obstacleList.clear();
     SetOrigin(Origins::MC);
-    SetScale({ 0.8f , 0.8f });
+    //SetPosition({ GetPosition().x + plusPos.x , GetPosition().y + plusPos.y });
     animator.Play(ANI_PATH"playerIdle.csv");
 }
 

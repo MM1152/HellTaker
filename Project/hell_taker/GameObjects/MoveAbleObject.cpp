@@ -16,12 +16,20 @@ MoveAbleObject::MoveAbleObject(const std::string texId, const std::string name)
 	
 }
 
+void MoveAbleObject::SetPosition(const sf::Vector2f pos)
+{
+	position = pos;
+	sprite.setPosition({ pos.x + plusPos.x , pos.y + plusPos.y });
+}
+
 void MoveAbleObject::SetMapData(sf::Vector2f gridSize, int x, int y , SpriteTypes objectId)
 {
 	this->gridSize = gridSize;
 	this->x = x;
 	this->y = y;
 	this->objectId = objectId;
+
+	SetPosition({ gridSize.x * x , gridSize.y * y });
 }
 
 void MoveAbleObject::Move(int upX, int upY)
@@ -31,7 +39,7 @@ void MoveAbleObject::Move(int upX, int upY)
 	x += upX;
 	y += upY;
 	SetPosition({x * gridSize.x	, y * gridSize.y});
-	GameScene::mapData[y][x] = (int)objectId;
+	GameScene::mapData[y][x] = (int)objectId + (int)Types::TYPECOUTN;
 }
 
 

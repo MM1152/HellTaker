@@ -30,9 +30,9 @@ void SceneDev1::Init()
 	texIds.push_back(SPRITE_PATH"chapterBG0007.png");
 	texIds.push_back(SPRITE_PATH"chapterBG0008.png");
 
-	texIds.push_back(SPRITE_PATH"assets100V20053.png");
-	texIds.push_back(SPRITE_PATH"assets100V20081.png");
-	texIds.push_back(SPRITE_PATH"assets100V20225.png");
+	texIds.push_back(UTILS.textureMap[SpriteTypes::PLAYER]);
+	texIds.push_back(UTILS.textureMap[SpriteTypes::OBSTACLE]);
+	texIds.push_back(UTILS.textureMap[SpriteTypes::ENEMY]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::MAP1NPC]);
 #pragma endregion
 
@@ -56,9 +56,9 @@ void SceneDev1::Init()
 	Button* prevMapBNT = new Button(FONT_PATH"Amiri-Regular.ttf");
 
 	ButtonSprite* deleteButton = new ButtonSprite();
-	ButtonSprite* playerButton = new ButtonSprite(SPRITE_PATH"assets100V20053.png");
-	ButtonSprite* obstacleButton = new ButtonSprite(SPRITE_PATH"assets100V20081.png");
-	ButtonSprite* enemyButton = new ButtonSprite(SPRITE_PATH"assets100V20225.png");
+	ButtonSprite* playerButton = new ButtonSprite(UTILS.textureMap[SpriteTypes::PLAYER]);
+	ButtonSprite* obstacleButton = new ButtonSprite(UTILS.textureMap[SpriteTypes::OBSTACLE]);
+	ButtonSprite* enemyButton = new ButtonSprite(UTILS.textureMap[SpriteTypes::ENEMY]);
 	ButtonSprite* map1NpcButton = new ButtonSprite(UTILS.textureMap[SpriteTypes::MAP1NPC]);
 
 	InputText* inputWidth = new InputText(FONT_PATH"Amiri-Regular.ttf");

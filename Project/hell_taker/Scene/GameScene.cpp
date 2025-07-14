@@ -35,12 +35,13 @@ void GameScene::Init()
 	texIds.push_back(UTILS.textureMap[SpriteTypes::MAP1NPC]);
 
 	aniIds.push_back(ANI_PATH"playerIdle.csv");
+	aniIds.push_back(ANI_PATH"enemyIdle.csv");
+	aniIds.push_back(ANI_PATH"enemyKicked.csv");
 
 	mapIndex = 0;
 
 	SpriteGo* backGround = new SpriteGo(MAP_IMAGE(mapIndex + 1));
 	backGround->SetSortingLayer(SortingLayers::BACKGROUND);
-
 	player = new Player(UTILS.textureMap[SpriteTypes::PLAYER]);
 	player->SetSortingLayer(SortingLayers::FORGROUND);
 
@@ -66,6 +67,7 @@ void GameScene::Draw(sf::RenderWindow& window)
 void GameScene::Reset()
 {
 	Scene::Reset();
+	
 	//SETSCALE (0.7 , 0.7) 이라 설정된 그리드 사이즈에 0.7 나누어줘야됌
 	mapData = TranslateMapData(UTILS.ReadFile(MAP_DATA(mapIndex + 1)));
 	sf::Vector2f gridSize = GetGridSize() / 0.7f;
@@ -76,10 +78,9 @@ void GameScene::Reset()
 			if (mapData[i][j] > 3) {
 				int curSpriteType = mapData[i][j] - (int)Types::TYPECOUTN;
 				if (curSpriteType == (int)SpriteTypes::PLAYER) {
-					player->plusPos = { 50.f , 0.f };
-					player->SetPosition({ gridSize.x * j , gridSize.y * i });
+					player->plusPos = { gridSize.x * 0.4f , gridSize.y * 0.1f };
 					player->SetMapData(gridSize, j, i, (SpriteTypes)curSpriteType);
-					player->SetPosition({ player->GetPosition().x + player->plusPos.x, player->GetPosition().y + player->plusPos.y });
+					std::cout << player->GetPosition().x << " , " << player->GetPosition().y << std::endl;
 				}
 				else{
 					Obstacle* ob = nullptr;
@@ -88,6 +89,7 @@ void GameScene::Reset()
 					}
 					else if (curSpriteType == (int)SpriteTypes::ENEMY) {
 						ob = new Enemy(UTILS.textureMap[SpriteTypes::ENEMY]);
+						ob->plusPos = { gridSize.x / 2 , gridSize.y  / 2};
 					}
 					else if (curSpriteType == (int)SpriteTypes::MAP1NPC) {
 						ob = new NPC(UTILS.textureMap[SpriteTypes::MAP1NPC]);
@@ -104,6 +106,10 @@ void GameScene::Reset()
 void GameScene::Exit()
 {
 	Scene::Exit();
+	
+	for (auto& i : player->GetObstacleList()) {
+		RemoveGameObject(i);
+	}
 }
 
 void GameScene::Release()

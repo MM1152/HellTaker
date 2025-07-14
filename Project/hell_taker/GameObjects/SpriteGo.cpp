@@ -39,7 +39,7 @@ void SpriteGo::Init()
 
 void SpriteGo::Reset()
 {
-	sprite.setTexture(TEXTURE_MGR.Get(texId));
+	sprite.setTexture(TEXTURE_MGR.Get(texId) , true);
 }
 
 void SpriteGo::Update(float dt)

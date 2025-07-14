@@ -1,0 +1,4 @@
+ID,FPS,"LoopType (0: Single, 1: Loop)		",,,,,,,,,
+enemyIdle,15,1,,,,,,,,,
+,,,,,,,,,,,
+Resources/Sprite/enemy1.png,Resources/Sprite/enemy2.png,Resources/Sprite/enemy3.png,Resources/Sprite/enemy4.png,Resources/Sprite/enemy5.png,Resources/Sprite/enemy6.png,Resources/Sprite/enemy7.png,Resources/Sprite/enemy8.png,Resources/Sprite/enemy9.png,Resources/Sprite/enemy10.png,Resources/Sprite/enemy11.png,Resources/Sprite/enemy12.png

@@ -25,7 +25,6 @@ public:
 	void Release();
 	void DrawObs(Obstacle* ob, SpriteTypes types, sf::Vector2f gridSize, int i, int j);
 
-
 	static std::vector<std::vector<int>> mapData;
 };
 

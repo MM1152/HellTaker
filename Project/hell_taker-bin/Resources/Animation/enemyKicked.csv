@@ -1,0 +1,4 @@
+ID,FPS,"LoopType (0: Single, 1: Loop)		",,,
+enemyKicked,15,1,,,
+,,,,,
+Resources/Sprite/beKicked1.png,Resources/Sprite/beKicked2.png,Resources/Sprite/beKicked3.png,Resources/Sprite/beKicked4.png,Resources/Sprite/beKicked5.png,Resources/Sprite/beKicked6.png

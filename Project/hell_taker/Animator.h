@@ -14,11 +14,15 @@ protected:
 	float x = 0;
 	float prevX = 0;
 	AnimationClip* currentClip;
-	sf::Sprite* body;
+	sf::Sprite* body = nullptr;
+	std::unordered_map<std::string , std::function<void()>> events;
+
 public:
 	Animator() = default;
 	~Animator() = default;
 
+
+	void SetEvent(const std::string& id , std::function<void()> event);
 	void SetTarget(sf::Sprite* body) { this->body = body; };
 	void Play(const std::string id);
 	void Play(AnimationClip* clip);
