@@ -47,8 +47,16 @@ Player::Player(const std::string texId, const std::string name)
 {
 }
 
+void Player::Init()
+{
+    animator.SetTarget(&sprite);
+
+    
+}
+
 void Player::Update(float dt)
 {
+    animator.Update(dt);
     if (INPUT_MGR.GetKeyDown(KEY::Left)) {
         inputKey = { -1,0 };
         if (CheckBound(x - 1, y)) {
@@ -83,6 +91,8 @@ void Player::Reset()
 {
     MoveAbleObject::Reset();
     obstacleList.clear();
+    
+    animator.Play(ANI_PATH"playerIdle.csv");
 }
 
 void Player::AddObstacle(Obstacle* obs)

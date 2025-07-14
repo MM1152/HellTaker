@@ -32,6 +32,7 @@ void Scene::Reset()
 {
 	TEXTURE_MGR.Load(texIds);
 	FONT_MGR.Load(fontIds);
+	ANIMATION_MGR.Load(aniIds);
 
 	for (auto obj : gameObjects) {
 		obj->Reset();
@@ -42,6 +43,7 @@ void Scene::Exit()
 {
 	TEXTURE_MGR.UnLoad();
 	FONT_MGR.UnLoad();
+	ANIMATION_MGR.UnLoad();
 
 	for (auto obj : gameObjects) {
 		obj->Exit();

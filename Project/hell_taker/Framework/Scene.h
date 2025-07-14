@@ -12,6 +12,7 @@ protected:
 
 	std::vector<std::string> texIds;
 	std::vector<std::string> fontIds;
+	std::vector<std::string> aniIds;
 
 	SceneIds sceneId;
 

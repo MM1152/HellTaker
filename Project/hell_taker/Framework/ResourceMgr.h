@@ -1,6 +1,6 @@
 #pragma once
 #include "Singleton.h"
-
+#include "AnimationClip.h"
 template<typename T>
 class ResourceMgr : public Singleton<ResourceMgr<T>>
 {
@@ -14,18 +14,19 @@ protected:
 	T empty;
 public:
 	void Load(const std::string id) {
-
 		if (map.find(id) == map.end()) {
 			T* item = new T();
 			item->loadFromFile(id);
 			map.insert({ id , item });
 		}
 	}
+
 	void Load(const std::vector<std::string> ids) {
 		for (const std::string id : ids) {
 			Load(id);
 		}
 	}
+
 	T& Get(const std::string id) {
 		if (map.find(id) == map.end()) {
 			std::cout << "FAIL TO LOAD " << id << std::endl;
@@ -46,3 +47,4 @@ public:
 
 #define TEXTURE_MGR ResourceMgr<sf::Texture>::Instance()
 #define FONT_MGR ResourceMgr<sf::Font>::Instance()
+#define ANIMATION_MGR ResourceMgr<AnimationClip>::Instance()

@@ -33,6 +33,9 @@ void GameScene::Init()
 	texIds.push_back(UTILS.textureMap[SpriteTypes::OBSTACLE]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::ENEMY]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::MAP1NPC]);
+
+	aniIds.push_back(ANI_PATH"playerIdle.csv");
+
 	mapIndex = 0;
 
 	SpriteGo* backGround = new SpriteGo(MAP_IMAGE(mapIndex + 1));
