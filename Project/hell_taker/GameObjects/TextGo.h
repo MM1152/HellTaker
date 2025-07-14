@@ -31,6 +31,5 @@ public:
 	sf::FloatRect GetGlobalBound() override;
 
 	void SetFillColor(sf::Color color);
-
 };
 

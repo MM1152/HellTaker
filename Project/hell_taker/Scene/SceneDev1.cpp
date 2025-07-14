@@ -66,25 +66,27 @@ void SceneDev1::Init()
 
 	InputText* inputGridSizeWidth = new InputText(FONT_PATH"Amiri-Regular.ttf");
 	InputText* inputGridSizeHeight = new InputText(FONT_PATH"Amiri-Regular.ttf");
+	InputText* inputMoveCount = new InputText(FONT_PATH"Amiri-Regular.ttf");
 
 	TextGo* gridSizeText = new TextGo(FONT_PATH"Amiri-Regular.ttf");
 	TextGo* gridCountText = new TextGo(FONT_PATH"Amiri-Regular.ttf");
+	TextGo* moveCountText = new TextGo(FONT_PATH"Amiri-Regular.ttf");
 
 #pragma region BUTTONS
 
 	button->SetString("WALL");
-	button->SetPosition({ 1920 - 400.f, 300 });
+	button->SetPosition({ 1920 - 400.f, 400 });
 	button->SetCallBack([this]() {
 		this->type = Types::WALL;
 		spriteType = SpriteTypes::NONE;
-		});
+	});
 
 	button1->SetString("TILE");
-	button1->SetPosition({ 1920 - 200.f, 300 });
+	button1->SetPosition({ 1920 - 200.f, 400 });
 	button1->SetCallBack([this]() {
 		this->type = Types::TILE;
 		spriteType = SpriteTypes::NONE;
-		});
+	});
 
 	prevMapBNT->SetString("Prev");
 	prevMapBNT->SetPosition({ 500.f , 1080.f - 200.f });
@@ -126,7 +128,7 @@ void SceneDev1::Init()
 	saveBNT->SetString("SAVE");
 	saveBNT->SetToggle(false);
 	saveBNT->SetPosition({ 1920 - 350.f , 1080 - 200.f });
-	saveBNT->SetCallBack([this]() {
+	saveBNT->SetCallBack([this , inputMoveCount]() {
 		std::vector<std::string> write;
 		for (int i = 0; i < gridCount.y; i++) {
 			std::string word;
@@ -143,10 +145,11 @@ void SceneDev1::Init()
 
 		write.push_back(std::to_string((int)gridSize.y));
 		write.push_back(std::to_string((int)gridSize.x));
+		
+		write.push_back(inputMoveCount->GetString());
 
 		UTILS.WriteFile("GameData/MapData" + std::to_string(mapIndex + 1) + ".csv", write);
-		});
-
+	});
 	changeGridSize->SetString("Change");
 	changeGridSize->SetToggle(false);
 	changeGridSize->SetPosition({ 1920 - 320.f , 200 });
@@ -173,6 +176,9 @@ void SceneDev1::Init()
 
 	inputGridSizeWidth->SetPosition({ 1920 - 400.f , 100 });
 	inputGridSizeHeight->SetPosition({ 1920 - 200.f , 100 });
+
+	inputMoveCount->SetPosition({ 1920 - 300.f , 250.f });
+	inputMoveCount->SetString("0");
 #pragma endregion
 #pragma region TEXTS
 	gridSizeText->SetPosition({ 1920 - 340.f , 50 });
@@ -183,33 +189,36 @@ void SceneDev1::Init()
 	gridCountText->SetString("GRID SIZE");
 	gridCountText->SetFillColor(sf::Color::White);
 	
+	moveCountText->SetPosition({ 1920 - 350.f , 300.f });
+	moveCountText->SetString("MOVE COUNT");
+	moveCountText->SetFillColor(sf::Color::White);
 #pragma endregion
 #pragma region BUTTONSPITE
-	deleteButton->SetPosition({ 1920 - 450.f , 400.f });
+	deleteButton->SetPosition({ 1920 - 450.f , 500.f });
 	deleteButton->SetCallBack([this]() {
 		spriteType = SpriteTypes::DELETE;
 		type = Types::NONE;
 	});
 
-	playerButton->SetPosition({1920 - 350.f , 400.f});
+	playerButton->SetPosition({1920 - 350.f , 500 });
 	playerButton->SetCallBack([this]() {
 		spriteType = SpriteTypes::PLAYER;
 		type = Types::NONE;
 	});
 	
-	obstacleButton->SetPosition({1920 - 250.f , 400.f});
+	obstacleButton->SetPosition({1920 - 250.f , 500 });
 	obstacleButton->SetCallBack([this]() {
 		spriteType = SpriteTypes::OBSTACLE;
 		type = Types::NONE;
 	});
 
-	enemyButton->SetPosition({ 1920 - 450.f , 500.f });
+	enemyButton->SetPosition({ 1920 - 450.f , 600 });
 	enemyButton->SetCallBack([this]() {
 		spriteType = SpriteTypes::ENEMY;
 		type = Types::NONE;
 	});
 
-	map1NpcButton->SetPosition({ 1920 - 350.f , 500.f });
+	map1NpcButton->SetPosition({ 1920 - 350.f , 600 });
 	map1NpcButton->SetCallBack([this]() {
 		spriteType = SpriteTypes::MAP1NPC;
 		type = Types::NONE;
@@ -237,6 +246,8 @@ void SceneDev1::Init()
 	AddGameObject(obstacleButton);
 	AddGameObject(enemyButton);
 	AddGameObject(map1NpcButton);
+	AddGameObject(inputMoveCount);
+	AddGameObject(moveCountText);
 #pragma endregion
 
 

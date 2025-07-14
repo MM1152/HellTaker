@@ -5,7 +5,7 @@ class Scene
 private:
 	sf::Vector2f gridSize;
 	sf::Vector2f gridCount;
-
+	int moveCount;
 	std::vector<std::vector<int>> infos;
 protected:
 	std::list<GameObject*> gameObjects;
@@ -32,5 +32,6 @@ public:
 	std::vector<std::vector<int>>& TranslateMapData(const std::vector<std::string>& mapData);
 	sf::Vector2f GetGridSize() { return gridSize; };
 	sf::Vector2f GetGridCount() { return gridCount; };
+	int GetMoveCount() { return moveCount; };
 };
 

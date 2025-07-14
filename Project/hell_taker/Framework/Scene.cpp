@@ -99,7 +99,7 @@ std::vector<std::vector<int>>& Scene::TranslateMapData(const std::vector<std::st
 {
 	infos.clear();
 
-	for (int i = 0; i < mapData.size() - 2; i++) {
+	for (int i = 0; i < mapData.size() - 3; i++) {
 		std::vector<int> vec;
 		for (int j = 0; j < mapData[i].size(); j++) {
 			vec.push_back(mapData[i][j] - '0');
@@ -108,8 +108,8 @@ std::vector<std::vector<int>>& Scene::TranslateMapData(const std::vector<std::st
 	}
 
 	//FIX XYÃà ¹Ý´ë·ÎµÊ
-	gridCount = { (float)mapData[0].size() , (float)mapData.size() - 2 };
-	gridSize = { std::stof(mapData[mapData.size() - 1]) , std::stof(mapData[mapData.size() - 2]) };
-
+	gridCount = { (float)mapData[0].size() , (float)mapData.size() - 3 };
+	gridSize = { std::stof(mapData[mapData.size() - 2]) , std::stof(mapData[mapData.size() - 3]) };
+	moveCount = std::stoi(mapData[mapData.size() - 1]);
 	return infos;
 }

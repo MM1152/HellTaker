@@ -38,6 +38,11 @@ bool Player::CheckBound(int row, int height)
                 ChangeAnimation(ANI_PATH"playerKick.csv");
                 SetPosition({ GetPosition().x , GetPosition().y});
                 isPlayAnimation = true;
+                --moveCount;
+                if (changeMoveCountFunc) {
+                    changeMoveCountFunc(moveCount);
+                }
+                
                 return false;
             }
         }
@@ -45,6 +50,10 @@ bool Player::CheckBound(int row, int height)
 
     //플레이어의 추가적인 로직 추가
     //SetPosition({ GetPosition().x , GetPosition().y + 200.f });
+    --moveCount;
+    if (changeMoveCountFunc) {
+        changeMoveCountFunc(moveCount);
+    }
     ChangeAnimation(ANI_PATH"playerMove.csv");
    
     return true;
@@ -144,7 +153,7 @@ void Player::ChangeAnimation(const std::string& id)
 }
 
 void Player::Move(int upX, int upY)
-{
-    
+{   
     MoveAbleObject::Move(upX , upY);
+
 }

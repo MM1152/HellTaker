@@ -4,14 +4,22 @@
 class SpriteGo;
 class Player;
 class Obstacle;
+class TextGo;
 class ChangeMapUI;
 class GameScene : public Scene
 {
 protected:
 	Player* player = nullptr;
 	ChangeMapUI* changeMapUI;
+
+	SpriteGo* moveCountUI;
+	SpriteGo* moveCountUIBackGround;
+	SpriteGo* mapIndexUI;
+	SpriteGo* mapIndexUIBackGround;
+
+	TextGo* moveCountText;
+	TextGo* mapIndexText;
 	int mapIndex;
-	
 public:
 
 

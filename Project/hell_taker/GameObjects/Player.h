@@ -11,6 +11,10 @@ protected:
 	std::list<Obstacle*> obstacleList;
 	sf::Vector2i inputKey;
 	bool isPlayAnimation = false;
+
+	int moveCount = 0;
+	std::function<void(int)> changeMoveCountFunc;
+	
 	bool CheckBound(int row, int height) override;
 public:
 	void TestPrint();
@@ -26,7 +30,12 @@ public:
 	void ChangeAnimation(const std::string& id);
 
 	void Move(int upX, int upY) override;
-	
+	void SetMoveCount(int count) {
+		moveCount = count;
+	};
+
+	int GetMoveCount() { return moveCount; };
+	void SetMoveCountFunc(std::function<void(int)> callBack) { changeMoveCountFunc = callBack; };
 	std::list<Obstacle*>& GetObstacleList() { return obstacleList; };
 };
 

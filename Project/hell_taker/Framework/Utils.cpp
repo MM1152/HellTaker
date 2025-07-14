@@ -38,7 +38,7 @@ void Utils::WriteFile(const std::string filePath , std::vector<std::string> writ
 	//document.SetCell(0, 0, "MapData");
 	int i = 0;
 	int j = 0;
-	for (i = 0; i < write.size() - 2; i++) {
+	for (i = 0; i < write.size() - 3; i++) {
 		for (j = 0; j < write[i].size(); j++) {
 			document.SetCell(j, i, write[i][j]);
 		}
@@ -46,6 +46,7 @@ void Utils::WriteFile(const std::string filePath , std::vector<std::string> writ
 	
 	document.SetCell(0, i-1, write[i++]);
 	document.SetCell(1, i-1, write[i]);
+	document.SetCell(0, i-1, write[++i]);
 
 	std::ifstream file(filePath);
 	if (file.good()) {
@@ -72,7 +73,8 @@ std::vector<std::string> Utils::ReadFile(const std::string filePath)
 
 	if (document.GetRowCount() == 0) return readFileInfo;
  
-	for (i = 0; i < document.GetRowCount() - 1; i++) {
+	std::cout << document.GetRowCount() << std::endl;
+	for (i = 0; i < document.GetRowCount() - 2; i++) {
 		auto row = document.GetRow<std::string>(i);
 		std::string word;
 		for (j = 0; j < row.size(); j++) {
@@ -81,9 +83,10 @@ std::vector<std::string> Utils::ReadFile(const std::string filePath)
 
 		readFileInfo.push_back(word);
 	}
+	
 	readFileInfo.push_back(document.GetCell<std::string>(0, i ));
 	readFileInfo.push_back(document.GetCell<std::string>(1, i ));
-
+	readFileInfo.push_back(document.GetCell<std::string>(0, i + 1));
 
 	return readFileInfo;
 }
