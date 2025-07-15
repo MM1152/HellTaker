@@ -1,0 +1,4 @@
+ID,FPS,"LoopType (0: Single, 1: Loop)		"
+moveEffect,10,1
+,,
+Resources/Sprite/small_vfx0001.png,Resources/Sprite/small_vfx0002.png,Resources/Sprite/small_vfx0003.png
