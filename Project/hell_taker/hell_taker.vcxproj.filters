@@ -87,7 +87,13 @@
     <ClCompile Include="ChangeMapUI.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="MoveEffect.cpp">
+    <ClCompile Include="Effect\MoveEffect.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneMapEditor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ImmovableObstacle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -173,7 +179,13 @@
     <ClInclude Include="ChangeMapUI.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="MoveEffect.h">
+    <ClInclude Include="Effect\MoveEffect.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneMapEditor.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ImmovableObstacle.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

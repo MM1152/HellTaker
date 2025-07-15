@@ -28,6 +28,6 @@ void MoveEffect::Update(float dt)
 void MoveEffect::Play()
 {
 	SetActive(true);
-	SetPosition({ GetPosition().x + 20.f , GetPosition().y + 30.f });
+	SetPosition({ GetPosition().x + 20.f , GetPosition().y + 40.f });
 	animator.Play(ANI_PATH"moveEffect.csv");
 }

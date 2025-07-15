@@ -18,6 +18,7 @@ public:
 
 	void SetPosition(const sf::Vector2f pos) override;
 	void SetMapData(sf::Vector2f gridSize , int x , int y , SpriteTypes objectId);
+	SpriteTypes GetObjectId() { return objectId; };
 	sf::Vector2i GetXY() { return { x , y }; };
 	virtual void Move(int x , int y);
 };

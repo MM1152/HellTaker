@@ -2,10 +2,12 @@
 #include "SceneMgr.h"
 #include "GameScene.h"
 #include "SceneDev1.h"
+#include "SceneMapEditor.h"
 void SceneMgr::Init()
 {
 	scenes.insert({ SceneIds::SceneGame , new GameScene() });
 	scenes.insert({ SceneIds::Dev1 , new SceneDev1() });
+	scenes.insert({ SceneIds::SceneMapEditor , new SceneMapEditor() });
 	for (auto scene : scenes) {
 		scene.second->Init();
 	}

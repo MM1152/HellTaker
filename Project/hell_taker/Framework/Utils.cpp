@@ -9,6 +9,9 @@ void Utils::Init()
 	textureMap.insert({ SpriteTypes::ENEMY , SPRITE_PATH"enemy1.png" });
 	textureMap.insert({ SpriteTypes::OBSTACLE , SPRITE_PATH"assets100V20081.png" });
 	textureMap.insert({ SpriteTypes::MAP1NPC , SPRITE_PATH"NPC1.png" });
+	textureMap.insert({ SpriteTypes::HUDLE , SPRITE_PATH"assets100V20122.png" });
+	textureMap.insert({ SpriteTypes::BOX , SPRITE_PATH"backup_lockbox.png" });
+	textureMap.insert({ SpriteTypes::GOLDKEY , SPRITE_PATH"assets100V20104.png" });
 }
 void Utils::SetOrigins(sf::Sprite& sp , Origins ori)
 {

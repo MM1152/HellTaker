@@ -37,6 +37,6 @@ public:
 
 	static std::vector<std::vector<int>> mapData;
 
-	void NextMap();
+	void ResetScene();
 };
 

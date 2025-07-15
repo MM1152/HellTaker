@@ -14,6 +14,9 @@ enum class SpriteTypes {
 	OBSTACLE,
 	ENEMY,
 	MAP1NPC,
+	HUDLE,
+	BOX,
+	GOLDKEY,
 	NONE,
 	SPRITECOUNT,
 };

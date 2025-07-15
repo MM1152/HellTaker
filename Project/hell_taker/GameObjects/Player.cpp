@@ -36,16 +36,27 @@ bool Player::CheckBound(int row, int height)
     if (GameScene::mapData[height][row] != 1) {
         for (auto obs : obstacleList) {
             if (height == obs->GetXY().y && row == obs->GetXY().x) {
-                obs->Move(inputKey.x, inputKey.y);
-                ChangeAnimation(ANI_PATH"playerKick.csv");
-                SetPosition({ GetPosition().x , GetPosition().y});
+
+                
                 isPlayAnimation = true;
                 --moveCount;
-                if(Die()) return false;
+                if (Die()) return false;
+
                 if (changeMoveCountFunc) {
                     changeMoveCountFunc(moveCount);
                 }
-                
+                if (obs->GetObjectId() == SpriteTypes::OBSTACLE || obs->GetObjectId() == SpriteTypes::ENEMY) {
+                    obs->Move(inputKey.x, inputKey.y);
+                }
+                else if (obs->GetObjectId() == SpriteTypes::GOLDKEY) {
+                    isGetKey = true;
+                    return true;
+                }
+                else if (obs->GetObjectId() == SpriteTypes::BOX && isGetKey) {
+                    obs->SetActive(false);
+                    return true;
+                }
+                ChangeAnimation(ANI_PATH"playerKick.csv");
                 return false;
             }
         }
@@ -129,6 +140,7 @@ void Player::Update(float dt)
 void Player::Reset()
 {
     MoveAbleObject::Reset();
+    isGetKey = false;
     SetOrigin(Origins::MB);
     moveEffect.Reset();
     obstacleList.clear();

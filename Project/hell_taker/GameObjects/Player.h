@@ -21,6 +21,8 @@ protected:
 	std::function<void(int)> changeMoveCountFunc;
 	std::function<void()> changeMapAnimationFunc;
 	
+	bool isGetKey = false;
+
 	bool CheckBound(int row, int height) override;
 public:
 	void TestPrint();

@@ -17,5 +17,6 @@ enum class SortingLayers {
 enum class SceneIds {
 	SceneGame,
 	Dev1,
+	SceneMapEditor,
 	None,
 };

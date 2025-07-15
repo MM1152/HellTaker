@@ -9,6 +9,8 @@
 #include "Enemy.h"
 #include "NPC.h"
 #include "ChangeMapUI.h"
+#include "ImmovableObstacle.h"
+
 std::vector<std::vector<int>> GameScene::mapData;
 
 GameScene::GameScene()
@@ -31,10 +33,13 @@ void GameScene::Init()
 	texIds.push_back(SPRITE_PATH"mainUIexport_fUI0001.png");
 	texIds.push_back(SPRITE_PATH"mainUIexport_bUI2.png");
 
+
 	texIds.push_back(UTILS.textureMap[SpriteTypes::PLAYER]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::OBSTACLE]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::ENEMY]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::MAP1NPC]);
+	texIds.push_back(UTILS.textureMap[SpriteTypes::GOLDKEY]);
+	texIds.push_back(UTILS.textureMap[SpriteTypes::BOX]);
 
 	aniIds.push_back(ANI_PATH"playerIdle.csv");
 	aniIds.push_back(ANI_PATH"enemyIdle.csv");
@@ -108,7 +113,11 @@ void GameScene::Update(float dt)
 {
 	Scene::Update(dt);
 	if (INPUT_MGR.GetKeyDown(KEY::Enter)) {
-		SCENE_MGR.ChangeScene(SceneIds::Dev1);
+		SCENE_MGR.ChangeScene(SceneIds::SceneMapEditor);
+	}
+	if (INPUT_MGR.GetKeyDown(KEY::F1)) {
+		mapIndex++;
+		ResetScene();
 	}
 	
 	/*if (player->GetMoveCount() == 0) {
@@ -172,6 +181,12 @@ void GameScene::Reset()
 							mapIndex++;
 						});
 					}
+					else if (curSpriteType == (int)SpriteTypes::BOX) {
+						ob = new ImmovableObstacle(UTILS.textureMap[SpriteTypes::BOX]);
+					}
+					else if (curSpriteType == (int)SpriteTypes::GOLDKEY) {
+						ob = new ImmovableObstacle(UTILS.textureMap[SpriteTypes::GOLDKEY]);
+					}
 					DrawObs(ob, (SpriteTypes)curSpriteType, gridSize, i, j);
 				}
 			}
@@ -204,7 +219,7 @@ void GameScene::DrawObs(Obstacle* ob, SpriteTypes types , sf::Vector2f gridSize 
 	player->AddObstacle(ob);
 }
 
-void GameScene::NextMap()
+void GameScene::ResetScene()
 {
 	for (auto& i : player->GetObstacleList()) {
 		RemoveGameObject(i);

@@ -111,7 +111,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>.\SFML-2.6.2\include;.\Framework;.\GameObjects;$(ProjectDir);.\Scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\SFML-2.6.2\include;.\Framework;.\GameObjects;$(ProjectDir);.\Scene;.\Effect;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -129,7 +129,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir);.\SFML-2.6.2\include;.\GameObjects;.\Framework;.\Scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);.\SFML-2.6.2\include;.\GameObjects;.\Framework;.\Scene;.\Effect;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
@@ -157,8 +157,10 @@
     <ClCompile Include="GameObjects\MoveAbleObject.cpp" />
     <ClCompile Include="GameObjects\Obstacle.cpp" />
     <ClCompile Include="GameObjects\Player.cpp" />
-    <ClCompile Include="MoveEffect.cpp" />
+    <ClCompile Include="ImmovableObstacle.cpp" />
+    <ClCompile Include="Effect\MoveEffect.cpp" />
     <ClCompile Include="NPC.cpp" />
+    <ClCompile Include="Scene\SceneMapEditor.cpp" />
     <ClCompile Include="Scene\SceneDev1.cpp" />
     <ClCompile Include="Scene\GameScene.cpp" />
     <ClCompile Include="main.cpp" />
@@ -192,8 +194,10 @@
     <ClInclude Include="GameObjects\MoveAbleObject.h" />
     <ClInclude Include="GameObjects\Obstacle.h" />
     <ClInclude Include="GameObjects\Player.h" />
-    <ClInclude Include="MoveEffect.h" />
+    <ClInclude Include="ImmovableObstacle.h" />
+    <ClInclude Include="Effect\MoveEffect.h" />
     <ClInclude Include="NPC.h" />
+    <ClInclude Include="Scene\SceneMapEditor.h" />
     <ClInclude Include="Scene\SceneDev1.h" />
     <ClInclude Include="Scene\GameScene.h" />
     <ClInclude Include="Framework\Scene.h" />

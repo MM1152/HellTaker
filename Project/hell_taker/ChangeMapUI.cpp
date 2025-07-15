@@ -48,7 +48,7 @@ void ChangeMapUI::Init()
 		//gameScene->Reset();
 		});
 	animator.SetEvent("changeMap", 17, [this]() {
-		gameScene->NextMap();
+		gameScene->ResetScene();
 	});
 
 	
