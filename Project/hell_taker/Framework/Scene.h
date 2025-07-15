@@ -29,7 +29,7 @@ public:
 	void AddGameObject(GameObject* obj);
 	void RemoveGameObject(GameObject* obj);
 
-	std::vector<std::vector<int>>& TranslateMapData(const std::vector<std::string>& mapData);
+	std::vector<std::vector<int>>& TranslateMapData(const std::vector<std::vector<float>>& mapData);
 	sf::Vector2f GetGridSize() { return gridSize; };
 	sf::Vector2f GetGridCount() { return gridCount; };
 	int GetMoveCount() { return moveCount; };

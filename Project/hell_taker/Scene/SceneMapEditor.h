@@ -26,6 +26,6 @@ public:
 	virtual void Release();
 
 	void DrawGrid(sf::Vector2f cellSize, sf::Vector2f cellCount);
-	void DrawGrid(std::vector<std::string>& lists);
+	void DrawGrid(std::vector<std::vector<float>>& lists);
 };
 

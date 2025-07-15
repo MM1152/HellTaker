@@ -101,7 +101,7 @@ void SceneMapEditor::Init()
 	prevMapBNT->SetCallBack([this, spriteGo]() {
 		if (mapIndex > 0) {
 			mapIndex--;
-			std::vector<std::string> list = UTILS.ReadFile(mapGridsIds[mapIndex]);
+			std::vector<std::vector<float>> list = UTILS.ReadFile(mapGridsIds[mapIndex]);
 			if (!list.size()) {
 				gridSize = { 50, 50 };
 				gridCount = { 15 , 15 };
@@ -120,7 +120,7 @@ void SceneMapEditor::Init()
 	nextMapBNT->SetCallBack([this, spriteGo]() {
 		if (mapIndex < 7) {
 			mapIndex++;
-			std::vector<std::string> list = UTILS.ReadFile(mapGridsIds[mapIndex]);
+			std::vector<std::vector<float>> list = UTILS.ReadFile(mapGridsIds[mapIndex]);
 			if (!list.size()) {
 				gridSize = { 50, 50 };
 				gridCount = { 15 , 15 };
@@ -137,27 +137,33 @@ void SceneMapEditor::Init()
 	saveBNT->SetToggle(false);
 	saveBNT->SetPosition({ 1920 - 350.f , 1080 - 200.f });
 	saveBNT->SetCallBack([this, inputMoveCount]() {
-		std::vector<std::string> write;
+		std::vector<std::vector<float>> write;
+		std::vector<float> word;
 		for (int i = 0; i < gridCount.y; i++) {
-			std::string word;
 			for (int j = 0; j < gridCount.x; j++) {
 				if (grids[i][j]->GetSpriteTypes() != SpriteTypes::NONE && grids[i][j]->GetSpriteTypes() != SpriteTypes::DELETE) {
-					word += std::to_string((int)grids[i][j]->GetSpriteTypes() + (int)Types::TYPECOUTN);
+					word.push_back((float)grids[i][j]->GetSpriteTypes() + (float)Types::TYPECOUTN);
 				}
 				else {
-					word += std::to_string((int)grids[i][j]->GetType());
+					word.push_back((float)grids[i][j]->GetType());
 				}
 			}
+			
 			write.push_back(word);
+			word.clear();
 		}
 
-		write.push_back(std::to_string(gridSize.y));
-		write.push_back(std::to_string(gridSize.x));
+		word.push_back(gridSize.y);
+		word.push_back(gridSize.x);
+		write.push_back(word);
 
-		write.push_back(inputMoveCount->GetString());
+
+		word.clear();
+		word.push_back(std::stof(inputMoveCount->GetString()));
+		write.push_back(word);
 
 		UTILS.WriteFile("GameData/MapData" + std::to_string(mapIndex + 1) + ".csv", write);
-		});
+	});
 	changeGridSize->SetString("Change");
 	changeGridSize->SetToggle(false);
 	changeGridSize->SetPosition({ 1920 - 320.f , 200 });
@@ -347,7 +353,7 @@ void SceneMapEditor::Draw(sf::RenderWindow& window)
 
 void SceneMapEditor::Reset()
 {
-	std::vector<std::string> ids = UTILS.ReadFile("GameData/MapData1.csv");
+	std::vector<std::vector<float>> ids = UTILS.ReadFile("GameData/MapData1.csv");
 
 	Scene::Reset();
 
@@ -393,7 +399,7 @@ void SceneMapEditor::DrawGrid(sf::Vector2f cellSize, sf::Vector2f cellCount)
 	}
 }
 
-void SceneMapEditor::DrawGrid(std::vector<std::string>& lists)
+void SceneMapEditor::DrawGrid(std::vector<std::vector<float>>& lists)
 {
 	std::vector<std::vector<int>> infos(TranslateMapData(lists));
 	gridSize = GetGridSize();

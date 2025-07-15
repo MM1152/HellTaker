@@ -50,10 +50,15 @@ bool Player::CheckBound(int row, int height)
                 }
                 else if (obs->GetObjectId() == SpriteTypes::GOLDKEY) {
                     isGetKey = true;
+                    obs->SetActive(false);
                     return true;
                 }
                 else if (obs->GetObjectId() == SpriteTypes::BOX && isGetKey) {
                     obs->SetActive(false);
+                    return true;
+                }
+                else if (obs->GetObjectId() == SpriteTypes::HUDLE) {
+                    moveCount--;
                     return true;
                 }
                 ChangeAnimation(ANI_PATH"playerKick.csv");

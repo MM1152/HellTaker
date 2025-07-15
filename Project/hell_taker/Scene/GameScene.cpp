@@ -40,6 +40,7 @@ void GameScene::Init()
 	texIds.push_back(UTILS.textureMap[SpriteTypes::MAP1NPC]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::GOLDKEY]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::BOX]);
+	texIds.push_back(UTILS.textureMap[SpriteTypes::HUDLE]);
 
 	aniIds.push_back(ANI_PATH"playerIdle.csv");
 	aniIds.push_back(ANI_PATH"enemyIdle.csv");
@@ -186,6 +187,9 @@ void GameScene::Reset()
 					}
 					else if (curSpriteType == (int)SpriteTypes::GOLDKEY) {
 						ob = new ImmovableObstacle(UTILS.textureMap[SpriteTypes::GOLDKEY]);
+					}
+					else if (curSpriteType == (int)SpriteTypes::HUDLE) {
+						ob = new ImmovableObstacle(UTILS.textureMap[SpriteTypes::HUDLE]);
 					}
 					DrawObs(ob, (SpriteTypes)curSpriteType, gridSize, i, j);
 				}

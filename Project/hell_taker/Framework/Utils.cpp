@@ -35,21 +35,20 @@ void Utils::SetOrigins(sf::Text& sp, Origins ori)
 	sp.setOrigin(origin);
 }
 
-void Utils::WriteFile(const std::string filePath , std::vector<std::string> write)
+void Utils::WriteFile(const std::string filePath , std::vector<std::vector<float>> write)
 {
 	rapidcsv::Document document;
 	//document.SetCell(0, 0, "MapData");
 	int i = 0;
 	int j = 0;
-	for (i = 0; i < write.size() - 3; i++) {
+	for (i = 0; i < write.size() - 2; i++) {
 		for (j = 0; j < write[i].size(); j++) {
 			document.SetCell(j, i, write[i][j]);
 		}
 	}
-	
-	document.SetCell(0, i-1, write[i++]);
-	document.SetCell(1, i-1, write[i]);
-	document.SetCell(0, i-1, write[++i]);
+	document.SetCell(0, i, write[i][0]);
+	document.SetCell(1, i, write[i][1]);
+	document.SetCell(0, i, write[++i][0]);
 
 	std::ifstream file(filePath);
 	if (file.good()) {
@@ -60,10 +59,10 @@ void Utils::WriteFile(const std::string filePath , std::vector<std::string> writ
 	document.Save(filePath);
 }
 
-std::vector<std::string> Utils::ReadFile(const std::string filePath)
+std::vector<std::vector<float>> Utils::ReadFile(const std::string filePath)
 {
 	std::ifstream file(filePath);
-	std::vector<std::string> readFileInfo;
+	std::vector<std::vector<float>> readFileInfo;
 
 	if (!file.good()) {
 		std::cout << "FAIL TO LOAD FILE " << filePath << std::endl;
@@ -76,20 +75,27 @@ std::vector<std::string> Utils::ReadFile(const std::string filePath)
 
 	if (document.GetRowCount() == 0) return readFileInfo;
  
-	std::cout << document.GetRowCount() << std::endl;
+	std::vector<float> vec;
 	for (i = 0; i < document.GetRowCount() - 2; i++) {
-		auto row = document.GetRow<std::string>(i);
-		std::string word;
+		auto row = document.GetRow<float>(i);
 		for (j = 0; j < row.size(); j++) {
-			word += row[j];
+			vec.push_back(row[j]);
 		}
 
-		readFileInfo.push_back(word);
+		readFileInfo.push_back(vec);
+		vec.clear();
 	}
 	
-	readFileInfo.push_back(document.GetCell<std::string>(0, i ));
-	readFileInfo.push_back(document.GetCell<std::string>(1, i ));
-	readFileInfo.push_back(document.GetCell<std::string>(0, i + 1));
+	vec.push_back(document.GetCell<float>(0, i));
+	readFileInfo.push_back(vec);
+	vec.clear();
+
+	vec.push_back(document.GetCell<float>(1, i));
+	readFileInfo.push_back(vec);
+	vec.clear();
+
+	vec.push_back(document.GetCell<float>(0, i + 1));
+	readFileInfo.push_back(vec);
 
 	return readFileInfo;
 }
