@@ -11,9 +11,9 @@
 #include "ChangeMapUI.h"
 #include "ImmovableObstacle.h"
 #include "Huddle.h"
-
-std::vector<std::vector<int>> GameScene::mapData;
-std::vector<std::vector<float>> GameScene::backGroundMapData;
+#include "GoldKey.h"
+#include "Map.h"
+#include "InteractiveViewer.h"
 
 GameScene::GameScene()
 	:Scene(SceneIds::SceneGame)
@@ -23,6 +23,7 @@ GameScene::GameScene()
 void GameScene::Init()
 {
 	fontIds.push_back(FONT_PATH"Amiri-Regular.ttf");
+	fontIds.push_back(FONT_PATH"CrimsonPro-Medium.ttf");
 
 	texIds.push_back(SPRITE_PATH"chapterBG0001.png");
 	texIds.push_back(SPRITE_PATH"chapterBG0002.png");
@@ -34,7 +35,10 @@ void GameScene::Init()
 	texIds.push_back(SPRITE_PATH"chapterBG0008.png");
 	texIds.push_back(SPRITE_PATH"mainUIexport_fUI0001.png");
 	texIds.push_back(SPRITE_PATH"mainUIexport_bUI2.png");
-
+	texIds.push_back(SPRITE_PATH"pand_idle.png");
+	texIds.push_back(SPRITE_PATH"dialogueBG_hell.png");
+	texIds.push_back(SPRITE_PATH"button0003.png");
+	texIds.push_back(SPRITE_PATH"button0004.png");
 
 	texIds.push_back(UTILS.textureMap[SpriteTypes::PLAYER]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::OBSTACLE]);
@@ -43,7 +47,7 @@ void GameScene::Init()
 	texIds.push_back(UTILS.textureMap[SpriteTypes::GOLDKEY]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::BOX]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::HUDLE]);
-
+	
 	aniIds.push_back(ANI_PATH"playerIdle.csv");
 	aniIds.push_back(ANI_PATH"enemyIdle.csv");
 	aniIds.push_back(ANI_PATH"enemyKicked.csv");
@@ -54,13 +58,15 @@ void GameScene::Init()
 	aniIds.push_back(ANI_PATH"playerDie.csv");
 	aniIds.push_back(ANI_PATH"moveEffect.csv");
 	aniIds.push_back(ANI_PATH"goldKey.csv");
-	mapIndex = 0;
+	//aniIds.push_back(ANI_PATH"goldKeyEffect.csv");
 
-	backGround = new SpriteGo(MAP_IMAGE(mapIndex + 1));
+	backGround = new SpriteGo(MAP_IMAGE(MAP.GetMapIndex() + 1));
 	
 	backGround->SetSortingLayer(SortingLayers::BACKGROUND);
 	player = new Player(UTILS.textureMap[SpriteTypes::PLAYER]);
 	player->SetSortingLayer(SortingLayers::FORGROUND);
+
+	interactive = new InteractiveViewer(FONT_PATH"CrimsonPro-Medium.ttf");
 
 	changeMapUI = new ChangeMapUI("" , "");
 
@@ -95,6 +101,7 @@ void GameScene::Init()
 	mapIndexText->SetSortingLayer(SortingLayers::UI);
 	mapIndexText->SetPosition({ 1800.f , 750.f });
 
+	AddGameObject(interactive);
 	AddGameObject(mapIndexText);
 	AddGameObject(moveCountText);
 	AddGameObject(mapIndexUI);
@@ -119,7 +126,7 @@ void GameScene::Update(float dt)
 		SCENE_MGR.ChangeScene(SceneIds::SceneMapEditor);
 	}
 	if (INPUT_MGR.GetKeyDown(KEY::F1)) {
-		mapIndex++;
+		MAP.SetMapIndex(MAP.GetMapIndex() + 1);
 		ResetScene();
 	}
 	if (INPUT_MGR.GetKeyDown(KEY::R)) {
@@ -137,6 +144,7 @@ void GameScene::Update(float dt)
 
 void GameScene::Draw(sf::RenderWindow& window)
 {
+
 	Scene::Draw(window);
 }
 
@@ -145,21 +153,21 @@ void GameScene::Reset()
 	Scene::Reset();
 
 
-	backGround->ChangeTexture(MAP_IMAGE(mapIndex + 1));
+	backGround->ChangeTexture(MAP_IMAGE(MAP.GetMapIndex() + 1));
 	moveCountUI->SetPosition({ 0,1080 - moveCountUI->GetLocalBound().height });
 	mapIndexUI->SetPosition({ 1920, 1080 - moveCountUI->GetLocalBound().height });
 
 	mapIndexUIBackGround->SetPosition({ 1920, 0 });
 	
 	//SETSCALE (0.7 , 0.7) 이라 설정된 그리드 사이즈에 0.7 나누어줘야됌
-	mapData = TranslateMapData(UTILS.ReadFile(MAP_DATA(mapIndex + 1)));
-	backGroundMapData = UTILS.ReadFile(MAP_BACKGROUND_DATA(mapIndex + 1));
+	auto mapData = MAP.GetMapData();
+	auto backGroundMapData = MAP.GetBackGroundMap();
 
-	mapIndexText->SetString(std::to_string(mapIndex + 1));
+	mapIndexText->SetString(std::to_string(MAP.GetMapIndex() + 1));
 	
-	sf::Vector2f gridSize = GetGridSize() / 0.7f;
-	sf::Vector2f gridCount = GetGridCount();
-	int moveCount = GetMoveCount();
+	sf::Vector2f gridSize = MAP.GetGridSize() / 0.7f;
+	sf::Vector2f gridCount = MAP.GetGridCount();
+	int moveCount = MAP.GetMoveCount();
 
 	for (int i = 0; i < mapData.size(); i++) {
 		for (int j = 0; j < mapData[i].size(); j++) {
@@ -202,14 +210,15 @@ void GameScene::Reset()
 						ob = new NPC(UTILS.textureMap[SpriteTypes::MAP1NPC]);
 						((NPC*)ob)->SettingCallBack([this]() {
 							changeMapUI->Play();
-							mapIndex++;
+							MAP.SetMapIndex(MAP.GetMapIndex() + 1);
 						});
 					}
 					else if (curSpriteType == (int)SpriteTypes::BOX) {
 						ob = new ImmovableObstacle(UTILS.textureMap[SpriteTypes::BOX]);
 					}
 					else if (curSpriteType == (int)SpriteTypes::GOLDKEY) {
-						ob = new ImmovableObstacle(UTILS.textureMap[SpriteTypes::GOLDKEY]);
+						ob = new GoldKey(UTILS.textureMap[SpriteTypes::GOLDKEY]);
+						ob->plusPos = { 15.f , 20.f };
 					}
 	
 					AddObs(ob, (SpriteTypes)curSpriteType, gridSize, i, j);

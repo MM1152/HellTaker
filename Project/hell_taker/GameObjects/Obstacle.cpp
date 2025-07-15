@@ -7,7 +7,7 @@ bool Obstacle::CheckBound(int row, int height)
 		return false;
 	}
 
-	if (GameScene::mapData[height][row] != 1) {
+	if (MAP.GetTileData(height,row) != 1) {
 		return false;
 	}
 
@@ -24,4 +24,8 @@ void Obstacle::Move(int upX, int upY)
 	if (CheckBound(x + upX, y + upY)) {
 		MoveAbleObject::Move(upX, upY);
 	}
+}
+//TODO : 나중에 로직 변경
+void Obstacle::Interaction()	
+{
 }

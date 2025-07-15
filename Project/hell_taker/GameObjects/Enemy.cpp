@@ -31,9 +31,9 @@ void Enemy::Update(float dt)
 
 void Enemy::Move(int upX, int upY)
 {
-	if (GameScene::mapData[y + upY][x + upX] != 1) {
+	if (MAP.GetTileData(y + upY , x + upX)!= 1) {
 		SetActive(false);
-		GameScene::mapData[y][x] = 1;
+		//GameScene::mapData[y][x] = 1;
 		return;
 	}
 	animator.Play(ANI_PATH"enemyKicked.csv");

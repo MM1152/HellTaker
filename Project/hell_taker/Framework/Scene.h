@@ -3,10 +3,10 @@
 class Scene
 {
 private:
-	sf::Vector2f gridSize;
-	sf::Vector2f gridCount;
-	int moveCount;
-	std::vector<std::vector<int>> infos;
+	//sf::Vector2f gridSize;
+	//sf::Vector2f gridCount;
+	//int moveCount;
+	//std::vector<std::vector<int>> infos;
 protected:
 	std::list<GameObject*> gameObjects;
 
@@ -29,9 +29,9 @@ public:
 	void AddGameObject(GameObject* obj);
 	void RemoveGameObject(GameObject* obj);
 
-	std::vector<std::vector<int>>& TranslateMapData(const std::vector<std::vector<float>>& mapData);
-	sf::Vector2f GetGridSize() { return gridSize; };
-	sf::Vector2f GetGridCount() { return gridCount; };
-	int GetMoveCount() { return moveCount; };
+	//std::vector<std::vector<int>>& TranslateMapData(const std::vector<std::vector<float>>& mapData);
+	//sf::Vector2f GetGridSize() { return gridSize; };
+	//sf::Vector2f GetGridCount() { return gridCount; };
+	//int GetMoveCount() { return moveCount; };
 };
 

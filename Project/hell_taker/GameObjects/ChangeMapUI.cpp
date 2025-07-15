@@ -73,6 +73,7 @@ void ChangeMapUI::Update(float dt)
 
 void ChangeMapUI::Exit()
 {
+	
 }
 
 void ChangeMapUI::Release()

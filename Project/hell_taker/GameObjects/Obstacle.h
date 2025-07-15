@@ -10,5 +10,6 @@ public:
 
 	SpriteTypes GetType() { return objectId; };
 	void Move(int upX, int upY) override;
+	virtual void Interaction();
 };
 

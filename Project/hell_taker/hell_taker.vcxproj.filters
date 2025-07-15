@@ -99,6 +99,15 @@
     <ClCompile Include="Huddle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="GoldKey.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractiveViewer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\GameObject.h">
@@ -192,6 +201,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Huddle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GoldKey.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractiveViewer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -95,21 +95,21 @@ void Scene::RemoveGameObject(GameObject* obj)
 	delete obj;
 }
 
-std::vector<std::vector<int>>& Scene::TranslateMapData(const std::vector<std::vector<float>>& mapData)
-{
-	infos.clear();
-
-	for (int i = 0; i < mapData.size() - 3; i++) {
-		std::vector<int> vec;
-		for (int j = 0; j < mapData[i].size(); j++) {
-			vec.push_back((int)mapData[i][j]);
-		}
-		infos.push_back(vec);
-	}
-
-	//FIX XYÃà ¹Ý´ë·ÎµÊ
-	gridCount = { (float)mapData[0].size() , (float)mapData.size() - 3.f };
-	gridSize = { mapData[mapData.size() - 2][0] , mapData[mapData.size() - 3][0]};
-	moveCount = (int)(mapData[mapData.size() - 1][0]);
-	return infos;
-}
+//std::vector<std::vector<int>>& Scene::TranslateMapData(const std::vector<std::vector<float>>& mapData)
+//{
+//	infos.clear();
+//
+//	for (int i = 0; i < mapData.size() - 3; i++) {
+//		std::vector<int> vec;
+//		for (int j = 0; j < mapData[i].size(); j++) {
+//			vec.push_back((int)mapData[i][j]);
+//		}
+//		infos.push_back(vec);
+//	}
+//
+//	//FIX XYÃà ¹Ý´ë·ÎµÊ
+//	gridCount = { (float)mapData[0].size() , (float)mapData.size() - 3.f };
+//	gridSize = { mapData[mapData.size() - 2][0] , mapData[mapData.size() - 3][0]};
+//	moveCount = (int)(mapData[mapData.size() - 1][0]);
+//	return infos;
+//}

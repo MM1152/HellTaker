@@ -3,19 +3,6 @@
 #include "NPC.h"
 #include "GameScene.h"
 
-
-void Player::TestPrint()
-{
-    for (int i = 0; i < GameScene::mapData.size(); i++) {
-        for (int j = 0; j < GameScene::mapData[i].size(); j++) {
-            std::cout << GameScene::mapData[i][j] << " ";
-        }
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
-    std::cout << std::endl;
-    std::cout << std::endl;
-}
 bool Player::CheckBound(int row, int height)
 {
     for (auto obs : obstacleList) {
@@ -137,7 +124,6 @@ void Player::Update(float dt)
 void Player::Reset()
 {
     MoveAbleObject::Reset();
-    TestPrint();
     isGetKey = false;
     isDie = false;
     isPlayAnimation = false;

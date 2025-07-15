@@ -32,7 +32,7 @@ public:
 	virtual void Release();
 
 	void DrawGrid(sf::Vector2f cellSize, sf::Vector2f cellCount);
-	void DrawGrid(std::vector<std::vector<float>>& forGround , std::vector<std::vector<float>>& backGround);
+	void DrawGrid(std::vector<std::vector<int>>& forGround , std::vector<std::vector<int>>& backGround);
 
 	
 };

@@ -6,6 +6,7 @@ class Player;
 class Obstacle;
 class TextGo;
 class ChangeMapUI;
+class InteractiveViewer;
 class GameScene : public Scene
 {
 protected:
@@ -18,9 +19,10 @@ protected:
 	SpriteGo* mapIndexUI;
 	SpriteGo* mapIndexUIBackGround;
 
+	InteractiveViewer* interactive;
+
 	TextGo* moveCountText;
 	TextGo* mapIndexText;
-	int mapIndex;
 public:
 
 
@@ -35,8 +37,6 @@ public:
 	void Release();
 	void AddObs(Obstacle* ob, SpriteTypes types, sf::Vector2f gridSize, int i, int j);
 
-	static std::vector<std::vector<int>> mapData;
-	static std::vector<std::vector<float>> backGroundMapData;
 	void ResetScene();
 };
 

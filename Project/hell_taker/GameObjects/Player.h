@@ -26,8 +26,6 @@ protected:
 
 	bool CheckBound(int row, int height) override;
 public:
-	void TestPrint();
-
 	Player(const std::string texId = "", const std::string name ="");
 	~Player() override = default;
 

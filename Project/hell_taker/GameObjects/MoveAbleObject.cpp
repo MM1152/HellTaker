@@ -4,8 +4,8 @@
 bool MoveAbleObject::CheckBound(int x, int y)
 {
 	if (x < 0 || y < 0) return false;
-	else if (x > GameScene::mapData[0].size() - 1 || y > GameScene::mapData.size() - 1) return false;
-	else if (GameScene::mapData[y][x] == 0) return false;
+	else if (x > MAP.GetGridCount().x - 1 || y > MAP.GetGridCount().y - 1) return false;
+	else if (MAP.GetTileData(y,x) == 0) return false;
 
 	return true;
 }
@@ -47,18 +47,12 @@ void MoveAbleObject::Update(float dt)
 
 void MoveAbleObject::Move(int upX, int upY)
 {
-	if (GameScene::mapData[y][x] != 8) {
-		GameScene::mapData[y][x] = 1;
-	}
-	
-
 	x += upX;
 	y += upY;
 	
 	curPos = GetPosition();
 	targetPos = { x * gridSize.x, y * gridSize.y };
 	isMoveAble = true;
-	GameScene::mapData[y][x] = (int)objectId + (int)Types::TYPECOUTN;
 }
 
 

@@ -159,7 +159,10 @@
     <ClCompile Include="GameObjects\Player.cpp" />
     <ClCompile Include="GameObjects\ImmovableObstacle.cpp" />
     <ClCompile Include="Effect\MoveEffect.cpp" />
+    <ClCompile Include="GoldKey.cpp" />
     <ClCompile Include="Huddle.cpp" />
+    <ClCompile Include="InteractiveViewer.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Scene\SceneMapEditor.cpp" />
     <ClCompile Include="Scene\SceneDev1.cpp" />
@@ -197,7 +200,10 @@
     <ClInclude Include="GameObjects\Player.h" />
     <ClInclude Include="GameObjects\ImmovableObstacle.h" />
     <ClInclude Include="Effect\MoveEffect.h" />
+    <ClInclude Include="GoldKey.h" />
     <ClInclude Include="Huddle.h" />
+    <ClInclude Include="InteractiveViewer.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="Scene\SceneMapEditor.h" />
     <ClInclude Include="Scene\SceneDev1.h" />

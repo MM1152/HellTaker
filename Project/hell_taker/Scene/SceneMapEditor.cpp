@@ -99,10 +99,10 @@ void SceneMapEditor::Init()
 	prevMapBNT->SetString("Prev");
 	prevMapBNT->SetPosition({ 500.f , 1080.f - 200.f });
 	prevMapBNT->SetCallBack([this]() {
-		if (mapIndex > 0) {
-			mapIndex--;
-			std::vector<std::vector<float>> list = UTILS.ReadFile(mapGridsIds[mapIndex]);
-			std::vector<std::vector<float>> backGround = UTILS.ReadFile(mapBackGround[mapIndex]);
+		if (MAP.GetMapIndex() > 0) {
+			MAP.SetMapIndex(MAP.GetMapIndex() - 1);
+			std::vector<std::vector<int>> list = MAP.GetMapData();
+			std::vector<std::vector<int>> backGround = MAP.GetBackGroundMap();
 			if (!list.size()) {
 				gridSize = { 50, 50 };
 				gridCount = { 15 , 15 };
@@ -111,7 +111,7 @@ void SceneMapEditor::Init()
 			else {
 				DrawGrid(list , backGround);
 			}
-			mapImage->ChangeTexture(mapIds[mapIndex]);
+			mapImage->ChangeTexture(mapIds[MAP.GetMapIndex()]);
 		}
 
 		});
@@ -119,10 +119,10 @@ void SceneMapEditor::Init()
 	nextMapBNT->SetString("Next");
 	nextMapBNT->SetPosition({ 600.f , 1080.f - 200.f });
 	nextMapBNT->SetCallBack([this]() {
-		if (mapIndex < 7) {
-			mapIndex++;
-			std::vector<std::vector<float>> list = UTILS.ReadFile(mapGridsIds[mapIndex]);
-			std::vector<std::vector<float>> backGround = UTILS.ReadFile(mapBackGround[mapIndex]);
+		if (MAP.GetMapIndex() < 7) {
+			MAP.SetMapIndex(MAP.GetMapIndex() + 1);
+			std::vector<std::vector<int>> list = MAP.GetMapData();
+			std::vector<std::vector<int>> backGround = MAP.GetBackGroundMap();
 			if (!list.size()) {
 				gridSize = { 50, 50 };
 				gridCount = { 15 , 15 };
@@ -131,7 +131,7 @@ void SceneMapEditor::Init()
 			else {
 				DrawGrid(list , backGround);
 			}
-			mapImage->ChangeTexture(mapIds[mapIndex]);
+			mapImage->ChangeTexture(mapIds[MAP.GetMapIndex()]);
 		}
 
 		});
@@ -182,8 +182,10 @@ void SceneMapEditor::Init()
 		backGroundType.push_back(0);
 		backGround.push_back(backGroundType);
 
-		UTILS.WriteFile("GameData/MapData" + std::to_string(mapIndex + 1) + ".csv", write);
-		UTILS.WriteFile("GameData/MapData" + std::to_string(mapIndex + 1) + "_backGroundTiles.csv", backGround);
+		UTILS.WriteFile("GameData/MapData" + std::to_string(MAP.GetMapIndex() + 1) + ".csv", write);
+		UTILS.WriteFile("GameData/MapData" + std::to_string(MAP.GetMapIndex() + 1) + "_backGroundTiles.csv", backGround);
+
+		MAP.ReLoad(); 
 	});
 	changeGridSize->SetString("Change");
 	changeGridSize->SetToggle(false);
@@ -382,9 +384,9 @@ void SceneMapEditor::Draw(sf::RenderWindow& window)
 
 void SceneMapEditor::Reset()
 {
-	std::vector<std::vector<float>> forGround = UTILS.ReadFile("GameData/MapData1.csv");
-	std::vector<std::vector<float>> backGround = UTILS.ReadFile("GameData/MapData1_backGroundTiles.csv");
-	mapImage->ChangeTexture(SPRITE_PATH"chapterBG0001.png");
+	std::vector<std::vector<int>> forGround = MAP.GetMapData();
+	std::vector<std::vector<int>> backGround = MAP.GetBackGroundMap();
+	mapImage->ChangeTexture(SPRITE_PATH"chapterBG000"+std::to_string(MAP.GetMapIndex() + 1)+ ".png");
 
 	Scene::Reset();
 
@@ -430,11 +432,11 @@ void SceneMapEditor::DrawGrid(sf::Vector2f cellSize, sf::Vector2f cellCount)
 	}
 }
 
-void SceneMapEditor::DrawGrid(std::vector<std::vector<float>>& forGround , std::vector<std::vector<float>>& backGround)
+void SceneMapEditor::DrawGrid(std::vector<std::vector<int>>& forGround , std::vector<std::vector<int>>& backGround)
 {
-	std::vector<std::vector<int>> infos(TranslateMapData(forGround));
-	gridSize = GetGridSize();
-	gridCount = GetGridCount();
+	std::vector<std::vector<int>> infos(MAP.GetMapData());
+	gridSize = MAP.GetGridSize();
+	gridCount = MAP.GetGridCount();
 
 	DrawGrid(gridSize, gridCount);
 
