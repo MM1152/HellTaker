@@ -34,7 +34,10 @@ void MoveAbleObject::SetMapData(sf::Vector2f gridSize, int x, int y , SpriteType
 
 void MoveAbleObject::Move(int upX, int upY)
 {
-	GameScene::mapData[y][x] = 1;
+	if (GameScene::mapData[y][x] != 8) {
+		GameScene::mapData[y][x] = 1;
+	}
+	
 
 	x += upX;
 	y += upY;

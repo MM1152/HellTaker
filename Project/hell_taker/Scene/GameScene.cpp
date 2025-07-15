@@ -137,9 +137,10 @@ void GameScene::Draw(sf::RenderWindow& window)
 
 void GameScene::Reset()
 {
-	backGround->ChangeTexture(MAP_IMAGE(mapIndex + 1));
 	Scene::Reset();
-	
+
+
+	backGround->ChangeTexture(MAP_IMAGE(mapIndex + 1));
 	moveCountUI->SetPosition({ 0,1080 - moveCountUI->GetLocalBound().height });
 	mapIndexUI->SetPosition({ 1920, 1080 - moveCountUI->GetLocalBound().height });
 

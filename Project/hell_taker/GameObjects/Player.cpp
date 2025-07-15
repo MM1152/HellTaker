@@ -33,46 +33,44 @@ bool Player::CheckBound(int row, int height)
         return false;
     }
        
-    if (GameScene::mapData[height][row] != 1) {
-        for (auto obs : obstacleList) {
-            if (height == obs->GetXY().y && row == obs->GetXY().x) {
-
-                
-                isPlayAnimation = true;
-                --moveCount;
-                if (Die()) return false;
-
-                if (changeMoveCountFunc) {
-                    changeMoveCountFunc(moveCount);
-                }
-                if (obs->GetObjectId() == SpriteTypes::OBSTACLE || obs->GetObjectId() == SpriteTypes::ENEMY) {
-                    obs->Move(inputKey.x, inputKey.y);
-                }
-                else if (obs->GetObjectId() == SpriteTypes::GOLDKEY) {
-                    isGetKey = true;
-                    obs->SetActive(false);
-                    return true;
-                }
-                else if (obs->GetObjectId() == SpriteTypes::BOX && isGetKey) {
-                    obs->SetActive(false);
-                    return true;
-                }
-                else if (obs->GetObjectId() == SpriteTypes::HUDLE) {
-                    moveCount--;
-                    return true;
-                }
-                ChangeAnimation(ANI_PATH"playerKick.csv");
-                return false;
+    for (auto obs : obstacleList) {
+        if (height == obs->GetXY().y && row == obs->GetXY().x) {
+            isPlayAnimation = true;
+            --moveCount;
+            if (Die()) return false;
+            if (!obs->GetActive()) return true;
+            if (changeMoveCountFunc) {
+                changeMoveCountFunc(moveCount);
             }
+            if (obs->GetObjectId() == SpriteTypes::OBSTACLE || obs->GetObjectId() == SpriteTypes::ENEMY) {
+                obs->Move(inputKey.x, inputKey.y);
+            }
+            else if (obs->GetObjectId() == SpriteTypes::GOLDKEY) {
+                isGetKey = true;
+                obs->SetActive(false);
+                return true;
+            }
+            else if (obs->GetObjectId() == SpriteTypes::BOX && isGetKey) {
+                obs->SetActive(false);
+                return true;
+            }
+            if (obs->GetObjectId() == SpriteTypes::HUDLE) {
+                moveCount--;
+                changeMoveCountFunc(moveCount);
+                return true;
+            }
+            ChangeAnimation(ANI_PATH"playerKick.csv");
+            return false;
         }
     }
+    
 
     --moveCount;
     if (Die()) return false;
     if (changeMoveCountFunc) {
         changeMoveCountFunc(moveCount);
     }
-    ChangeAnimation(ANI_PATH"playerMove.csv");
+    
    
     return true;
 }
@@ -145,13 +143,15 @@ void Player::Update(float dt)
 void Player::Reset()
 {
     MoveAbleObject::Reset();
+    TestPrint();
     isGetKey = false;
+    isDie = false;
+    isPlayAnimation = false;
     SetOrigin(Origins::MB);
     moveEffect.Reset();
     obstacleList.clear();
     //SetPosition({ GetPosition().x + plusPos.x , GetPosition().y + plusPos.y });
     animator.Play(ANI_PATH"playerIdle.csv");
-
 }
 
 void Player::Draw(sf::RenderWindow& window)
@@ -188,12 +188,12 @@ void Player::Move(int upX, int upY)
 {   
     if (CheckBound(upX + x, upY + y)) {
         if(inputKey.x != 0) SetScale({ std::abs(GetScale().x) * inputKey.x , GetScale().y });
-        
+        ChangeAnimation(ANI_PATH"playerMove.csv");
         moveEffect.SetPosition({GetPosition().x , GetPosition().y});
         moveEffect.Play();
         std::cout << GetPosition().x << "," << GetPosition().y << std::endl;
         MoveAbleObject::Move(upX, upY);
-        
+        TestPrint();
     }
 }
 

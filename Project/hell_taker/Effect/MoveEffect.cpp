@@ -22,7 +22,10 @@ void MoveEffect::Reset()
 
 void MoveEffect::Update(float dt)
 {
-	animator.Update(dt);	
+	if (GetActive()) {
+		animator.Update(dt);	
+	}
+	
 }
 
 void MoveEffect::Play()
