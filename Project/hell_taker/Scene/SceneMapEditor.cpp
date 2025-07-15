@@ -8,7 +8,6 @@
 #include "Button.h"
 #include "InputText.h"
 #include "ButtonSprite.h"
-
 SceneMapEditor::SceneMapEditor()
 	:Scene(SceneIds::SceneMapEditor)
 {
@@ -47,11 +46,12 @@ void SceneMapEditor::Init()
 	}
 	for (int i = 0; i < 8; i++) {
 		mapGridsIds[i] = MAP_DATA(i + 1);
+		mapBackGround[i] = MAP_BACKGROUND_DATA(i + 1);
 	}
 
 	TextGo* textGo = new TextGo(FONT_PATH"Amiri-Regular.ttf");
 
-	SpriteGo* spriteGo = new SpriteGo(SPRITE_PATH"chapterBG0001.png");
+	mapImage = new SpriteGo(SPRITE_PATH"chapterBG0001.png");
 
 	Button* button = new Button(FONT_PATH"Amiri-Regular.ttf");
 	Button* button1 = new Button(FONT_PATH"Amiri-Regular.ttf");
@@ -98,38 +98,40 @@ void SceneMapEditor::Init()
 
 	prevMapBNT->SetString("Prev");
 	prevMapBNT->SetPosition({ 500.f , 1080.f - 200.f });
-	prevMapBNT->SetCallBack([this, spriteGo]() {
+	prevMapBNT->SetCallBack([this]() {
 		if (mapIndex > 0) {
 			mapIndex--;
 			std::vector<std::vector<float>> list = UTILS.ReadFile(mapGridsIds[mapIndex]);
+			std::vector<std::vector<float>> backGround = UTILS.ReadFile(mapBackGround[mapIndex]);
 			if (!list.size()) {
 				gridSize = { 50, 50 };
 				gridCount = { 15 , 15 };
 				DrawGrid(gridSize, gridCount);
 			}
 			else {
-				DrawGrid(list);
+				DrawGrid(list , backGround);
 			}
-			spriteGo->ChangeTexture(mapIds[mapIndex]);
+			mapImage->ChangeTexture(mapIds[mapIndex]);
 		}
 
 		});
 
 	nextMapBNT->SetString("Next");
 	nextMapBNT->SetPosition({ 600.f , 1080.f - 200.f });
-	nextMapBNT->SetCallBack([this, spriteGo]() {
+	nextMapBNT->SetCallBack([this]() {
 		if (mapIndex < 7) {
 			mapIndex++;
 			std::vector<std::vector<float>> list = UTILS.ReadFile(mapGridsIds[mapIndex]);
+			std::vector<std::vector<float>> backGround = UTILS.ReadFile(mapBackGround[mapIndex]);
 			if (!list.size()) {
 				gridSize = { 50, 50 };
 				gridCount = { 15 , 15 };
 				DrawGrid(gridSize, gridCount);
 			}
 			else {
-				DrawGrid(list);
+				DrawGrid(list , backGround);
 			}
-			spriteGo->ChangeTexture(mapIds[mapIndex]);
+			mapImage->ChangeTexture(mapIds[mapIndex]);
 		}
 
 		});
@@ -138,31 +140,50 @@ void SceneMapEditor::Init()
 	saveBNT->SetPosition({ 1920 - 350.f , 1080 - 200.f });
 	saveBNT->SetCallBack([this, inputMoveCount]() {
 		std::vector<std::vector<float>> write;
-		std::vector<float> word;
+		std::vector<std::vector<float>> backGround;
+
+		std::vector<float> type;
+		std::vector<float> backGroundType;
 		for (int i = 0; i < gridCount.y; i++) {
 			for (int j = 0; j < gridCount.x; j++) {
 				if (grids[i][j]->GetSpriteTypes() != SpriteTypes::NONE && grids[i][j]->GetSpriteTypes() != SpriteTypes::DELETE) {
-					word.push_back((float)grids[i][j]->GetSpriteTypes() + (float)Types::TYPECOUTN);
+					type.push_back((float)grids[i][j]->GetSpriteTypes() + (float)Types::TYPECOUTN);
 				}
 				else {
-					word.push_back((float)grids[i][j]->GetType());
+					type.push_back((float)grids[i][j]->GetType());
+				}
+
+				if (grids[i][j]->GetBackGroundTypes() != SpriteTypes::NONE && grids[i][j]->GetBackGroundTypes() != SpriteTypes::DELETE) {
+					backGroundType.push_back((int)grids[i][j]->GetBackGroundTypes());
+				}
+				else {
+					backGroundType.push_back(0);
 				}
 			}
-			
-			write.push_back(word);
-			word.clear();
+			backGround.push_back(backGroundType);
+			backGroundType.clear();
+			write.push_back(type);
+			type.clear();
 		}
 
-		word.push_back(gridSize.y);
-		word.push_back(gridSize.x);
-		write.push_back(word);
+		type.push_back(gridSize.y);
+		type.push_back(gridSize.x);
+		write.push_back(type);
 
+		type.clear();
+		type.push_back(std::stof(inputMoveCount->GetString()));
+		write.push_back(type);
 
-		word.clear();
-		word.push_back(std::stof(inputMoveCount->GetString()));
-		write.push_back(word);
+		backGroundType.push_back(0);
+		backGroundType.push_back(0);
+		backGround.push_back(backGroundType);
+
+		backGroundType.clear();
+		backGroundType.push_back(0);
+		backGround.push_back(backGroundType);
 
 		UTILS.WriteFile("GameData/MapData" + std::to_string(mapIndex + 1) + ".csv", write);
+		UTILS.WriteFile("GameData/MapData" + std::to_string(mapIndex + 1) + "_backGroundTiles.csv", backGround);
 	});
 	changeGridSize->SetString("Change");
 	changeGridSize->SetToggle(false);
@@ -217,52 +238,60 @@ void SceneMapEditor::Init()
 	playerButton->SetPosition({ 1920 - 350.f , 500 });
 	playerButton->SetCallBack([this]() {
 		spriteType = SpriteTypes::PLAYER;
+		isForGround = true;
 		type = Types::NONE;
 		});
 
 	obstacleButton->SetPosition({ 1920 - 250.f , 500 });
 	obstacleButton->SetCallBack([this]() {
 		spriteType = SpriteTypes::OBSTACLE;
+		isForGround = true;
+		
 		type = Types::NONE;
 		});
 
 	enemyButton->SetPosition({ 1920 - 450.f , 600 });
 	enemyButton->SetCallBack([this]() {
 		spriteType = SpriteTypes::ENEMY;
+		isForGround = true;
 		type = Types::NONE;
 		});
 
 	map1NpcButton->SetPosition({ 1920 - 350.f , 600 });
 	map1NpcButton->SetCallBack([this]() {
 		spriteType = SpriteTypes::MAP1NPC;
+		isForGround = true;
 		type = Types::NONE;
 		});
 
 	hurdleButton->SetPosition({ 1920 - 250.f , 600.f });
 	hurdleButton->SetCallBack([this] {
 		spriteType = SpriteTypes::HUDLE;
+		isForGround = false;
 		type = Types::NONE;
 	});
 
 	goldKeyButton->SetPosition({ 1920 - 450.f , 700 });
 	goldKeyButton->SetCallBack([this]() {
 		spriteType = SpriteTypes::GOLDKEY;
+		isForGround = true;
 		type = Types::NONE;
 	});
 
 	boxButton->SetPosition({ 1920 - 350.f , 700 });
 	boxButton->SetCallBack([this]() {
 		spriteType = SpriteTypes::BOX;
+		isForGround = true;
 		type = Types::NONE;
 	});
 #pragma endregion
 
-	spriteGo->SetScale({ 0.7f , 0.7f });
+	mapImage->SetScale({ 0.7f , 0.7f });
 #pragma region ADDGAMEOBJECT
 	AddGameObject(saveBNT);
 	AddGameObject(button);
 	AddGameObject(button1);
-	AddGameObject(spriteGo);
+	AddGameObject(mapImage);
 	AddGameObject(textGo);
 	AddGameObject(inputWidth);
 	AddGameObject(inputHeigth);
@@ -306,7 +335,7 @@ void SceneMapEditor::Update(float dt)
 				grids[i][j]->SetTypes(type);
 			}
 			if (spriteType != SpriteTypes::NONE && grids[i][j]->GetGlobalBound().intersects(INPUT_MGR.GetMouseGlobalBound()) && INPUT_MGR.GetMouseDown(MOUSE::Left)) {
-				grids[i][j]->SetTypes(spriteType);
+				grids[i][j]->SetTypes(spriteType , isForGround);
 			}
 		}
 	}
@@ -353,12 +382,14 @@ void SceneMapEditor::Draw(sf::RenderWindow& window)
 
 void SceneMapEditor::Reset()
 {
-	std::vector<std::vector<float>> ids = UTILS.ReadFile("GameData/MapData1.csv");
+	std::vector<std::vector<float>> forGround = UTILS.ReadFile("GameData/MapData1.csv");
+	std::vector<std::vector<float>> backGround = UTILS.ReadFile("GameData/MapData1_backGroundTiles.csv");
+	mapImage->ChangeTexture(SPRITE_PATH"chapterBG0001.png");
 
 	Scene::Reset();
 
-	if (ids.size() != 0) {
-		DrawGrid(ids);
+	if (forGround.size() != 0) {
+		DrawGrid(forGround , backGround);
 	}
 	else {
 		DrawGrid(gridSize, gridCount);
@@ -399,9 +430,9 @@ void SceneMapEditor::DrawGrid(sf::Vector2f cellSize, sf::Vector2f cellCount)
 	}
 }
 
-void SceneMapEditor::DrawGrid(std::vector<std::vector<float>>& lists)
+void SceneMapEditor::DrawGrid(std::vector<std::vector<float>>& forGround , std::vector<std::vector<float>>& backGround)
 {
-	std::vector<std::vector<int>> infos(TranslateMapData(lists));
+	std::vector<std::vector<int>> infos(TranslateMapData(forGround));
 	gridSize = GetGridSize();
 	gridCount = GetGridCount();
 
@@ -413,7 +444,17 @@ void SceneMapEditor::DrawGrid(std::vector<std::vector<float>>& lists)
 			if (infos[i][j] > 3) {
 				grids[i][j]->SetTypes((SpriteTypes)(infos[i][j] - (int)Types::TYPECOUTN));
 			}
-
 		}
 	}
+
+	if (backGround.size() > 0) {
+		for (int i = 0; i < grids.size(); i++) {
+			for (int j = 0; j < grids[i].size(); j++) {
+				if (backGround[i][j] != 0) {
+					grids[i][j]->SetTypes((SpriteTypes)backGround[i][j], false);
+				}
+			}
+		}
+	}
+
 }

@@ -27,11 +27,12 @@ protected:
 	sf::RectangleShape rectangle;
 	sf::Vector2f gridSize;
 
-	SpriteTypes spriteType;
+	SpriteTypes typeForground;
+	SpriteTypes typeBackGround;
 	Types type;
 
-	sf::Sprite sp;
-	
+	sf::Sprite forgroundTile;
+	sf::Sprite backGroundTile;
 public:
 
 
@@ -56,9 +57,10 @@ public:
 	// GameObject을(를) 통해 상속됨
 	void SetScale(sf::Vector2f scale) override;
 	void SetTypes(Types type) { this->type = type; };
-	void SetTypes(SpriteTypes types);
+	void SetTypes(SpriteTypes types, bool isForground = true);
 	Types GetType() { return this->type; };
-	SpriteTypes GetSpriteTypes() { return this->spriteType; };
+	SpriteTypes GetBackGroundTypes() { return this->typeBackGround; };
+	SpriteTypes GetSpriteTypes() { return this->typeForground; };
 
 };
 

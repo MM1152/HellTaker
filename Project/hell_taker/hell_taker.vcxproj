@@ -142,7 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ChangeMapUI.cpp" />
+    <ClCompile Include="GameObjects\ChangeMapUI.cpp" />
     <ClCompile Include="Framework\AnimationClip.cpp" />
     <ClCompile Include="Framework\Animator.cpp" />
     <ClCompile Include="GameObjects\Enemy.cpp" />
@@ -157,8 +157,9 @@
     <ClCompile Include="GameObjects\MoveAbleObject.cpp" />
     <ClCompile Include="GameObjects\Obstacle.cpp" />
     <ClCompile Include="GameObjects\Player.cpp" />
-    <ClCompile Include="ImmovableObstacle.cpp" />
+    <ClCompile Include="GameObjects\ImmovableObstacle.cpp" />
     <ClCompile Include="Effect\MoveEffect.cpp" />
+    <ClCompile Include="Huddle.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Scene\SceneMapEditor.cpp" />
     <ClCompile Include="Scene\SceneDev1.cpp" />
@@ -194,8 +195,9 @@
     <ClInclude Include="GameObjects\MoveAbleObject.h" />
     <ClInclude Include="GameObjects\Obstacle.h" />
     <ClInclude Include="GameObjects\Player.h" />
-    <ClInclude Include="ImmovableObstacle.h" />
+    <ClInclude Include="GameObjects\ImmovableObstacle.h" />
     <ClInclude Include="Effect\MoveEffect.h" />
+    <ClInclude Include="Huddle.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="Scene\SceneMapEditor.h" />
     <ClInclude Include="Scene\SceneDev1.h" />

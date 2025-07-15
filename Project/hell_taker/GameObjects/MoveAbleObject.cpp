@@ -32,6 +32,19 @@ void MoveAbleObject::SetMapData(sf::Vector2f gridSize, int x, int y , SpriteType
 	SetPosition({ gridSize.x * x , gridSize.y * y });
 }
 
+void MoveAbleObject::Update(float dt)
+{
+	SpriteGo::Update(dt);
+	if (isMoveAble) {
+		SetPosition(UTILS.Lerp(curPos, targetPos, t));
+		t += 0.1f;
+		if (t >= 1) {
+			t = 0;
+			isMoveAble = false;
+		}
+	}
+}
+
 void MoveAbleObject::Move(int upX, int upY)
 {
 	if (GameScene::mapData[y][x] != 8) {
@@ -41,7 +54,10 @@ void MoveAbleObject::Move(int upX, int upY)
 
 	x += upX;
 	y += upY;
-	SetPosition({x * gridSize.x	, y * gridSize.y});
+	
+	curPos = GetPosition();
+	targetPos = { x * gridSize.x, y * gridSize.y };
+	isMoveAble = true;
 	GameScene::mapData[y][x] = (int)objectId + (int)Types::TYPECOUTN;
 }
 

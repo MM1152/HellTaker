@@ -10,8 +10,10 @@
 #include "NPC.h"
 #include "ChangeMapUI.h"
 #include "ImmovableObstacle.h"
+#include "Huddle.h"
 
 std::vector<std::vector<int>> GameScene::mapData;
+std::vector<std::vector<float>> GameScene::backGroundMapData;
 
 GameScene::GameScene()
 	:Scene(SceneIds::SceneGame)
@@ -51,7 +53,7 @@ void GameScene::Init()
 	aniIds.push_back(ANI_PATH"changeMap.csv");
 	aniIds.push_back(ANI_PATH"playerDie.csv");
 	aniIds.push_back(ANI_PATH"moveEffect.csv");
-
+	aniIds.push_back(ANI_PATH"goldKey.csv");
 	mapIndex = 0;
 
 	backGround = new SpriteGo(MAP_IMAGE(mapIndex + 1));
@@ -120,6 +122,9 @@ void GameScene::Update(float dt)
 		mapIndex++;
 		ResetScene();
 	}
+	if (INPUT_MGR.GetKeyDown(KEY::R)) {
+		ResetScene();
+	}
 	
 	/*if (player->GetMoveCount() == 0) {
 
@@ -148,6 +153,8 @@ void GameScene::Reset()
 	
 	//SETSCALE (0.7 , 0.7) 이라 설정된 그리드 사이즈에 0.7 나누어줘야됌
 	mapData = TranslateMapData(UTILS.ReadFile(MAP_DATA(mapIndex + 1)));
+	backGroundMapData = UTILS.ReadFile(MAP_BACKGROUND_DATA(mapIndex + 1));
+
 	mapIndexText->SetString(std::to_string(mapIndex + 1));
 	
 	sf::Vector2f gridSize = GetGridSize() / 0.7f;
@@ -156,8 +163,23 @@ void GameScene::Reset()
 
 	for (int i = 0; i < mapData.size(); i++) {
 		for (int j = 0; j < mapData[i].size(); j++) {
+			if (backGroundMapData.size() > 0) {
+				if (backGroundMapData[i][j] != 0) {
+					Obstacle* ob = nullptr;
+					if (backGroundMapData[i][j] == (int)SpriteTypes::HUDLE) {
+						ob = new Huddle(UTILS.textureMap[SpriteTypes::HUDLE]);
+						ob->plusPos = { 10 , 20 };
+						ob->SetScale({ 0.8f , 0.8f });
+						ob->SetSortingOrder(-2);
+					}
+					AddObs(ob, (SpriteTypes)backGroundMapData[i][j], gridSize, i, j);
+					
+				}
+			}
 			if (mapData[i][j] > 3) {
 				int curSpriteType = mapData[i][j] - (int)Types::TYPECOUTN;
+				
+				
 				if (curSpriteType == (int)SpriteTypes::PLAYER) {
 					player->plusPos = { gridSize.x * 0.4f , gridSize.y * 0.5f };
 					player->SetMapData(gridSize, j, i, (SpriteTypes)curSpriteType);
@@ -189,10 +211,8 @@ void GameScene::Reset()
 					else if (curSpriteType == (int)SpriteTypes::GOLDKEY) {
 						ob = new ImmovableObstacle(UTILS.textureMap[SpriteTypes::GOLDKEY]);
 					}
-					else if (curSpriteType == (int)SpriteTypes::HUDLE) {
-						ob = new ImmovableObstacle(UTILS.textureMap[SpriteTypes::HUDLE]);
-					}
-					DrawObs(ob, (SpriteTypes)curSpriteType, gridSize, i, j);
+	
+					AddObs(ob, (SpriteTypes)curSpriteType, gridSize, i, j);
 				}
 			}
 		}
@@ -214,13 +234,14 @@ void GameScene::Release()
 	Scene::Release();
 }
 
-void GameScene::DrawObs(Obstacle* ob, SpriteTypes types , sf::Vector2f gridSize ,int i , int j)
+void GameScene::AddObs(Obstacle* ob, SpriteTypes types , sf::Vector2f gridSize ,int i , int j)
 {
 	AddGameObject(ob);
 	ob->Init();
 	ob->Reset();
 	ob->SetPosition({ gridSize.x * j , gridSize.y * i });
 	ob->SetMapData(gridSize, j, i, types);
+	
 	player->AddObstacle(ob);
 }
 

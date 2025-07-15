@@ -1,5 +1,7 @@
 #pragma once
 #include "Scene.h"
+
+class SpriteGo;
 class SceneMapEditor : public Scene
 {
 protected:
@@ -11,10 +13,14 @@ protected:
 	Types type = Types::NONE;
 	SpriteTypes spriteType = SpriteTypes::NONE;
 
+
 	std::string mapIds[8];
 	std::string mapGridsIds[8];
-	sf::Sprite* mapImage;
+	std::string mapBackGround[8];
+	SpriteGo* mapImage;
 	int mapIndex = 0;
+
+	bool isForGround = true;
 public:
 	SceneMapEditor();
 	~SceneMapEditor() = default;
@@ -26,6 +32,8 @@ public:
 	virtual void Release();
 
 	void DrawGrid(sf::Vector2f cellSize, sf::Vector2f cellCount);
-	void DrawGrid(std::vector<std::vector<float>>& lists);
+	void DrawGrid(std::vector<std::vector<float>>& forGround , std::vector<std::vector<float>>& backGround);
+
+	
 };
 

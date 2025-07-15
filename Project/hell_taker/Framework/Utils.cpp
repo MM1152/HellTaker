@@ -59,6 +59,16 @@ void Utils::WriteFile(const std::string filePath , std::vector<std::vector<float
 	document.Save(filePath);
 }
 
+float Utils::Lerp(float min, float max, float t)
+{
+	return min + (max - min) * t;
+}
+
+sf::Vector2f Utils::Lerp(sf::Vector2f min, sf::Vector2f max, float t)
+{
+	return min + (max - min) * t;
+}
+
 std::vector<std::vector<float>> Utils::ReadFile(const std::string filePath)
 {
 	std::ifstream file(filePath);

@@ -9,6 +9,11 @@ protected:
 	int x;
 	int y;
 
+	bool isMoveAble = false;
+
+	sf::Vector2f targetPos={ 0,0 };
+	sf::Vector2f curPos = { 0,0 };
+	float t = 0;
 	virtual bool CheckBound(int row , int height);
 
 public:
@@ -20,6 +25,7 @@ public:
 	void SetMapData(sf::Vector2f gridSize , int x , int y , SpriteTypes objectId);
 	SpriteTypes GetObjectId() { return objectId; };
 	sf::Vector2i GetXY() { return { x , y }; };
+	void Update(float dt) override;
 	virtual void Move(int x , int y);
 };
 

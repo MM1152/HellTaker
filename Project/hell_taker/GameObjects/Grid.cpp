@@ -3,11 +3,12 @@
 
 
 
-Grid::Grid(const sf::Vector2f gridSize , const std::string name)
+Grid::Grid(const sf::Vector2f gridSize, const std::string name)
     :GameObject(name)
-    ,gridSize(gridSize)
-    ,type(Types::WALL)
-    ,spriteType(SpriteTypes::NONE)
+    , gridSize(gridSize)
+    , type(Types::WALL)
+    , typeBackGround(SpriteTypes::NONE)
+    ,typeForground(SpriteTypes::NONE)
   
 {
     SetSortingLayer(SortingLayers::UI);
@@ -78,7 +79,8 @@ void Grid::Release()
 void Grid::Draw(sf::RenderWindow& window)
 {
     window.draw(rectangle);
-    window.draw(sp);
+    window.draw(forgroundTile);
+    window.draw(backGroundTile);
 }
 
 sf::FloatRect Grid::GetLocalBound()
@@ -102,18 +104,32 @@ void Grid::SetScale(sf::Vector2f scale)
     rectangle.setScale(scale);
 }
 
-void Grid::SetTypes(SpriteTypes types)
+void Grid::SetTypes(SpriteTypes types , bool isForground)
 {
-    spriteType = types;
+    if (isForground) {
+        typeForground = types;
+        if (typeForground == SpriteTypes::DELETE) {
+            forgroundTile.setColor(sf::Color::Transparent);
+        }
+        else if (typeForground != SpriteTypes::NONE) {
+            forgroundTile.setTexture(TEXTURE_MGR.Get(UTILS.textureMap[types]));
+            forgroundTile.setColor(sf::Color::White);
+            forgroundTile.setPosition(rectangle.getPosition());
+            forgroundTile.setScale({ 0.7f , 0.7f });
+        }
+    }
+    else {
+        typeBackGround = types;
+        if (typeBackGround == SpriteTypes::DELETE) {
+            backGroundTile.setColor(sf::Color::Transparent);
+        }
+        else if (typeBackGround != SpriteTypes::NONE) {
+            backGroundTile.setTexture(TEXTURE_MGR.Get(UTILS.textureMap[types]));
+            backGroundTile.setColor(sf::Color::White);
+            backGroundTile.setPosition(rectangle.getPosition());
+            backGroundTile.setScale({ 0.7f , 0.7f });
+        }
+    }
 
-    if (spriteType == SpriteTypes::DELETE) {
-        sp.setColor(sf::Color::Transparent);
-    }
-    else if (spriteType != SpriteTypes::NONE) {
-        sp.setTexture(TEXTURE_MGR.Get(UTILS.textureMap[types]));
-        sp.setColor(sf::Color::White);
-        sp.setPosition(rectangle.getPosition());
-        sp.setScale({ 0.7f , 0.7f });
-    }
     
 }

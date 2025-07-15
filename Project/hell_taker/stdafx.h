@@ -31,3 +31,4 @@
 
 std::string MAP_DATA(int x);
 std::string MAP_IMAGE(int x);
+std::string MAP_BACKGROUND_DATA(int x);

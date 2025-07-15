@@ -33,46 +33,39 @@ bool Player::CheckBound(int row, int height)
         return false;
     }
        
+    bool moveAble = true;
     for (auto obs : obstacleList) {
         if (height == obs->GetXY().y && row == obs->GetXY().x) {
-            isPlayAnimation = true;
-            --moveCount;
+            
+            // 여기서 각 장애물마다 수행해야되는 부분으로 짧게 짤수 있을거같음
+            // 플레이어랑 장애물이랑 거리값 넘겨줘서 해당하면 수행하게 하면될듯
             if (Die()) return false;
             if (!obs->GetActive()) return true;
-            if (changeMoveCountFunc) {
-                changeMoveCountFunc(moveCount);
-            }
             if (obs->GetObjectId() == SpriteTypes::OBSTACLE || obs->GetObjectId() == SpriteTypes::ENEMY) {
                 obs->Move(inputKey.x, inputKey.y);
+                moveAble = false;
             }
+     /*       else if (obs->GetObjectId() == SpriteTypes::HUDLE) {
+                moveCount--;
+            }*/
             else if (obs->GetObjectId() == SpriteTypes::GOLDKEY) {
                 isGetKey = true;
                 obs->SetActive(false);
-                return true;
             }
             else if (obs->GetObjectId() == SpriteTypes::BOX && isGetKey) {
                 obs->SetActive(false);
-                return true;
             }
-            if (obs->GetObjectId() == SpriteTypes::HUDLE) {
-                moveCount--;
-                changeMoveCountFunc(moveCount);
-                return true;
+            else if (obs->GetObjectId() == SpriteTypes::BOX && !isGetKey) {
+                moveAble = false;
             }
-            ChangeAnimation(ANI_PATH"playerKick.csv");
-            return false;
+
+            isPlayAnimation = true;
         }
     }
     
-
-    --moveCount;
-    if (Die()) return false;
-    if (changeMoveCountFunc) {
-        changeMoveCountFunc(moveCount);
-    }
-    
-   
-    return true;
+    if (Die()) return false;   
+    if (!moveAble) ChangeAnimation(ANI_PATH"playerKick.csv");
+    return moveAble;
 }
 
 Player::Player(const std::string texId, const std::string name)
@@ -114,6 +107,7 @@ void Player::Init()
 
 void Player::Update(float dt)
 {
+    MoveAbleObject::Update(dt);
     animator.Update(dt);
     moveEffect.Update(dt);
 
@@ -151,7 +145,7 @@ void Player::Reset()
     moveEffect.Reset();
     obstacleList.clear();
     //SetPosition({ GetPosition().x + plusPos.x , GetPosition().y + plusPos.y });
-    animator.Play(ANI_PATH"playerIdle.csv");
+    ChangeAnimation(ANI_PATH"playerIdle.csv");
 }
 
 void Player::Draw(sf::RenderWindow& window)
@@ -188,18 +182,28 @@ void Player::Move(int upX, int upY)
 {   
     if (CheckBound(upX + x, upY + y)) {
         if(inputKey.x != 0) SetScale({ std::abs(GetScale().x) * inputKey.x , GetScale().y });
+
         ChangeAnimation(ANI_PATH"playerMove.csv");
+
         moveEffect.SetPosition({GetPosition().x , GetPosition().y});
         moveEffect.Play();
-        std::cout << GetPosition().x << "," << GetPosition().y << std::endl;
+        
         MoveAbleObject::Move(upX, upY);
-        TestPrint();
     }
+    moveCount--;
+    for (auto obs : obstacleList) {
+        if (obs->GetType() == SpriteTypes::HUDLE) {
+            if (obs->GetXY().x == x && obs->GetXY().y == y) {
+                moveCount--;
+            }
+        }
+    }
+    changeMoveCountFunc(moveCount);
 }
 
 bool Player::Die()
 {
-    if (moveCount == -1 && !isDie) {
+    if (moveCount <= 0 && !isDie) {
         ChangeAnimation(ANI_PATH"playerDie.csv", true);
         SetPosition({ GetPosition().x , GetPosition().y - 170.f });
         isDie = true;

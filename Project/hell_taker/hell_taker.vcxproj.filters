@@ -84,7 +84,7 @@
     <ClCompile Include="Framework\AnimationClip.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ChangeMapUI.cpp">
+    <ClCompile Include="GameObjects\ChangeMapUI.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Effect\MoveEffect.cpp">
@@ -93,7 +93,10 @@
     <ClCompile Include="Scene\SceneMapEditor.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ImmovableObstacle.cpp">
+    <ClCompile Include="GameObjects\ImmovableObstacle.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Huddle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -185,7 +188,10 @@
     <ClInclude Include="Scene\SceneMapEditor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ImmovableObstacle.h">
+    <ClInclude Include="GameObjects\ImmovableObstacle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Huddle.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
