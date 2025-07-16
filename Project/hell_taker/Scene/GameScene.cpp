@@ -36,9 +36,11 @@ void GameScene::Init()
 	texIds.push_back(SPRITE_PATH"mainUIexport_fUI0001.png");
 	texIds.push_back(SPRITE_PATH"mainUIexport_bUI2.png");
 	texIds.push_back(SPRITE_PATH"pand_idle.png");
+	texIds.push_back(SPRITE_PATH"pand_flust.png");
 	texIds.push_back(SPRITE_PATH"dialogueBG_hell.png");
 	texIds.push_back(SPRITE_PATH"button0003.png");
 	texIds.push_back(SPRITE_PATH"button0004.png");
+	
 
 	texIds.push_back(UTILS.textureMap[SpriteTypes::PLAYER]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::OBSTACLE]);
@@ -58,6 +60,9 @@ void GameScene::Init()
 	aniIds.push_back(ANI_PATH"playerDie.csv");
 	aniIds.push_back(ANI_PATH"moveEffect.csv");
 	aniIds.push_back(ANI_PATH"goldKey.csv");
+	aniIds.push_back(ANI_PATH"InteractiveViewIcon.csv");
+	aniIds.push_back(ANI_PATH"Success.csv");
+
 	//aniIds.push_back(ANI_PATH"goldKeyEffect.csv");
 
 	backGround = new SpriteGo(MAP_IMAGE(MAP.GetMapIndex() + 1));
@@ -67,6 +72,7 @@ void GameScene::Init()
 	player->SetSortingLayer(SortingLayers::FORGROUND);
 
 	interactive = new InteractiveViewer(FONT_PATH"CrimsonPro-Medium.ttf");
+	interactive->SetGameScene(this);
 
 	changeMapUI = new ChangeMapUI("" , "");
 
@@ -114,7 +120,7 @@ void GameScene::Init()
 
 	changeMapUI->SetGameScene(this);
 	player->SetChangeMapFunc([this]() {
-		changeMapUI->Play();
+		ResetScene();
 	});
 	Scene::Init();
 }
@@ -152,6 +158,7 @@ void GameScene::Reset()
 {
 	Scene::Reset();
 
+	MAP.isClear = false;
 
 	backGround->ChangeTexture(MAP_IMAGE(MAP.GetMapIndex() + 1));
 	moveCountUI->SetPosition({ 0,1080 - moveCountUI->GetLocalBound().height });
@@ -209,8 +216,12 @@ void GameScene::Reset()
 					else if (curSpriteType == (int)SpriteTypes::MAP1NPC) {
 						ob = new NPC(UTILS.textureMap[SpriteTypes::MAP1NPC]);
 						((NPC*)ob)->SettingCallBack([this]() {
-							changeMapUI->Play();
-							MAP.SetMapIndex(MAP.GetMapIndex() + 1);
+							interactive->SettingCharacter(MAP.GetMapIndex());
+							interactive->Reset();
+							interactive->SetActive(true);
+
+							//changeMapUI->Play();
+							MAP.isClear = true;
 						});
 					}
 					else if (curSpriteType == (int)SpriteTypes::BOX) {
@@ -256,6 +267,9 @@ void GameScene::AddObs(Obstacle* ob, SpriteTypes types , sf::Vector2f gridSize ,
 
 void GameScene::ResetScene()
 {
+	
+	changeMapUI->Play();
+
 	for (auto& i : player->GetObstacleList()) {
 		RemoveGameObject(i);
 	}

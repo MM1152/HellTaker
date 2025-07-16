@@ -72,3 +72,8 @@ void Animator::SetFrame(int currentFrarme)
 		body->setTexture(TEXTURE_MGR.Get(currentClip->frames[currentFrame]) , resetTexuterRect);		
 	}
 }
+
+void Animator::Stop()
+{
+	currentClip = nullptr;
+}

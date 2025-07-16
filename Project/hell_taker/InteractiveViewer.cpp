@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "InteractiveViewer.h"
-
+#include "GameScene.h"
 InteractiveViewer::InteractiveViewer(const std::string& fontId, const std::string& name)
 	:TextGo(fontId , name)
 {
@@ -15,16 +15,38 @@ void InteractiveViewer::SettingCharacter(int idx)
 void InteractiveViewer::Init()
 {
 	TextGo::Init();
+	iconAnimation.SetTarget(&icon);
+	successAnimation.SetTarget(&succecsSprite);
+
+	icon.setColor(sf::Color::Red);
+
 	texures.push_back(SPRITE_PATH"pand_idle.png");
+	texures.push_back(SPRITE_PATH"pand_flust.png");
+
 	names.push_back("Pandemica, the Tired Demon");
 	lines.push_back("Name's Pandemonica, Hell's Customer Service.\n\t\t\t\t\t\tHow may I serve you?");
 	mixUp.push_back("We can figure somthing out at my place");
 	mixUp.push_back("Maybe I can serve YOU instead?");	
+	correct.push_back(1);
+
+	successAnimation.SetEvent("Success", -1, [this](){
+		successAnimation.Stop();	
+	});
 }
 
 void InteractiveViewer::Reset()
-{
+{	
+	SetActive(false);
 	TextGo::Reset();
+	successAnimation.Play(ANI_PATH"Success.csv");
+	succecsSprite.setPosition({ 1920 / 2 , 1080 - 200.f });
+	UTILS.SetOrigins(succecsSprite, Origins::MC);
+
+	iconAnimation.Play(ANI_PATH"InteractiveViewIcon.csv" , true);
+	icon.setPosition({ 1920 / 2 , 1080 - 200.f });
+	icon.setColor(sf::Color::Red);
+	icon.setScale({ 0.8f , 0.8f });
+
 	topButton.setTexture(TEXTURE_MGR.Get(SPRITE_PATH"button0003.png"));
 	downButton.setTexture(TEXTURE_MGR.Get(SPRITE_PATH"button0003.png"));
 
@@ -52,7 +74,7 @@ void InteractiveViewer::Reset()
 	mixUp2.setPosition({ downButton.getPosition().x ,  downButton.getPosition().y - 7.f });
 	UTILS.SetOrigins(downButton, Origins::MC);
 
-	backGround.setFillColor(sf::Color::Black);
+	backGround.setFillColor(sf::Color(2,2,27));
 	backGround.setSize({1920 , 1080});
 	backGroundSprite.setTexture(TEXTURE_MGR.Get(SPRITE_PATH"dialogueBG_hell.png"));
 	backGroundSprite.setPosition({ 0 , 1080 / 2  - 100.f});
@@ -60,10 +82,10 @@ void InteractiveViewer::Reset()
 
 	nameText.setFont(FONT_MGR.Get(fontId));
 	lineText.setFont(FONT_MGR.Get(fontId));
-	sprite.setTexture(TEXTURE_MGR.Get(texures[curIndex]) , true);
+	sprite.setTexture(TEXTURE_MGR.Get(texures[curIndex * 2]) , true);
 
-	sprite.setPosition({ 1920 / 2 , 1080 / 2 - 150.f });
-	UTILS.SetOrigins(sprite, Origins::MC);
+	sprite.setPosition({ 1920 / 2 , 1080 / 2 + 200.f });
+	UTILS.SetOrigins(sprite, Origins::MB);
 
 	nameText.setString(names[curIndex]);
 	lineText.setString(lines[curIndex]);
@@ -73,11 +95,21 @@ void InteractiveViewer::Reset()
 
 	UTILS.SetOrigins(nameText, Origins::MC);
 	UTILS.SetOrigins(lineText, Origins::MC);
+
+	showMessageBox = false;
+	up = false;
+	t = 0;
 }
 
 void InteractiveViewer::Update(float dt)
 {
 	TextGo::Update(dt);
+	iconAnimation.Update(dt);
+	if (clear) {
+		successAnimation.Update(dt);
+	}
+	
+	UTILS.SetOrigins(icon, Origins::MC);
 	if (INPUT_MGR.GetKeyDown(KEY::Space) && !showMessageBox) {
 		showMessageBox = true;
 	}
@@ -109,6 +141,24 @@ void InteractiveViewer::Update(float dt)
 		downButton.setColor(selectColor);
 		mixUp2.setFillColor(sf::Color::White);
 	}
+
+	if (INPUT_MGR.GetKeyDown(KEY::Space) && clear) {
+		gameScene->ResetScene();
+	}
+
+	if (INPUT_MGR.GetKeyDown(KEY::Space)) {
+		if (correct[curIndex] == up) {
+			sprite.setTexture(TEXTURE_MGR.Get(texures[curIndex * 2 + 1] ), true);
+			UTILS.SetOrigins(sprite, Origins::MB);
+
+			clear = true;
+			MAP.SetMapIndex(MAP.GetMapIndex() + 1);
+			
+		}
+		else {
+
+		}
+	}
 }
 
 void InteractiveViewer::Draw(sf::RenderWindow& window)
@@ -118,10 +168,16 @@ void InteractiveViewer::Draw(sf::RenderWindow& window)
 	window.draw(sprite);
 	window.draw(nameText);
 	window.draw(lineText);
-	if (showMessageBox) {
+
+	if (!showMessageBox) window.draw(icon);
+	
+	if (showMessageBox && !clear) {
 		window.draw(topButton);
 		window.draw(downButton);
 		window.draw(mixUp1);
 		window.draw(mixUp2);
+	}
+	if (clear) {
+		window.draw(succecsSprite);
 	}
 }

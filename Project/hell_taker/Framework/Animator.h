@@ -39,6 +39,7 @@ public:
 	void Play(AnimationClip* clip , bool resetTexuterRect = false);
 	void Update(float dt);
 	void SetFrame(int currentFrarme);
+	void Stop();
 	const std::string& GetCurrentClipId() {
 		if (currentClip == nullptr) {
 			return "";

@@ -47,16 +47,16 @@ void ChangeMapUI::Init()
 		SetActive(false);
 		//gameScene->Reset();
 		});
-	animator.SetEvent("changeMap", 17, [this]() {
-		gameScene->ResetScene();
-	});
+	//animator.SetEvent("changeMap", 17, [this]() {
+	//	gameScene->ResetScene();
+	//});
 
 	
 	SetActive(false);
 }
 
 void ChangeMapUI::Reset()
-{
+{	
 	//sprite.setTexture(TEXTURE_MGR.Get(texId));
 	//SetPosition({ 0 , 1080 - 100 });
 	
@@ -73,7 +73,7 @@ void ChangeMapUI::Update(float dt)
 
 void ChangeMapUI::Exit()
 {
-	
+	animator.Stop();
 }
 
 void ChangeMapUI::Release()
@@ -87,6 +87,7 @@ void ChangeMapUI::Draw(sf::RenderWindow& window)
 
 void ChangeMapUI::Play()
 {
+	std::cout << "PLAY" << std::endl;
 	animator.Play(ANI_PATH"changeMap.csv", true);
 	playAnimation = true;
 	SetActive(true);

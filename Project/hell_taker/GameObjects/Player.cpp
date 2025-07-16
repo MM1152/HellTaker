@@ -98,7 +98,7 @@ void Player::Update(float dt)
     animator.Update(dt);
     moveEffect.Update(dt);
 
-    if (!isPlayAnimation) {
+    if (!isPlayAnimation && !MAP.isClear) {
         
         if (INPUT_MGR.GetKeyDown(KEY::Left)) {
             inputKey = { -1,0 };

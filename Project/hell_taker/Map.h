@@ -16,6 +16,7 @@ protected:
 	sf::Vector2f gridSize;
 	sf::Vector2f gridCount;
 	int moveCount;
+
 public:
 	void Init();
 	void Release();
@@ -30,6 +31,8 @@ public:
 	void SetMapIndex(int idx);
 	void ReLoad();
 	std::vector<std::vector<int>> TranslateMapData(const std::vector<std::vector<float>>& mapData);
+
+	bool isClear = false;
 };
 
 #define MAP Map::Instance()
