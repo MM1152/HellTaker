@@ -1,8 +1,8 @@
 #pragma once
 #include "Singleton.h"
-class Map : public Singleton<Map>
+class MapData_MGR : public Singleton<MapData_MGR>
 {
-	friend Singleton<Map>;
+	friend Singleton<MapData_MGR>;
 protected:
 	std::vector<std::vector<std::vector<int>>> map_Data;
 	std::vector<std::vector<std::vector<int>>> backGround_Map_Data;
@@ -35,4 +35,4 @@ public:
 	bool isClear = false;
 };
 
-#define MAP Map::Instance()
+#define MAP MapData_MGR::Instance()

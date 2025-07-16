@@ -153,7 +153,6 @@ void InteractiveViewer::Update(float dt)
 
 			clear = true;
 			MAP.SetMapIndex(MAP.GetMapIndex() + 1);
-			
 		}
 		else {
 

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Map.h"
 
-void Map::Init()
+void MapData_MGR::Init()
 {	
 	for (int i = 0; i < 8; i++) {
 		map_Data.push_back(TranslateMapData(UTILS.ReadFile(MAP_DATA(i + 1))));
@@ -14,7 +14,7 @@ void Map::Init()
 	}
 }
 
-void Map::ReLoad() {
+void MapData_MGR::ReLoad() {
 	map_Data.clear();
 	map_gridSize.clear();
 	map_gridCount.clear();
@@ -31,46 +31,46 @@ void Map::ReLoad() {
 	}
 }
 
-void Map::Release()
+void MapData_MGR::Release()
 {
 }
 
-std::vector<std::vector<int>> Map::GetMapData()
+std::vector<std::vector<int>> MapData_MGR::GetMapData()
 {
 	return map_Data[mapIndex];
 }
 
-std::vector<std::vector<int>> Map::GetBackGroundMap()
+std::vector<std::vector<int>> MapData_MGR::GetBackGroundMap()
 {
 	return backGround_Map_Data[mapIndex];
 }
 
-sf::Vector2f Map::GetGridSize()
+sf::Vector2f MapData_MGR::GetGridSize()
 {
 	return map_gridSize[mapIndex];
 }
 
-sf::Vector2f Map::GetGridCount()
+sf::Vector2f MapData_MGR::GetGridCount()
 {
 	return map_gridCount[mapIndex];
 }
 
-int Map::GetTileData(int height, int row)
+int MapData_MGR::GetTileData(int height, int row)
 {
 	return map_Data[mapIndex][height][row];
 }
 
-int Map::GetMoveCount()
+int MapData_MGR::GetMoveCount()
 {
 	return map_MoveCount[mapIndex];
 }
 
-void Map::SetMapIndex(int idx)
+void MapData_MGR::SetMapIndex(int idx)
 {
 	mapIndex = idx;
 }
 
-std::vector<std::vector<int>> Map::TranslateMapData(const std::vector<std::vector<float>>& mapData)
+std::vector<std::vector<int>> MapData_MGR::TranslateMapData(const std::vector<std::vector<float>>& mapData)
 {
 	std::vector<std::vector<int>> infos;
 

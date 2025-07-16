@@ -17,6 +17,7 @@
 #include <assert.h>
 #include <fstream>
 #include <functional>
+#include <nlohmann/json.hpp>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
@@ -29,6 +30,7 @@
 #include "ResourceMgr.h"
 #include "Utils.h"
 #include "Map.h"
+
 std::string MAP_DATA(int x);
 std::string MAP_IMAGE(int x);
 std::string MAP_BACKGROUND_DATA(int x);
