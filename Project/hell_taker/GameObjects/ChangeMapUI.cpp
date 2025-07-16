@@ -87,7 +87,6 @@ void ChangeMapUI::Draw(sf::RenderWindow& window)
 
 void ChangeMapUI::Play()
 {
-	std::cout << "PLAY" << std::endl;
 	animator.Play(ANI_PATH"changeMap.csv", true);
 	playAnimation = true;
 	SetActive(true);

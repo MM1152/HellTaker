@@ -20,6 +20,7 @@ void SceneDev1::Init()
 
 void SceneDev1::Reset()
 {
+	
 	Scene::Reset();
 
 }

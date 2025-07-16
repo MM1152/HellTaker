@@ -40,7 +40,8 @@ void GameScene::Init()
 	texIds.push_back(SPRITE_PATH"dialogueBG_hell.png");
 	texIds.push_back(SPRITE_PATH"button0003.png");
 	texIds.push_back(SPRITE_PATH"button0004.png");
-	
+	texIds.push_back(SPRITE_PATH"mod_idle.png");
+	texIds.push_back(SPRITE_PATH"mod_close.png");
 
 	texIds.push_back(UTILS.textureMap[SpriteTypes::PLAYER]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::OBSTACLE]);
@@ -62,7 +63,7 @@ void GameScene::Init()
 	aniIds.push_back(ANI_PATH"goldKey.csv");
 	aniIds.push_back(ANI_PATH"InteractiveViewIcon.csv");
 	aniIds.push_back(ANI_PATH"Success.csv");
-
+	aniIds.push_back(ANI_PATH"badEnd.csv");
 	//aniIds.push_back(ANI_PATH"goldKeyEffect.csv");
 
 	backGround = new SpriteGo(MAP_IMAGE(MAP.GetMapIndex() + 1));
@@ -216,7 +217,6 @@ void GameScene::Reset()
 					else if (curSpriteType == (int)SpriteTypes::MAP1NPC) {
 						ob = new NPC(UTILS.textureMap[SpriteTypes::MAP1NPC]);
 						((NPC*)ob)->SettingCallBack([this]() {
-							interactive->SettingCharacter(MAP.GetMapIndex());
 							interactive->Reset();
 							interactive->SetActive(true);
 

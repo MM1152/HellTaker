@@ -35,7 +35,7 @@ void Utils::SetOrigins(sf::Text& sp, Origins ori)
 	sp.setOrigin(origin);
 }
 
-void Utils::WriteFile(const std::string filePath , std::vector<std::vector<float>> write)
+void Utils::WriteMapDataFile(const std::string filePath , std::vector<std::vector<float>> write)
 {
 	rapidcsv::Document document;
 	//document.SetCell(0, 0, "MapData");
@@ -69,7 +69,7 @@ sf::Vector2f Utils::Lerp(sf::Vector2f min, sf::Vector2f max, float t)
 	return min + (max - min) * t;
 }
 
-std::vector<std::vector<float>> Utils::ReadFile(const std::string filePath)
+std::vector<std::vector<float>> Utils::ReadMapDataFile(const std::string filePath)
 {
 	std::ifstream file(filePath);
 	std::vector<std::vector<float>> readFileInfo;
@@ -108,6 +108,14 @@ std::vector<std::vector<float>> Utils::ReadFile(const std::string filePath)
 	readFileInfo.push_back(vec);
 
 	return readFileInfo;
+}
+
+nlohmann::json Utils::ReadInteractiveViewerData(const std::string& filePath)
+{
+	std::ifstream read(filePath);
+	nlohmann::json data = nlohmann::json::parse(read);
+	
+	return data;
 }
 
 

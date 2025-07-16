@@ -5,6 +5,7 @@
 #define SPRITE_PATH "Resources/Sprite/"
 #define FONT_PATH "Resources/Font/"
 #define ANI_PATH "Resources/Animation/"
+#define INTERATIVE_DATA_PATH "InterativeViewerData/"
 #define KEY sf::Keyboard::Key 
 #define MOUSE sf::Mouse
 

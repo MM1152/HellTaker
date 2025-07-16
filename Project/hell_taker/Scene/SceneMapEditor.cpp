@@ -182,8 +182,8 @@ void SceneMapEditor::Init()
 		backGroundType.push_back(0);
 		backGround.push_back(backGroundType);
 
-		UTILS.WriteFile("GameData/MapData" + std::to_string(MAP.GetMapIndex() + 1) + ".csv", write);
-		UTILS.WriteFile("GameData/MapData" + std::to_string(MAP.GetMapIndex() + 1) + "_backGroundTiles.csv", backGround);
+		UTILS.WriteMapDataFile("GameData/MapData" + std::to_string(MAP.GetMapIndex() + 1) + ".csv", write);
+		UTILS.WriteMapDataFile("GameData/MapData" + std::to_string(MAP.GetMapIndex() + 1) + "_backGroundTiles.csv", backGround);
 
 		MAP.ReLoad(); 
 	});

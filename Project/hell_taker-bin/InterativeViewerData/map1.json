@@ -1,0 +1,7 @@
+{
+  "texture":["Resources/Sprite/pand_idle.png" , "Resources/Sprite/pand_flust.png"],
+  "name": "Pandemica, the Tired Demon",
+  "lines": ["Name's Pandemonica, Hell's Customer Service.\n\t\t\t\t\t\tHow may I serve you?","Sweet of you to offer. i could really use some coffee.\n\t\t\t\t\t\tI'm not myself without it.","you thought you're leaving hell alive? How delusional."],
+  "mixUp": ["We can figure something out at my place" , "Maybe I can serve You instead?"],
+  "correct": 1
+}

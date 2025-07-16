@@ -7,40 +7,54 @@ InteractiveViewer::InteractiveViewer(const std::string& fontId, const std::strin
 	sortingOrder = 50;
 }
 
-void InteractiveViewer::SettingCharacter(int idx)
-{
-	curIndex = idx;
-}
-
 void InteractiveViewer::Init()
 {
 	TextGo::Init();
+	textures.resize(2);
+	lines.resize(3);
+	mixUp.resize(2);
+
 	iconAnimation.SetTarget(&icon);
 	successAnimation.SetTarget(&succecsSprite);
+	badEndAnimation.SetTarget(&badEndSprite);
 
 	icon.setColor(sf::Color::Red);
 
-	texures.push_back(SPRITE_PATH"pand_idle.png");
-	texures.push_back(SPRITE_PATH"pand_flust.png");
-
-	names.push_back("Pandemica, the Tired Demon");
-	lines.push_back("Name's Pandemonica, Hell's Customer Service.\n\t\t\t\t\t\tHow may I serve you?");
-	mixUp.push_back("We can figure somthing out at my place");
-	mixUp.push_back("Maybe I can serve YOU instead?");	
-	correct.push_back(1);
-
 	successAnimation.SetEvent("Success", -1, [this](){
 		successAnimation.Stop();	
+	});
+	badEndAnimation.SetEvent("badEnd", -1, [this]() {
+		badEndAnimation.Stop();
 	});
 }
 
 void InteractiveViewer::Reset()
 {	
+	nlohmann::json data = UTILS.ReadInteractiveViewerData(INTERATIVE_DATA_PATH"map" + std::to_string(MAP.GetMapIndex() + 1) + ".json");
+
+	textures[0] = (data)["texture"][0];
+	textures[1] = (data)["texture"][1];
+
+	name = (data)["name"];
+	lines[0] = (data)["lines"][0];
+	lines[1] = (data)["lines"][1];
+	lines[2] = (data)["lines"][2];
+
+	mixUp[0] = (data)["mixUp"][0];
+	mixUp[1] = (data)["mixUp"][1];
+	correct = (data)["correct"];
+
 	SetActive(false);
+
 	TextGo::Reset();
 	successAnimation.Play(ANI_PATH"Success.csv");
 	succecsSprite.setPosition({ 1920 / 2 , 1080 - 200.f });
 	UTILS.SetOrigins(succecsSprite, Origins::MC);
+
+	badEndSprite.setPosition({ 1920/2 , 1080 / 2 - 100.f });
+	
+	badEndAnimation.Play(ANI_PATH"badEnd.csv");
+	UTILS.SetOrigins(badEndSprite, Origins::MC);
 
 	iconAnimation.Play(ANI_PATH"InteractiveViewIcon.csv" , true);
 	icon.setPosition({ 1920 / 2 , 1080 - 200.f });
@@ -52,13 +66,13 @@ void InteractiveViewer::Reset()
 
 	mixUp1.setFont(FONT_MGR.Get(fontId));
 	mixUp1.setFillColor(sf::Color::White);
-	mixUp1.setString(mixUp[curIndex * 2]);
+	mixUp1.setString(mixUp[0]);
 	mixUp1.setCharacterSize(23);
 	UTILS.SetOrigins(mixUp1 , Origins::MC);
 
 	mixUp2.setFont(FONT_MGR.Get(fontId));
 	mixUp2.setFillColor(sf::Color::White);
-	mixUp2.setString(mixUp[curIndex * 2 + 1]);
+	mixUp2.setString(mixUp[1]);
 	mixUp2.setCharacterSize(23);
 	UTILS.SetOrigins(mixUp2, Origins::MC);
 
@@ -82,13 +96,13 @@ void InteractiveViewer::Reset()
 
 	nameText.setFont(FONT_MGR.Get(fontId));
 	lineText.setFont(FONT_MGR.Get(fontId));
-	sprite.setTexture(TEXTURE_MGR.Get(texures[curIndex * 2]) , true);
+	sprite.setTexture(TEXTURE_MGR.Get(textures[0]) , true);
 
 	sprite.setPosition({ 1920 / 2 , 1080 / 2 + 200.f });
 	UTILS.SetOrigins(sprite, Origins::MB);
 
-	nameText.setString(names[curIndex]);
-	lineText.setString(lines[curIndex]);
+	nameText.setString(name);
+	lineText.setString(lines[0]);
 	nameText.setPosition({1920 / 2 , 750.f});
 	nameText.setFillColor(sf::Color::Red);
 	lineText.setPosition({ 1920 / 2 , 800.f });
@@ -98,6 +112,9 @@ void InteractiveViewer::Reset()
 
 	showMessageBox = false;
 	up = false;
+	badClear = false;
+	clear = false;
+	badSelect = false;
 	t = 0;
 }
 
@@ -108,11 +125,11 @@ void InteractiveViewer::Update(float dt)
 	if (clear) {
 		successAnimation.Update(dt);
 	}
+	if (badClear) {
+		badEndAnimation.Update(dt);
+	}
 	
 	UTILS.SetOrigins(icon, Origins::MC);
-	if (INPUT_MGR.GetKeyDown(KEY::Space) && !showMessageBox) {
-		showMessageBox = true;
-	}
 
 	if (INPUT_MGR.GetKeyDown(KEY::Up) && up) {
 		up = false;
@@ -122,7 +139,7 @@ void InteractiveViewer::Update(float dt)
 		up = true;
 		t = 0;
 	}
-
+	
 	if (!up && t <= 1) {
 		topButton.setScale({ UTILS.Lerp(curSize , targetSize , t).x , UTILS.Lerp(curSize , targetSize , t).y });
 		downButton.setScale({ UTILS.Lerp(targetSize ,curSize ,t).x , UTILS.Lerp(targetSize , curSize , t).y });
@@ -142,35 +159,52 @@ void InteractiveViewer::Update(float dt)
 		mixUp2.setFillColor(sf::Color::White);
 	}
 
-	if (INPUT_MGR.GetKeyDown(KEY::Space) && clear) {
+
+
+	if (INPUT_MGR.GetKeyDown(KEY::Space) && (clear || badClear)) {
 		gameScene->ResetScene();
 	}
 
-	if (INPUT_MGR.GetKeyDown(KEY::Space)) {
-		if (correct[curIndex] == up) {
-			sprite.setTexture(TEXTURE_MGR.Get(texures[curIndex * 2 + 1] ), true);
+	if (INPUT_MGR.GetKeyDown(KEY::Space) && badSelect) {
+		badClear = true;
+	}
+
+	if (INPUT_MGR.GetKeyDown(KEY::Space) && showMessageBox) {
+		if (correct == up) {
+			sprite.setTexture(TEXTURE_MGR.Get(textures[1] ), true);
+			lineText.setString(lines[1]);
+
+			UTILS.SetOrigins(lineText, Origins::MC);
 			UTILS.SetOrigins(sprite, Origins::MB);
 
 			clear = true;
 			MAP.SetMapIndex(MAP.GetMapIndex() + 1);
 		}
 		else {
-
+			lineText.setString(lines[2]);
+			badSelect = true;
+			UTILS.SetOrigins(lineText, Origins::MC);
 		}
+	}
+	
+
+	if (INPUT_MGR.GetKeyDown(KEY::Space) && !showMessageBox) {
+		showMessageBox = true;
 	}
 }
 
 void InteractiveViewer::Draw(sf::RenderWindow& window)
 {
 	window.draw(backGround);
-	window.draw(backGroundSprite);
-	window.draw(sprite);
-	window.draw(nameText);
-	window.draw(lineText);
-
-	if (!showMessageBox) window.draw(icon);
+	if (!badClear) {
+		window.draw(backGroundSprite);
+		window.draw(sprite);
+		window.draw(nameText);
+		window.draw(lineText);
+	}
+	if ((!showMessageBox || badSelect) && !badClear) window.draw(icon);
 	
-	if (showMessageBox && !clear) {
+	if (showMessageBox && !clear && !badSelect) {
 		window.draw(topButton);
 		window.draw(downButton);
 		window.draw(mixUp1);
@@ -178,5 +212,8 @@ void InteractiveViewer::Draw(sf::RenderWindow& window)
 	}
 	if (clear) {
 		window.draw(succecsSprite);
+	}
+	if (badClear) {
+		window.draw(badEndSprite);
 	}
 }

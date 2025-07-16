@@ -4,13 +4,13 @@
 void MapData_MGR::Init()
 {	
 	for (int i = 0; i < 8; i++) {
-		map_Data.push_back(TranslateMapData(UTILS.ReadFile(MAP_DATA(i + 1))));
+		map_Data.push_back(TranslateMapData(UTILS.ReadMapDataFile(MAP_DATA(i + 1))));
 
 		map_gridSize.push_back(gridSize);
 		map_gridCount.push_back(gridCount);
 		map_MoveCount.push_back(moveCount);
 
-		backGround_Map_Data.push_back(TranslateMapData(UTILS.ReadFile(MAP_BACKGROUND_DATA(i + 1))));
+		backGround_Map_Data.push_back(TranslateMapData(UTILS.ReadMapDataFile(MAP_BACKGROUND_DATA(i + 1))));
 	}
 }
 
@@ -21,13 +21,13 @@ void MapData_MGR::ReLoad() {
 	map_MoveCount.clear();
 	backGround_Map_Data.clear();
 	for (int i = 0; i < 8; i++) {
-		map_Data.push_back(TranslateMapData(UTILS.ReadFile(MAP_DATA(i + 1))));
+		map_Data.push_back(TranslateMapData(UTILS.ReadMapDataFile(MAP_DATA(i + 1))));
 
 		map_gridSize.push_back(gridSize);
 		map_gridCount.push_back(gridCount);
 		map_MoveCount.push_back(moveCount);
 
-		backGround_Map_Data.push_back(TranslateMapData(UTILS.ReadFile(MAP_BACKGROUND_DATA(i + 1))));
+		backGround_Map_Data.push_back(TranslateMapData(UTILS.ReadMapDataFile(MAP_BACKGROUND_DATA(i + 1))));
 	}
 }
 
