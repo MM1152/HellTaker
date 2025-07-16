@@ -10,12 +10,3 @@ Huddle::~Huddle()
 {
 }
 
-void Huddle::Init()
-{
-	ImmovableObstacle::Init();
-}
-
-void Huddle::Reset()
-{
-	ImmovableObstacle::Reset();
-}

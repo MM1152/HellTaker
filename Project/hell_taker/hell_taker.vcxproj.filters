@@ -75,7 +75,7 @@
     <ClCompile Include="GameObjects\Enemy.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="NPC.cpp">
+    <ClCompile Include="GameObjects\NPC.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Framework\Animator.cpp">
@@ -96,16 +96,25 @@
     <ClCompile Include="GameObjects\ImmovableObstacle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Huddle.cpp">
+    <ClCompile Include="GameObjects\Huddle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="GoldKey.cpp">
+    <ClCompile Include="GameObjects\GoldKey.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
+    <ClCompile Include="Framework\Map.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="InteractiveViewer.cpp">
+    <ClCompile Include="GameObjects\InteractiveViewer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjects\UpDownHudle.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="HitEffect.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -179,7 +188,7 @@
     <ClInclude Include="GameObjects\Enemy.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="NPC.h">
+    <ClInclude Include="GameObjects\NPC.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Framework\Animator.h">
@@ -200,16 +209,25 @@
     <ClInclude Include="GameObjects\ImmovableObstacle.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Huddle.h">
+    <ClInclude Include="GameObjects\Huddle.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="GoldKey.h">
+    <ClInclude Include="GameObjects\GoldKey.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
+    <ClInclude Include="Framework\Map.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="InteractiveViewer.h">
+    <ClInclude Include="GameObjects\InteractiveViewer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjects\UpDownHudle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="HitEffect.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

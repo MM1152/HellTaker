@@ -12,6 +12,7 @@ void Utils::Init()
 	textureMap.insert({ SpriteTypes::HUDLE , SPRITE_PATH"assets100V20122.png" });
 	textureMap.insert({ SpriteTypes::BOX , SPRITE_PATH"backup_lockbox.png" });
 	textureMap.insert({ SpriteTypes::GOLDKEY , SPRITE_PATH"assets100V20104.png" });
+	textureMap.insert({ SpriteTypes::UPDOWNHUDLE , SPRITE_PATH"assets100V20119.png" });	
 }
 void Utils::SetOrigins(sf::Sprite& sp , Origins ori)
 {

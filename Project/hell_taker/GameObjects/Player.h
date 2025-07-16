@@ -3,13 +3,20 @@
 #include "Obstacle.h"
 #include "Animator.h"
 #include "MoveEffect.h"
+
+enum class EffectType {
+	None,
+	Move,
+	Hit,
+};
+
 class Player : public MoveAbleObject
 {
 private:
 	
 protected:
 	Animator animator;
-	MoveEffect moveEffect;
+	std::unordered_map<EffectType, Effect*> effectAnimation;
 	sf::RectangleShape dieAnimationBackGround;
 	bool isDie = false;
 
@@ -23,8 +30,9 @@ protected:
 	
 	
 	bool isGetKey = false;
-
+	bool isHit = false;
 	bool CheckBound(int row, int height) override;
+	void PlayEffectAnimation(EffectType type);
 public:
 	Player(const std::string texId = "", const std::string name ="");
 	~Player() override = default;
@@ -47,5 +55,7 @@ public:
 	void SetMoveCountFunc(std::function<void(int)> callBack) { changeMoveCountFunc = callBack; };
 	void SetChangeMapFunc(std::function<void()> callBack) { changeMapAnimationFunc = callBack; };
 	std::list<Obstacle*>& GetObstacleList() { return obstacleList; };
+
+
 };
 

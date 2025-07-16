@@ -9,29 +9,51 @@ GoldKey::GoldKey(const std::string& texId, const std::string& name)
 void GoldKey::Init()
 {
 	animator.SetTarget(&sprite);
-	effect.SetTarget(&effectSprite);
+	effect.SetTarget(&sprite);
 }
 
 void GoldKey::Reset()
 {
 	ImmovableObstacle::Reset();
+	getKey = false;
 	SetScale({ 0.8f , 0.8f });
-	effectSprite.setScale(GetScale());
+
 	animator.Play(ANI_PATH"goldKey.csv");
+	effect.Play(ANI_PATH"goldKeyEffect.csv" , true);
 
 	effect.SetEvent("goldKeyEffect", -1, [this]() {
 		SetActive(false);
+		effect.Stop();
 	});
+
+	effect.SetEvent("goldKeyEffect", 1 ,[this]() {
+		SetPosition(GetPosition() - plusPos * 0.8f);
+	});
+
+	SetOrigin(Origins::MC);
 }
 
 void GoldKey::Update(float dt)
 {
-	animator.Update(dt);
-	effect.Update(dt);
+	
+	if (getKey) {
+		effect.Update(dt);
+	}
+	else {
+		animator.Update(dt);
+	}
 }
 
 void GoldKey::Draw(sf::RenderWindow& window)
 {
 	ImmovableObstacle::Draw(window);
-	window.draw(effectSprite);	
+	window.draw(sprite);	
 }
+
+void GoldKey::Interaction()
+{
+	getKey = true;
+	
+}
+
+

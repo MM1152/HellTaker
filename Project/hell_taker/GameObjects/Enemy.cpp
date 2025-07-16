@@ -19,7 +19,7 @@ void Enemy::Reset()
 {
 	Obstacle::Reset();
 	animator.Play(ANI_PATH"enemyIdle.csv");
-	sprite.setScale(0.7f, 0.7f);
+	sprite.setScale(0.8f, 0.8f);
 	SetOrigin(Origins::MC);
 }
 

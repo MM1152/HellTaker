@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="GameObjects\ChangeMapUI.cpp" />
     <ClCompile Include="Framework\AnimationClip.cpp" />
     <ClCompile Include="Framework\Animator.cpp" />
@@ -159,11 +160,12 @@
     <ClCompile Include="GameObjects\Player.cpp" />
     <ClCompile Include="GameObjects\ImmovableObstacle.cpp" />
     <ClCompile Include="Effect\MoveEffect.cpp" />
-    <ClCompile Include="GoldKey.cpp" />
-    <ClCompile Include="Huddle.cpp" />
-    <ClCompile Include="InteractiveViewer.cpp" />
-    <ClCompile Include="Map.cpp" />
-    <ClCompile Include="NPC.cpp" />
+    <ClCompile Include="GameObjects\GoldKey.cpp" />
+    <ClCompile Include="GameObjects\Huddle.cpp" />
+    <ClCompile Include="GameObjects\InteractiveViewer.cpp" />
+    <ClCompile Include="Framework\Map.cpp" />
+    <ClCompile Include="GameObjects\NPC.cpp" />
+    <ClCompile Include="HitEffect.cpp" />
     <ClCompile Include="Scene\SceneMapEditor.cpp" />
     <ClCompile Include="Scene\SceneDev1.cpp" />
     <ClCompile Include="Scene\GameScene.cpp" />
@@ -176,9 +178,11 @@
     </ClCompile>
     <ClCompile Include="Framework\Utils.cpp" />
     <ClCompile Include="GameObjects\TextGo.cpp" />
+    <ClCompile Include="GameObjects\UpDownHudle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChangeMapUI.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="Framework\AnimationClip.h" />
     <ClInclude Include="Framework\Animator.h" />
     <ClInclude Include="GameObjects\Enemy.h" />
@@ -200,11 +204,12 @@
     <ClInclude Include="GameObjects\Player.h" />
     <ClInclude Include="GameObjects\ImmovableObstacle.h" />
     <ClInclude Include="Effect\MoveEffect.h" />
-    <ClInclude Include="GoldKey.h" />
-    <ClInclude Include="Huddle.h" />
-    <ClInclude Include="InteractiveViewer.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="NPC.h" />
+    <ClInclude Include="GameObjects\GoldKey.h" />
+    <ClInclude Include="GameObjects\Huddle.h" />
+    <ClInclude Include="GameObjects\InteractiveViewer.h" />
+    <ClInclude Include="Framework\Map.h" />
+    <ClInclude Include="GameObjects\NPC.h" />
+    <ClInclude Include="HitEffect.h" />
     <ClInclude Include="Scene\SceneMapEditor.h" />
     <ClInclude Include="Scene\SceneDev1.h" />
     <ClInclude Include="Scene\GameScene.h" />
@@ -212,6 +217,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Framework\Utils.h" />
     <ClInclude Include="GameObjects\TextGo.h" />
+    <ClInclude Include="GameObjects\UpDownHudle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

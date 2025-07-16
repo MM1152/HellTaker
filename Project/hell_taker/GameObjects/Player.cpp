@@ -2,31 +2,32 @@
 #include "Player.h"
 #include "NPC.h"
 #include "GameScene.h"
-
+#include "UpDownHudle.h"
+#include "MoveEffect.h"
+#include "HitEffect.h"
 bool Player::CheckBound(int row, int height)
 {
-    for (auto obs : obstacleList) {
-        if (obs->GetType() == SpriteTypes::MAP1NPC) {
-            sf::Vector2i pos = obs->GetXY();
-            if (std::abs(pos.x - row) + std::abs(pos.y - height) == 1) {
-                std::cout << "END GAME" << std::endl;
-                ((NPC*)obs)->ClearMap();
-                return true;
-            }
-        }
-    }
+    
 
     if (!MoveAbleObject::CheckBound(row , height)) {
         return false;
     }
        
+    moveCount--;
+    for (auto obs : obstacleList) {
+        if (obs->GetType() == SpriteTypes::UPDOWNHUDLE) {
+            ((UpDownHudle*)obs)->Play();
+        }
+    }
+
+    if (Die()) return false;
     bool moveAble = true;
     for (auto obs : obstacleList) {
         if (height == obs->GetXY().y && row == obs->GetXY().x) {
             
             // 여기서 각 장애물마다 수행해야되는 부분으로 짧게 짤수 있을거같음
             // 플레이어랑 장애물이랑 거리값 넘겨줘서 해당하면 수행하게 하면될듯
-            if (Die()) return false;
+            if (isDie) return false;
             if (!obs->GetActive()) return true;
             if (obs->GetObjectId() == SpriteTypes::OBSTACLE || obs->GetObjectId() == SpriteTypes::ENEMY) {
                 obs->Move(inputKey.x, inputKey.y);
@@ -37,7 +38,7 @@ bool Player::CheckBound(int row, int height)
             }*/
             else if (obs->GetObjectId() == SpriteTypes::GOLDKEY) {
                 isGetKey = true;
-                obs->SetActive(false);
+                obs->Interaction();
             }
             else if (obs->GetObjectId() == SpriteTypes::BOX && isGetKey) {
                 obs->SetActive(false);
@@ -49,15 +50,36 @@ bool Player::CheckBound(int row, int height)
             isPlayAnimation = true;
         }
     }
+    if (!isDie) {
+        for (auto obs : obstacleList) {
+            if (obs->GetType() == SpriteTypes::MAP1NPC) {
+                sf::Vector2i pos = obs->GetXY();
+                if (std::abs(pos.x - row) + std::abs(pos.y - height) == 1) {
+                    std::cout << "END GAME" << std::endl;
+                    ((NPC*)obs)->ClearMap();
+                    return true;
+                }
+            }
+        }
+    }
+   
     
-    if (Die()) return false;   
+    if (isDie) return false;   
     if (!moveAble) ChangeAnimation(ANI_PATH"playerKick.csv");
     return moveAble;
+}
+
+void Player::PlayEffectAnimation(EffectType type)
+{
+    effectAnimation[type]->SetPosition(GetPosition());
+    effectAnimation[type]->Play();
 }
 
 Player::Player(const std::string texId, const std::string name)
     :MoveAbleObject(texId , name)
 {
+    sortingLayer = SortingLayers::FORGROUND;
+    sortingOrder = 5;
 }
 
 void Player::Exit()
@@ -69,7 +91,8 @@ void Player::Init()
     dieAnimationBackGround.setSize({ 1920 , 1080 });
     dieAnimationBackGround.setFillColor(sf::Color(2, 2 , 27));
     
-    moveEffect.Init();
+    effectAnimation.insert({ EffectType::Move , new MoveEffect() });
+    effectAnimation.insert({ EffectType::Hit , new HitEffect() });
 
     animator.SetTarget(&sprite);
     SetScale({ 0.8f , 0.8f });
@@ -90,14 +113,24 @@ void Player::Init()
         isDie = false;
         isPlayAnimation = false;
     });
+
+    for (auto effect : effectAnimation) {
+        effect.second->Init();
+    }
 }
 
 void Player::Update(float dt)
 {
+    if (Die()) true;
     MoveAbleObject::Update(dt);
     animator.Update(dt);
-    moveEffect.Update(dt);
-
+    for (auto effect : effectAnimation) {
+        effect.second->Update(dt);
+    }
+    if (isHit && !isMoveAble) {
+        PlayEffectAnimation(EffectType::Hit);
+        isHit = false;
+    }
     if (!isPlayAnimation && !MAP.isClear) {
         
         if (INPUT_MGR.GetKeyDown(KEY::Left)) {
@@ -127,11 +160,13 @@ void Player::Reset()
     isGetKey = false;
     isDie = false;
     isPlayAnimation = false;
-    SetOrigin(Origins::MB);
-    moveEffect.Reset();
+    SetOrigin(Origins::MC);
     obstacleList.clear();
     //SetPosition({ GetPosition().x + plusPos.x , GetPosition().y + plusPos.y });
     ChangeAnimation(ANI_PATH"playerIdle.csv");
+    for (auto effect : effectAnimation) {
+        effect.second->Reset();
+    }
 }
 
 void Player::Draw(sf::RenderWindow& window)
@@ -140,11 +175,13 @@ void Player::Draw(sf::RenderWindow& window)
     if (isDie) {
         window.draw(dieAnimationBackGround);
     }
-    if (moveEffect.GetActive()) {
-        moveEffect.Draw(window);
-    }
     
     MoveAbleObject::Draw(window);
+    for (auto effect : effectAnimation) {
+        if (effect.second->GetActive()) {
+            effect.second->Draw(window);
+        }
+    }
 }
 
 void Player::AddObstacle(Obstacle* obs)
@@ -168,18 +205,15 @@ void Player::Move(int upX, int upY)
 {   
     if (CheckBound(upX + x, upY + y)) {
         if(inputKey.x != 0) SetScale({ std::abs(GetScale().x) * inputKey.x , GetScale().y });
-
         ChangeAnimation(ANI_PATH"playerMove.csv");
-
-        moveEffect.SetPosition({GetPosition().x , GetPosition().y});
-        moveEffect.Play();
-        
+        PlayEffectAnimation(EffectType::Move);
         MoveAbleObject::Move(upX, upY);
     }
-    moveCount--;
+    
     for (auto obs : obstacleList) {
-        if (obs->GetType() == SpriteTypes::HUDLE) {
-            if (obs->GetXY().x == x && obs->GetXY().y == y) {
+        if (obs->GetType() == SpriteTypes::HUDLE || obs->GetType() == SpriteTypes::UPDOWNHUDLE) {
+            if (obs->GetXY().x == x && obs->GetXY().y == y && ((Huddle*)obs)->GetHitAble()) {
+                isHit = true;
                 moveCount--;
             }
         }
@@ -189,7 +223,7 @@ void Player::Move(int upX, int upY)
 
 bool Player::Die()
 {
-    if (moveCount <= 0 && !isDie) {
+    if (moveCount < 0 && !isDie) {
         ChangeAnimation(ANI_PATH"playerDie.csv", true);
         SetPosition({ GetPosition().x , GetPosition().y - 170.f });
         isDie = true;

@@ -37,6 +37,7 @@ void SceneMapEditor::Init()
 	texIds.push_back(UTILS.textureMap[SpriteTypes::HUDLE]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::GOLDKEY]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::BOX]);
+	texIds.push_back(UTILS.textureMap[SpriteTypes::UPDOWNHUDLE]);
 
 #pragma endregion
 
@@ -68,6 +69,7 @@ void SceneMapEditor::Init()
 	ButtonSprite* hurdleButton = new ButtonSprite(UTILS.textureMap[SpriteTypes::HUDLE]);
 	ButtonSprite* goldKeyButton = new ButtonSprite(UTILS.textureMap[SpriteTypes::GOLDKEY]);
 	ButtonSprite* boxButton = new ButtonSprite(UTILS.textureMap[SpriteTypes::BOX]);
+	ButtonSprite* upDownHuddle = new ButtonSprite(UTILS.textureMap[SpriteTypes::UPDOWNHUDLE]);
 
 	InputText* inputWidth = new InputText(FONT_PATH"Amiri-Regular.ttf");
 	InputText* inputHeigth = new InputText(FONT_PATH"Amiri-Regular.ttf");
@@ -286,6 +288,12 @@ void SceneMapEditor::Init()
 		isForGround = true;
 		type = Types::NONE;
 	});
+	upDownHuddle->SetPosition({ 1920 - 250.f , 700 });
+	upDownHuddle->SetCallBack([this]() {
+		spriteType = SpriteTypes::UPDOWNHUDLE;
+		isForGround = false;
+		type = Types::NONE;
+	});
 #pragma endregion
 
 	mapImage->SetScale({ 0.7f , 0.7f });
@@ -314,6 +322,7 @@ void SceneMapEditor::Init()
 	AddGameObject(hurdleButton);
 	AddGameObject(goldKeyButton);
 	AddGameObject(boxButton);
+	AddGameObject(upDownHuddle);
 #pragma endregion
 
 

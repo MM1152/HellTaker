@@ -17,6 +17,7 @@ enum class SpriteTypes {
 	HUDLE,
 	BOX,
 	GOLDKEY,
+	UPDOWNHUDLE,
 	NONE,
 	SPRITECOUNT,
 };

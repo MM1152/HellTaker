@@ -14,7 +14,7 @@
 #include "GoldKey.h"
 #include "Map.h"
 #include "InteractiveViewer.h"
-
+#include "UpDownHudle.h"
 GameScene::GameScene()
 	:Scene(SceneIds::SceneGame)
 {
@@ -50,7 +50,8 @@ void GameScene::Init()
 	texIds.push_back(UTILS.textureMap[SpriteTypes::GOLDKEY]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::BOX]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::HUDLE]);
-	
+	texIds.push_back(UTILS.textureMap[SpriteTypes::UPDOWNHUDLE]);
+
 	aniIds.push_back(ANI_PATH"playerIdle.csv");
 	aniIds.push_back(ANI_PATH"enemyIdle.csv");
 	aniIds.push_back(ANI_PATH"enemyKicked.csv");
@@ -64,14 +65,15 @@ void GameScene::Init()
 	aniIds.push_back(ANI_PATH"InteractiveViewIcon.csv");
 	aniIds.push_back(ANI_PATH"Success.csv");
 	aniIds.push_back(ANI_PATH"badEnd.csv");
-	//aniIds.push_back(ANI_PATH"goldKeyEffect.csv");
+	aniIds.push_back(ANI_PATH"goldKeyEffect.csv");
+	aniIds.push_back(ANI_PATH"huddleDown.csv");
+	aniIds.push_back(ANI_PATH"huddleUp.csv");
+	aniIds.push_back(ANI_PATH"playerHit.csv");
 
 	backGround = new SpriteGo(MAP_IMAGE(MAP.GetMapIndex() + 1));
 	
 	backGround->SetSortingLayer(SortingLayers::BACKGROUND);
 	player = new Player(UTILS.textureMap[SpriteTypes::PLAYER]);
-	player->SetSortingLayer(SortingLayers::FORGROUND);
-
 	interactive = new InteractiveViewer(FONT_PATH"CrimsonPro-Medium.ttf");
 	interactive->SetGameScene(this);
 
@@ -188,6 +190,12 @@ void GameScene::Reset()
 						ob->SetScale({ 0.8f , 0.8f });
 						ob->SetSortingOrder(-2);
 					}
+					else if (backGroundMapData[i][j] == (int)SpriteTypes::UPDOWNHUDLE) {
+						ob = new UpDownHudle(UTILS.textureMap[SpriteTypes::UPDOWNHUDLE]);
+						ob->plusPos = { 50 , 90 };
+						ob->SetScale({ 0.8f , 0.8f });
+						ob->SetSortingOrder(-2);
+					}
 					AddObs(ob, (SpriteTypes)backGroundMapData[i][j], gridSize, i, j);
 					
 				}
@@ -209,6 +217,8 @@ void GameScene::Reset()
 					Obstacle* ob = nullptr;
 					if (curSpriteType == (int)SpriteTypes::OBSTACLE) {
 						ob = new Obstacle(UTILS.textureMap[SpriteTypes::OBSTACLE]);
+						//ob->SetScale({ 0.8f , 0.8f });
+						ob->plusPos = { 10.f , 10.f };
 					}
 					else if (curSpriteType == (int)SpriteTypes::ENEMY) {
 						ob = new Enemy(UTILS.textureMap[SpriteTypes::ENEMY]);
@@ -229,7 +239,7 @@ void GameScene::Reset()
 					}
 					else if (curSpriteType == (int)SpriteTypes::GOLDKEY) {
 						ob = new GoldKey(UTILS.textureMap[SpriteTypes::GOLDKEY]);
-						ob->plusPos = { 15.f , 20.f };
+						ob->plusPos = { gridSize.x + 20.f , gridSize.y + 10.f };
 					}
 	
 					AddObs(ob, (SpriteTypes)curSpriteType, gridSize, i, j);

@@ -17,7 +17,10 @@ bool Obstacle::CheckBound(int row, int height)
 Obstacle::Obstacle(const std::string texId, const std::string name)
 	:MoveAbleObject(texId , name)
 {
+	sortingLayer = SortingLayers::FORGROUND;
+	sortingOrder = 0;
 }
+
 
 void Obstacle::Move(int upX, int upY)
 {

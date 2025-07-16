@@ -2,35 +2,30 @@
 #include "MoveEffect.h"
 
 MoveEffect::MoveEffect(const std::string& texId, const std::string& name)
-	:SpriteGo(texId,  name)
+	:Effect(texId,  name)
 {
 }
 
 void MoveEffect::Init()
 {
-	animator.SetTarget(&sprite);
+	Effect::Init();
 	animator.SetEvent("moveEffect", -1, [this]() {
 		SetActive(false);
 	});
 }
 
 void MoveEffect::Reset()
-{
+{	
+	Effect::Reset();
+	SetOrigin(Origins::MC);
 	SetScale({0.7f, 0.7f});
-	SetOrigin(Origins::RB);
 }
-
-void MoveEffect::Update(float dt)
-{
-	if (GetActive()) {
-		animator.Update(dt);	
-	}
 	
-}
 
 void MoveEffect::Play()
 {
 	SetActive(true);
-	SetPosition({ GetPosition().x + 20.f , GetPosition().y + 40.f });
-	animator.Play(ANI_PATH"moveEffect.csv");
+	SetPosition({ GetPosition().x + 20.f, GetPosition().y + 50.f});
+	
+	animator.Play(ANI_PATH"moveEffect.csv" , true);
 }
