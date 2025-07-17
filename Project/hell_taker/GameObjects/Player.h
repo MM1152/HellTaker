@@ -3,6 +3,7 @@
 #include "Obstacle.h"
 #include "Animator.h"
 #include "MoveEffect.h"
+#include "GameScene.h";
 
 enum class EffectType {
 	None,
@@ -29,6 +30,7 @@ protected:
 	std::function<void(int)> changeMoveCountFunc;
 	std::function<void()> changeMapAnimationFunc;
 	
+	GameScene* gameScene;
 	
 	bool isGetKey = false;
 	bool isHit = false;
@@ -58,6 +60,6 @@ public:
 	void SetChangeMapFunc(std::function<void()> callBack) { changeMapAnimationFunc = callBack; };
 	std::list<Obstacle*>& GetObstacleList() { return obstacleList; };
 
-
+	void SetGameScene(GameScene* gameScene) { this->gameScene = gameScene; };
 };
 

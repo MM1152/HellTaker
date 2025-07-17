@@ -79,6 +79,7 @@ void GameScene::Init()
 	
 	backGround->SetSortingLayer(SortingLayers::BACKGROUND);
 	player = new Player(UTILS.textureMap[SpriteTypes::PLAYER]);
+	player->SetGameScene(this);
 	interactive = new InteractiveViewer(FONT_PATH"CrimsonPro-Medium.ttf");
 	interactive->SetGameScene(this);
 
@@ -88,7 +89,7 @@ void GameScene::Init()
 	moveCountUI->SetSortingLayer(SortingLayers::UI);
 	moveCountUI->SetSortingOrder(1);
 	moveCountUIBackGround = new SpriteGo(SPRITE_PATH"mainUIexport_bUI2.png");
-	moveCountUIBackGround->SetSortingLayer(SortingLayers::DEFAULT);
+	moveCountUIBackGround->SetSortingLayer(SortingLayers::UI);
 	moveCountUIBackGround->SetSortingOrder(0);
 
 	mapIndexUI = new SpriteGo(SPRITE_PATH"mainUIexport_fUI0001.png");
@@ -155,9 +156,6 @@ void GameScene::Update(float dt)
 		ResetScene();
 	}
 
-	if (INPUT_MGR.GetKeyDown(KEY::S)) {
-		shakeLeft = true;
-	}
 	CameraShake();
 	
 	
@@ -313,6 +311,10 @@ void GameScene::ResetScene()
 	Reset();
 }
 
+void GameScene::SetCameraShake() {
+	shakeLeft = true;
+}
+
 void GameScene::CameraShake()
 {
 	if (shakeLeft) {
@@ -339,9 +341,7 @@ void GameScene::CameraShake()
 				shakeLeft = false;
 				count = 0;
 			}
-
 			shakeRight = false;
-
 		}
 	}
 }

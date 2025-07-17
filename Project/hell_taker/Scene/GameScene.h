@@ -35,6 +35,8 @@ protected:
 
 	TextGo* moveCountText;
 	TextGo* mapIndexText;
+
+	void CameraShake();
 public:
 
 
@@ -50,6 +52,6 @@ public:
 	void AddObs(Obstacle* ob, SpriteTypes types, sf::Vector2f gridSize, int i, int j);
 
 	void ResetScene();
-	void CameraShake();
+	void SetCameraShake();
 };
 

@@ -234,6 +234,7 @@ void Player::Move(int upX, int upY)
         if (obs->GetType() == SpriteTypes::HUDLE || obs->GetType() == SpriteTypes::UPDOWNHUDLE || obs->GetType() == SpriteTypes::DOWNUPHUDDLE) {
             if (obs->GetXY().x == x && obs->GetXY().y == y && ((Huddle*)obs)->GetHitAble()) {
                 isHit = true;
+                gameScene->SetCameraShake();
                 moveCount--;
             }
         }

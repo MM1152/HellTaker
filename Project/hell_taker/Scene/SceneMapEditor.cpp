@@ -17,7 +17,11 @@ SceneMapEditor::SceneMapEditor()
 
 void SceneMapEditor::Init()
 {
+	worldView.setSize({ 1920 , 1080 });
+	worldView.setCenter({ 1920 / 2 , 1080 / 2 });
 
+	uiView.setSize({ 1920 , 1080 });
+	uiView.setCenter({ 1920 / 2 , 1080 / 2 });
 #pragma region TEXTURE , FONT
 	fontIds.push_back(FONT_PATH"Amiri-Regular.ttf");
 
