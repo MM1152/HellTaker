@@ -1,7 +1,7 @@
 {
-  "texture":["Resources/Sprite/mod_idle.png" , "Resources/Sprite/mod_close.png"],
-  "name": "Modeus, the Lustful Demon",
-  "lines": ["You and me. Now.","Demon harem? You poor fool... They will rip you to shreds, and I.\n\t\t\t\t\t\t\t\tHAVE to see this.", "They always say that... and they always try to run away.\n\t\t\tI'll have to break your knees, just in case."],
-  "mixUp": ["Deal, No questions asked." , "No time. Busy gathering girls."],
-  "correct": 1
+  "texture":["Resources/Sprite/mal_idle.png" , "Resources/Sprite/mal_puzzled.png"],
+  "name": "Malina, the Sour Demon",
+  "lines": ["Great, more braindead idiots... Never seen your ugly face before.\n\t\t\t\t\t\t\t\t\t\tWhat are you playing at?","Too bad, I'm coming anyway. Go ahead, .","Fantastic. Just my luck to find another masochist creep." , "Fantastic. Just my luck to find another masochist creep."],
+  "mixUp": ["I'd sure love to play with you" , "This is delicious. Please,insult me more"],
+  "correct": 0
 }

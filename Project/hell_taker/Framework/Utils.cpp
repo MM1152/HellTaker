@@ -14,6 +14,8 @@ void Utils::Init()
 	textureMap.insert({ SpriteTypes::GOLDKEY , SPRITE_PATH"assets100V20104.png" });
 	textureMap.insert({ SpriteTypes::UPDOWNHUDLE , SPRITE_PATH"assets100V20123.png" });	
 	textureMap.insert({ SpriteTypes::DOWNUPHUDDLE , SPRITE_PATH"assets100V20120.png" });
+	textureMap.insert({ SpriteTypes::BOSSMAPTILE , SPRITE_PATH"bossFloor.png" });
+	textureMap.insert({ SpriteTypes::BOSSOUTTILE , SPRITE_PATH"BossOutTile.png" });
 }
 void Utils::SetOrigins(sf::Sprite& sp , Origins ori)
 {

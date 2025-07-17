@@ -76,8 +76,11 @@ void GameScene::Init()
 	aniIds.push_back(ANI_PATH"playerHit.csv");
 
 	backGround = new SpriteGo(MAP_IMAGE(MAP.GetMapIndex() + 1));
-	
 	backGround->SetSortingLayer(SortingLayers::BACKGROUND);
+
+	bossmapBackGround = new SpriteGo(SPRITE_PATH"boss_EXPORT20001.png");
+	bossmapBackGround->SetSortingLayer(SortingLayers::FORGROUND);
+
 	player = new Player(UTILS.textureMap[SpriteTypes::PLAYER]);
 	player->SetGameScene(this);
 	interactive = new InteractiveViewer(FONT_PATH"CrimsonPro-Medium.ttf");
@@ -126,6 +129,7 @@ void GameScene::Init()
 	AddGameObject(player);
 	AddGameObject(backGround);
 	AddGameObject(mapIndexUIBackGround);
+	AddGameObject(bossmapBackGround);
 
 	changeMapUI->SetGameScene(this);
 	player->SetChangeMapFunc([this]() {
@@ -178,9 +182,35 @@ void GameScene::Reset()
 {
 	Scene::Reset();
 
+	if (MAP.GetMapIndex() == 5) {
+		bossmapBackGround->SetActive(true);
+		bossmapBackGround->SetScale({ 0.99f , 1 });
+		bossmapBackGround->SetOrigin(Origins::MC);
+		bossmapBackGround->SetPosition({ 1920 / 2 - 20.f , 1080 / 2 - 233.f });
+		
+		mapIndexUI->SetActive(false);
+		mapIndexText->SetActive(false);
+		mapIndexUIBackGround->SetActive(false);
+
+		moveCountText->SetActive(false);
+		moveCountUI->SetActive(false);
+		moveCountUIBackGround->SetActive(false);
+	}
+	else {
+		bossmapBackGround->SetActive(false);
+		backGround->ChangeTexture(MAP_IMAGE(MAP.GetMapIndex() + 1));
+		backGround->SetPosition({ 0, 0 });
+		mapIndexUI->SetActive(true);
+		mapIndexText->SetActive(true);
+		mapIndexUIBackGround->SetActive(true);
+
+		moveCountText->SetActive(true);
+		moveCountUI->SetActive(true);
+		moveCountUIBackGround->SetActive(true);
+	}
+
 	MAP.isClear = false;
 
-	backGround->ChangeTexture(MAP_IMAGE(MAP.GetMapIndex() + 1));
 	moveCountUI->SetPosition({ 0,1080 - moveCountUI->GetLocalBound().height });
 	mapIndexUI->SetPosition({ 1920, 1080 - moveCountUI->GetLocalBound().height });
 
@@ -219,6 +249,10 @@ void GameScene::Reset()
 						ob->plusPos = { 50 , 90 };
 						ob->SetScale({ 0.8f , 0.8f });
 						ob->SetSortingOrder(-2);
+					}
+					else if (backGroundMapData[i][j] == (int)SpriteTypes::BOSSMAPTILE) {
+						ob = new Obstacle(UTILS.textureMap[SpriteTypes::BOSSMAPTILE]);
+						
 					}
 					AddObs(ob, (SpriteTypes)backGroundMapData[i][j], gridSize, i, j);
 					

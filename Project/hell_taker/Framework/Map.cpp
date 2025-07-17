@@ -67,6 +67,9 @@ int MapData_MGR::GetMoveCount()
 
 void MapData_MGR::SetMapIndex(int idx)
 {
+	if (idx < 0) idx = 0;
+	if (idx > 5) idx = 5;
+
 	mapIndex = idx;
 }
 

@@ -42,18 +42,18 @@ void SceneMapEditor::Init()
 	texIds.push_back(UTILS.textureMap[SpriteTypes::GOLDKEY]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::BOX]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::UPDOWNHUDLE]);
-
+	texIds.push_back(UTILS.textureMap[SpriteTypes::BOSSMAPTILE]);
 #pragma endregion
 
 
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 5; i++) {
 		mapIds[i] = SPRITE_PATH"chapterBG000" + std::to_string(i + 1) + ".png";
 	}
-	for (int i = 0; i < 8; i++) {
+	mapIds[5] = "";
+	for (int i = 0; i < 6; i++) {
 		mapGridsIds[i] = MAP_DATA(i + 1);
 		mapBackGround[i] = MAP_BACKGROUND_DATA(i + 1);
 	}
-
 	TextGo* textGo = new TextGo(FONT_PATH"Amiri-Regular.ttf");
 
 	mapImage = new SpriteGo(SPRITE_PATH"chapterBG0001.png");
@@ -75,6 +75,8 @@ void SceneMapEditor::Init()
 	ButtonSprite* boxButton = new ButtonSprite(UTILS.textureMap[SpriteTypes::BOX]);
 	ButtonSprite* upDownHuddle = new ButtonSprite(UTILS.textureMap[SpriteTypes::UPDOWNHUDLE]);
 	ButtonSprite* downUpHuddle = new ButtonSprite(UTILS.textureMap[SpriteTypes::DOWNUPHUDDLE]);
+	ButtonSprite* bossMapTile = new ButtonSprite(UTILS.textureMap[SpriteTypes::BOSSMAPTILE]);
+	ButtonSprite* bossOutTile = new ButtonSprite(UTILS.textureMap[SpriteTypes::BOSSOUTTILE]);
 
 	InputText* inputWidth = new InputText(FONT_PATH"Amiri-Regular.ttf");
 	InputText* inputHeigth = new InputText(FONT_PATH"Amiri-Regular.ttf");
@@ -306,7 +308,19 @@ void SceneMapEditor::Init()
 		type = Types::NONE;
 	});
 
+	bossMapTile->SetPosition({ 1920 - 350.f , 800.f });
+	bossMapTile->SetCallBack([this]() {
+		spriteType = SpriteTypes::BOSSMAPTILE;
+		isForGround = false;
+		type = Types::TILE;
+	});
 
+	bossOutTile->SetPosition({ 1920 - 250.f , 800.f });
+	bossOutTile->SetCallBack([this]() {
+		spriteType = SpriteTypes::BOSSOUTTILE;
+		isForGround = false;
+		type = Types::WALL;
+	});
 #pragma endregion
 
 	mapImage->SetScale({ 0.7f , 0.7f });
@@ -337,8 +351,10 @@ void SceneMapEditor::Init()
 	AddGameObject(boxButton);
 	AddGameObject(upDownHuddle);
 	AddGameObject(downUpHuddle);
+	AddGameObject(bossMapTile);
+	AddGameObject(bossOutTile);
+	
 #pragma endregion
-
 
 
 	Scene::Init();

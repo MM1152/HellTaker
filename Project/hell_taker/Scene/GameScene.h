@@ -30,6 +30,7 @@ protected:
 	SpriteGo* moveCountUIBackGround;
 	SpriteGo* mapIndexUI;
 	SpriteGo* mapIndexUIBackGround;
+	SpriteGo* bossmapBackGround;
 
 	InteractiveViewer* interactive;
 
