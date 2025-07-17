@@ -16,6 +16,8 @@ protected:
 
 	SceneIds sceneId;
 
+	sf::View uiView;
+	sf::View worldView;
 public:
 	Scene(SceneIds id);
 	virtual ~Scene() = default;

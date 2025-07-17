@@ -9,7 +9,6 @@ Effect::Effect(const std::string& texId, const std::string& name)
 void Effect::Init()
 {
 	animator.SetTarget(&sprite);
-	SetActive(true);
 }
 
 void Effect::Update(float dt)

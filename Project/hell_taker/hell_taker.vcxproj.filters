@@ -114,10 +114,13 @@
     <ClCompile Include="Effect.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="HitEffect.cpp">
+    <ClCompile Include="Effect\HitEffect.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Box.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect\KickEffect.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -230,10 +233,13 @@
     <ClInclude Include="Effect.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="HitEffect.h">
+    <ClInclude Include="Effect\HitEffect.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Box.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect\KickEffect.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

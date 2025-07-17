@@ -6,10 +6,9 @@
 #include "MoveEffect.h"
 #include "HitEffect.h"
 #include "Enemy.h"
+#include "KickEffect.h"
 bool Player::CheckBound(int row, int height)
 {
-    
-
     if (!MoveAbleObject::CheckBound(row , height)) {
         return false;
     }
@@ -72,7 +71,11 @@ bool Player::CheckBound(int row, int height)
    
     
     if (isDie) return false;   
-    if (!moveAble) ChangeAnimation(ANI_PATH"playerKick.csv");
+    if (!moveAble) {
+        ChangeAnimation(ANI_PATH"playerKick.csv");
+        PlayEffectAnimation(EffectType::Kick);
+        effectAnimation[EffectType::Kick]->SetPosition({ row * gridSize.x, height * gridSize.y - 20.f});
+    }
     return moveAble;
 }
 
@@ -100,6 +103,7 @@ void Player::Init()
     
     effectAnimation.insert({ EffectType::Move , new MoveEffect() });
     effectAnimation.insert({ EffectType::Hit , new HitEffect() });
+    effectAnimation.insert({ EffectType::Kick , new KickEffect() });
 
     animator.SetTarget(&sprite);
     SetScale({ 0.8f , 0.8f });

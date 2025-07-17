@@ -1,8 +1,11 @@
 #pragma once
 #include "MoveAbleObject.h"
+#include "KickEffect.h"
+
 class Obstacle : public MoveAbleObject
 {
 protected:
+	KickEffect kickEffect;
 	bool CheckBound(int row, int height);
 public:
 	Obstacle(const std::string texId = "", const std::string name = "");

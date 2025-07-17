@@ -23,6 +23,10 @@ GameScene::GameScene()
 
 void GameScene::Init()
 {
+	worldView.setSize({ 1920 , 1080 });
+	worldView.setCenter({ 1920 / 2 , 1080 / 2 });
+	uiView.setSize({ 1920 , 1080 });
+	uiView.setCenter({ 1920 / 2 , 1080 / 2 });
 	fontIds.push_back(FONT_PATH"Amiri-Regular.ttf");
 	fontIds.push_back(FONT_PATH"CrimsonPro-Medium.ttf");
 
@@ -84,7 +88,7 @@ void GameScene::Init()
 	moveCountUI->SetSortingLayer(SortingLayers::UI);
 	moveCountUI->SetSortingOrder(1);
 	moveCountUIBackGround = new SpriteGo(SPRITE_PATH"mainUIexport_bUI2.png");
-	moveCountUIBackGround->SetSortingLayer(SortingLayers::UI);
+	moveCountUIBackGround->SetSortingLayer(SortingLayers::DEFAULT);
 	moveCountUIBackGround->SetSortingOrder(0);
 
 	mapIndexUI = new SpriteGo(SPRITE_PATH"mainUIexport_fUI0001.png");
@@ -94,7 +98,7 @@ void GameScene::Init()
 
 	mapIndexUIBackGround = new SpriteGo(SPRITE_PATH"mainUIexport_bUI2.png");
 	mapIndexUIBackGround->SetScale({ -1 , 1 });
-	mapIndexUIBackGround->SetSortingLayer(SortingLayers::UI);
+	mapIndexUIBackGround->SetSortingLayer(SortingLayers::DEFAULT);
 	mapIndexUIBackGround->SetSortingOrder(0);
 	
 	moveCountText = new TextGo(FONT_PATH"Amiri-Regular.ttf");
@@ -151,6 +155,10 @@ void GameScene::Update(float dt)
 		ResetScene();
 	}
 
+	if (INPUT_MGR.GetKeyDown(KEY::S)) {
+		shakeLeft = true;
+	}
+	CameraShake();
 	
 	
 	/*if (player->GetMoveCount() == 0) {
@@ -164,7 +172,7 @@ void GameScene::Update(float dt)
 
 void GameScene::Draw(sf::RenderWindow& window)
 {
-
+	window.setView(worldView);
 	Scene::Draw(window);
 }
 
@@ -303,4 +311,37 @@ void GameScene::ResetScene()
 	}
 
 	Reset();
+}
+
+void GameScene::CameraShake()
+{
+	if (shakeLeft) {
+		sf::Vector2f pos = UTILS.Lerp(initCameraPos, cameraShakeMin, shakeTime);
+		shakeTime += shakeSmooth;
+		worldView.setCenter(pos);
+		if (shakeTime >= 1) {
+			shakeTime = 0;
+			shakeLeft = false;
+			shakeRight = true;
+		}
+	}
+	if (shakeRight) {
+		sf::Vector2f pos = UTILS.Lerp(cameraShakeMin, cameraShakeMax, shakeTime);
+		shakeTime += shakeSmooth;
+		worldView.setCenter(pos);
+		if (shakeTime >= 1) {
+			shakeTime = 0;
+			if (count >= 0) {
+				shakeLeft = true;
+				count--;
+			}
+			else {
+				shakeLeft = false;
+				count = 0;
+			}
+
+			shakeRight = false;
+
+		}
+	}
 }

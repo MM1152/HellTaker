@@ -8,6 +8,7 @@ enum class EffectType {
 	None,
 	Move,
 	Hit,
+	Kick,
 };
 
 class Player : public MoveAbleObject

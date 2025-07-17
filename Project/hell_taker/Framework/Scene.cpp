@@ -22,7 +22,11 @@ void Scene::Update(float dt)
 
 void Scene::Draw(sf::RenderWindow& window)
 {
+	window.setView(worldView);
 	for (auto obj : gameObjects) {
+		if(obj->GetSortingLayer() == SortingLayers::UI) 
+			window.setView(uiView);
+
 		if(obj->GetActive())
 			obj->Draw(window);
 	}

@@ -8,6 +8,7 @@ class Enemy : public Obstacle
 protected:
 	Animator animator;
 	Player* player;
+
 public:
 	Enemy(const std::string texId="" , const std::string name ="");
 	~Enemy() override = default;
@@ -21,5 +22,6 @@ public:
 	void SettingPlayer(Player* player) {
 		this->player = player;
 	}
+
 };
 
