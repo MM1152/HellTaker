@@ -35,7 +35,6 @@ void GoldKey::Reset()
 
 void GoldKey::Update(float dt)
 {
-	
 	if (getKey) {
 		effect.Update(dt);
 	}

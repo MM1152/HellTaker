@@ -56,19 +56,6 @@ bool Player::CheckBound(int row, int height)
             isPlayAnimation = true;
         }
     }
-    if (!isDie) {
-        for (auto obs : obstacleList) {
-            if (obs->GetType() == SpriteTypes::MAP1NPC) {
-                sf::Vector2i pos = obs->GetXY();
-                if (std::abs(pos.x - row) + std::abs(pos.y - height) == 1) {
-                    std::cout << "END GAME" << std::endl;
-                    ((NPC*)obs)->ClearMap();
-                    return true;
-                }
-            }
-        }
-    }
-   
     
     if (isDie) return false;   
     if (!moveAble) {
@@ -133,7 +120,9 @@ void Player::Init()
 void Player::Update(float dt)
 {
     if (Die()) true;
+    
     MoveAbleObject::Update(dt);
+
     animator.Update(dt);
     for (auto effect : effectAnimation) {
         effect.second->Update(dt);
@@ -142,6 +131,7 @@ void Player::Update(float dt)
         PlayEffectAnimation(EffectType::Hit);
         isHit = false;
     }
+
     if (!isPlayAnimation && !MAP.isClear) {
         
         if (INPUT_MGR.GetKeyDown(KEY::Left)) {
@@ -175,6 +165,7 @@ void Player::Reset()
     obstacleList.clear();
     //SetPosition({ GetPosition().x + plusPos.x , GetPosition().y + plusPos.y });
     ChangeAnimation(ANI_PATH"playerIdle.csv");
+
     for (auto effect : effectAnimation) {
         effect.second->Reset();
     }
@@ -239,6 +230,16 @@ void Player::Move(int upX, int upY)
             }
         }
     }
+    for (auto obs : obstacleList) {
+        if (obs->GetType() == SpriteTypes::MAP1NPC) {
+            sf::Vector2i pos = obs->GetXY();
+            if (std::abs(pos.x - x) + std::abs(pos.y - y) == 1) {
+                std::cout << "END GAME" << std::endl;
+                ((NPC*)obs)->ClearMap();
+            }
+        }
+    }
+
     changeMoveCountFunc(moveCount);
 }
 

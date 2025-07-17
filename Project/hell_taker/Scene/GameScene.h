@@ -11,8 +11,8 @@ class Boss;
 class GameScene : public Scene
 {
 protected:
-	sf::Vector2f cameraShakeMin = { 1920 / 2 - 3.f , 1080 / 2 - 3.f };
-	sf::Vector2f cameraShakeMax = { 1920 / 2 + 3.f , 1080 / 2 + 3.f };
+	sf::Vector2f cameraShakeMin = { 1920 / 2 - 5.f , 1080 / 2 - 5.f };
+	sf::Vector2f cameraShakeMax = { 1920 / 2 + 5.f , 1080 / 2 + 5.f };
 	sf::Vector2f initCameraPos = { 1920 / 2 , 1080 / 2 };
 
 	float shakeTime = 0;

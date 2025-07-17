@@ -53,26 +53,43 @@ void Boss::Init()
     });
     
     rightAni.SetEvent("bossAttack1", -1, [this]() {
+        attackCount++;
+        
         rightAni.Stop();
         leftAni.Stop();
+    
         gameScene->SetCameraShake();
-        Attack1(huddleCount , spawnHuddleX , spawnHuddleY);
-    });
-    rightAni.SetEvent("bossAttackRight", -1, [this]() {
-        rightAni.Stop();
-        gameScene->SetCameraShake();
-        Attack1(huddleCount, spawnHuddleX, spawnHuddleY);
-     });
 
-    leftAni.SetEvent("bossAttack1", -1, [this]() {
-        leftAni.Stop();
-        gameScene->SetCameraShake();
-        Attack1(huddleCount, spawnHuddleX, spawnHuddleY);
+       
+        Attack1(huddleCount , spawnHuddleX , spawnHuddleY);
+
+        
+        if (attackCount == 1) {
+            huddleCount = 5;
+            spawnHuddleX = workAbleRow;
+            spawnHuddleY = workAbleHeight;
+        }
+        else if(attackCount == 2){
+            huddleCount = 5;
+            spawnHuddleX = workAbleMaxRow - 4;
+            spawnHuddleY = workAbleHeight;
+        }
+        else if (attackCount == 3) {
+            huddleCount = 7;
+            spawnHuddleX = 6;
+            spawnHuddleY = 6;
+        }
     });
+
 }
 
 void Boss::Reset()
 {
+    attackCount = 0;
+    huddleCount = 7;
+    spawnHuddleX = 6;
+    spawnHuddleY = 6;
+
     rightAni.Stop();
     leftAni.Stop();
 
@@ -99,7 +116,7 @@ void Boss::Update(float dt)
         leftAni.Update(dt);
         rightAni.Update(dt);
     }
-
+  
     auto iter = bossHuddles.begin();
 
     while (iter != bossHuddles.end()) {
@@ -116,6 +133,15 @@ void Boss::Update(float dt)
 
 void Boss::Exit()
 {
+    for (auto huddle : bossHuddles) {
+        delete huddle;
+    }
+    bossHuddles.clear();
+
+    for (auto huddle : bossHuddlsPool) {
+        delete huddle;
+    }
+    bossHuddlsPool.clear();
 }
 
 void Boss::Release()
@@ -146,7 +172,7 @@ sf::FloatRect Boss::GetGlobalBound()
 
 void Boss::Attack1(int count ,int row, int height)
 {
-    
+    startAnimation = false;
     for (int i = 0; i < count; i++) {
         BossHuddle* bossHuddle;
         if (bossHuddlsPool.empty()) {
@@ -171,21 +197,18 @@ void Boss::Attack1(int count ,int row, int height)
         bossHuddles.push_back(bossHuddle);
     }
     
-    attackCount++;
-    if (attackCount == 1) {
-        huddleCount = 5;
-        spawnHuddleX = workAbleRow;
-        spawnHuddleY = workAbleHeight;
-    }
+
 }
 
 void Boss::SetNextHuddle(int row , int height)
 {
-    if (height > 3) {
-        rightAni.Play(ANI_PATH"bossAttackRight.csv" , true);
+    if (height == workAbleRow + 2 && !startAnimation && attackCount < 4) {
+        rightAni.Play(ANI_PATH"bossAttack1.csv");
+        leftAni.Play(ANI_PATH"bossAttack1.csv");
+        startAnimation = true;
     }
 
-    if (height <= workAbleMaxHeight) {
+    if (height <= workAbleMaxHeight ) {
         Attack1(1, row, height);
     }
 }

@@ -37,12 +37,13 @@ void MoveAbleObject::Update(float dt)
 	SpriteGo::Update(dt);
 	if (isMoveAble) {
 		SetPosition(UTILS.Lerp(curPos, targetPos, t));
-		t += 0.05f;
+		t += smooth;
 		if (t >= 1) {
 			t = 0;
 			isMoveAble = false;
 		}
 	}
+	std::cout << dt << std::endl;
 }
 
 void MoveAbleObject::Move(int upX, int upY)

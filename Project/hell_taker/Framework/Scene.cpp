@@ -16,7 +16,9 @@ void Scene::Init()
 void Scene::Update(float dt)
 {
 	for (auto obj : gameObjects) {
-		obj->Update(dt);
+		if (obj->GetActive()) {
+			obj->Update(dt);
+		}
 	}
 }
 
@@ -24,7 +26,7 @@ void Scene::Draw(sf::RenderWindow& window)
 {
 	window.setView(worldView);
 	for (auto obj : gameObjects) {
-		if(obj->GetSortingLayer() == SortingLayers::UI) 
+		if(obj->GetSortingLayer() == SortingLayers::UI)
 			window.setView(uiView);
 
 		if(obj->GetActive())

@@ -20,6 +20,7 @@ protected:
 
 	int attackCount = 0;
 
+	bool startAnimation;
 	sf::Sprite right;
 	sf::Sprite left;
 
