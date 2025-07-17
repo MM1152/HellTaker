@@ -1,4 +1,4 @@
-ID,FPS,"LoopType (0: Single, 1: Loop)		",,,,,,,,,,,,
-bossWakeUp,10,1,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-Resources/Sprite/boss_EXPORT_HALF0042.png,Resources/Sprite/boss_EXPORT_HALF0043.png,Resources/Sprite/boss_EXPORT_HALF0044.png,Resources/Sprite/boss_EXPORT_HALF0045.png,Resources/Sprite/boss_EXPORT_HALF0046.png,Resources/Sprite/boss_EXPORT_HALF0047.png,Resources/Sprite/boss_EXPORT_HALF0048.png,Resources/Sprite/boss_EXPORT_HALF0049.png,Resources/Sprite/boss_EXPORT_HALF0050.png,Resources/Sprite/boss_EXPORT_HALF0051.png,Resources/Sprite/boss_EXPORT_HALF0051.png,Resources/Sprite/boss_EXPORT_HALF0051.png,Resources/Sprite/boss_EXPORT_HALF0051.png,Resources/Sprite/boss_EXPORT_HALF0051.png,Resources/Sprite/boss_EXPORT_HALF0051.png
+ID,FPS,"LoopType (0: Single, 1: Loop)		",,,,,,
+bossAttack1,10,1,,,,,,
+,,,,,,,,
+Resources/Sprite/boss_EXPORT_HALF0015.png,Resources/Sprite/boss_EXPORT_HALF0016.png,Resources/Sprite/boss_EXPORT_HALF0017.png,Resources/Sprite/boss_EXPORT_HALF0018.png,Resources/Sprite/boss_EXPORT_HALF0019.png,Resources/Sprite/boss_EXPORT_HALF0020.png,Resources/Sprite/boss_EXPORT_HALF0021.png,Resources/Sprite/boss_EXPORT_HALF0022.png,Resources/Sprite/boss_EXPORT_HALF0023.png

@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="BossHuddle.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="GameObjects\ChangeMapUI.cpp" />
@@ -185,6 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
+    <ClInclude Include="BossHuddle.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="ChangeMapUI.h" />
     <ClInclude Include="Effect.h" />

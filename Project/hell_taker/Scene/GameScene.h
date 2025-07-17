@@ -32,7 +32,7 @@ protected:
 	SpriteGo* mapIndexUI;
 	SpriteGo* mapIndexUIBackGround;
 	Boss* bossmapBackGround;
-
+		
 
 	InteractiveViewer* interactive;
 

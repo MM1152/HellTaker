@@ -79,13 +79,15 @@ void GameScene::Init()
 	backGround = new SpriteGo(MAP_IMAGE(MAP.GetMapIndex() + 1));
 	backGround->SetSortingLayer(SortingLayers::BACKGROUND);
 
-	bossmapBackGround = new Boss(SPRITE_PATH"boss_EXPORT_HALF0042.png");
-	bossmapBackGround->SetSortingLayer(SortingLayers::FORGROUND);
-
 	player = new Player(UTILS.textureMap[SpriteTypes::PLAYER]);
 	player->SetGameScene(this);
 	interactive = new InteractiveViewer(FONT_PATH"CrimsonPro-Medium.ttf");
 	interactive->SetGameScene(this);
+
+	bossmapBackGround = new Boss(SPRITE_PATH"boss_EXPORT_HALF0042.png");
+	bossmapBackGround->SetSortingLayer(SortingLayers::FORGROUND);
+	bossmapBackGround->SettingGameScene(this);
+	bossmapBackGround->SetPlayer(player);		
 
 	changeMapUI = new ChangeMapUI("" , "");
 
@@ -160,6 +162,7 @@ void GameScene::Update(float dt)
 		MAP.SetMapIndex(MAP.GetMapIndex() - 1);
 		ResetScene();
 	}
+	std::cout << INPUT_MGR.GetMousePosition().x << ", " << INPUT_MGR.GetMousePosition().y << std::endl;
 
 	CameraShake();
 	

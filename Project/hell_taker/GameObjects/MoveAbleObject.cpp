@@ -32,7 +32,7 @@ void MoveAbleObject::SetMapData(sf::Vector2f gridSize, int x, int y , SpriteType
 	SetPosition({ gridSize.x * x , gridSize.y * y });
 }
 
-void MoveAbleObject::Update(float dt)
+void MoveAbleObject::Update(float dt)	
 {
 	SpriteGo::Update(dt);
 	if (isMoveAble) {
