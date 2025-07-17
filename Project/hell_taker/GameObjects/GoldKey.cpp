@@ -44,11 +44,6 @@ void GoldKey::Update(float dt)
 	}
 }
 
-void GoldKey::Draw(sf::RenderWindow& window)
-{
-	ImmovableObstacle::Draw(window);
-	window.draw(sprite);	
-}
 
 void GoldKey::Interaction()
 {

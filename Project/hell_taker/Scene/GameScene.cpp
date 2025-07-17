@@ -15,6 +15,7 @@
 #include "Map.h"
 #include "InteractiveViewer.h"
 #include "UpDownHudle.h"
+#include "Box.h"
 GameScene::GameScene()
 	:Scene(SceneIds::SceneGame)
 {
@@ -135,12 +136,22 @@ void GameScene::Update(float dt)
 		SCENE_MGR.ChangeScene(SceneIds::SceneMapEditor);
 	}
 	if (INPUT_MGR.GetKeyDown(KEY::F1)) {
-		MAP.SetMapIndex(MAP.GetMapIndex() + 1);
-		ResetScene();
+		interactive->Reset();
+		interactive->SetActive(true);
 	}
 	if (INPUT_MGR.GetKeyDown(KEY::R)) {
 		ResetScene();
 	}
+	if (INPUT_MGR.GetKeyDown(KEY::K)) {
+		MAP.SetMapIndex(MAP.GetMapIndex() + 1);
+		ResetScene();
+	}
+	if (INPUT_MGR.GetKeyDown(KEY::J)) {
+		MAP.SetMapIndex(MAP.GetMapIndex() - 1);
+		ResetScene();
+	}
+
+	
 	
 	/*if (player->GetMoveCount() == 0) {
 
@@ -196,6 +207,13 @@ void GameScene::Reset()
 						ob->SetScale({ 0.8f , 0.8f });
 						ob->SetSortingOrder(-2);
 					}
+					else if (backGroundMapData[i][j] == (int)SpriteTypes::DOWNUPHUDDLE) {
+						ob = new UpDownHudle(UTILS.textureMap[SpriteTypes::UPDOWNHUDLE]);
+						((UpDownHudle*)ob)->Play();
+						ob->plusPos = { 50 , 90 };
+						ob->SetScale({ 0.8f , 0.8f });
+						ob->SetSortingOrder(-2);
+					}
 					AddObs(ob, (SpriteTypes)backGroundMapData[i][j], gridSize, i, j);
 					
 				}
@@ -205,7 +223,7 @@ void GameScene::Reset()
 				
 				
 				if (curSpriteType == (int)SpriteTypes::PLAYER) {
-					player->plusPos = { gridSize.x * 0.4f , gridSize.y * 0.5f };
+					player->plusPos = { gridSize.x * 0.5f , gridSize.y * 0.5f };
 					player->SetMapData(gridSize, j, i, (SpriteTypes)curSpriteType);
 					player->SetMoveCount(moveCount);
 					player->SetMoveCountFunc([this](int moveCount) {
@@ -222,6 +240,7 @@ void GameScene::Reset()
 					}
 					else if (curSpriteType == (int)SpriteTypes::ENEMY) {
 						ob = new Enemy(UTILS.textureMap[SpriteTypes::ENEMY]);
+						((Enemy*)ob)->SettingPlayer(player);
 						ob->plusPos = { gridSize.x / 2 , gridSize.y  / 2};
 					}
 					else if (curSpriteType == (int)SpriteTypes::MAP1NPC) {
@@ -235,7 +254,7 @@ void GameScene::Reset()
 						});
 					}
 					else if (curSpriteType == (int)SpriteTypes::BOX) {
-						ob = new ImmovableObstacle(UTILS.textureMap[SpriteTypes::BOX]);
+						ob = new Box(UTILS.textureMap[SpriteTypes::BOX]);
 					}
 					else if (curSpriteType == (int)SpriteTypes::GOLDKEY) {
 						ob = new GoldKey(UTILS.textureMap[SpriteTypes::GOLDKEY]);
@@ -277,7 +296,6 @@ void GameScene::AddObs(Obstacle* ob, SpriteTypes types , sf::Vector2f gridSize ,
 
 void GameScene::ResetScene()
 {
-	
 	changeMapUI->Play();
 
 	for (auto& i : player->GetObstacleList()) {

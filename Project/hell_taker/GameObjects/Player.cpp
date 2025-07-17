@@ -5,6 +5,7 @@
 #include "UpDownHudle.h"
 #include "MoveEffect.h"
 #include "HitEffect.h"
+#include "Enemy.h"
 bool Player::CheckBound(int row, int height)
 {
     
@@ -14,9 +15,15 @@ bool Player::CheckBound(int row, int height)
     }
        
     moveCount--;
+    if (inputKey.x != 0) SetScale({ std::abs(GetScale().x) * inputKey.x , GetScale().y });
     for (auto obs : obstacleList) {
-        if (obs->GetType() == SpriteTypes::UPDOWNHUDLE) {
+        if (obs->GetType() == SpriteTypes::UPDOWNHUDLE || obs->GetType() == SpriteTypes::DOWNUPHUDDLE) {
             ((UpDownHudle*)obs)->Play();
+        }
+    }
+    for (auto enemy : obstacleList) {
+        if (enemy->GetType() == SpriteTypes::ENEMY) {
+            ((Enemy*)enemy)->CheckUnderHuddle();
         }
     }
 
@@ -41,7 +48,7 @@ bool Player::CheckBound(int row, int height)
                 obs->Interaction();
             }
             else if (obs->GetObjectId() == SpriteTypes::BOX && isGetKey) {
-                obs->SetActive(false);
+                obs->Interaction();
             }
             else if (obs->GetObjectId() == SpriteTypes::BOX && !isGetKey) {
                 moveAble = false;
@@ -184,6 +191,15 @@ void Player::Draw(sf::RenderWindow& window)
     }
 }
 
+void Player::Release()
+{
+    MoveAbleObject::Release();
+    for (auto effect : effectAnimation) {
+        delete effect.second;
+    }
+    effectAnimation.clear();
+}
+
 void Player::AddObstacle(Obstacle* obs)
 {
     obstacleList.push_back(obs);
@@ -204,14 +220,14 @@ void Player::ChangeAnimation(const std::string& id , bool resetTextureRect)
 void Player::Move(int upX, int upY)
 {   
     if (CheckBound(upX + x, upY + y)) {
-        if(inputKey.x != 0) SetScale({ std::abs(GetScale().x) * inputKey.x , GetScale().y });
+        //if(inputKey.x != 0) SetScale({ std::abs(GetScale().x) * inputKey.x , GetScale().y });
         ChangeAnimation(ANI_PATH"playerMove.csv");
         PlayEffectAnimation(EffectType::Move);
         MoveAbleObject::Move(upX, upY);
     }
     
     for (auto obs : obstacleList) {
-        if (obs->GetType() == SpriteTypes::HUDLE || obs->GetType() == SpriteTypes::UPDOWNHUDLE) {
+        if (obs->GetType() == SpriteTypes::HUDLE || obs->GetType() == SpriteTypes::UPDOWNHUDLE || obs->GetType() == SpriteTypes::DOWNUPHUDDLE) {
             if (obs->GetXY().x == x && obs->GetXY().y == y && ((Huddle*)obs)->GetHitAble()) {
                 isHit = true;
                 moveCount--;

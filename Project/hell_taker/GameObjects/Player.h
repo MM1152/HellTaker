@@ -42,6 +42,7 @@ public:
 	void Update(float dt) override;
 	void Reset() override;
 	void Draw(sf::RenderWindow& window) override;
+	void Release() override;
 	void AddObstacle(Obstacle* obs);
 	void ChangeAnimation(const std::string& id , bool resetTextureRect = false);
 

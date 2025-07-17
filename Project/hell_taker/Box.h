@@ -2,16 +2,14 @@
 #include "ImmovableObstacle.h"
 #include "Animator.h"
 
-class GoldKey : public ImmovableObstacle
+class Box : public ImmovableObstacle
 {
 protected:
-	Animator animator;
 	Animator effect;
-
-	bool getKey;
+	bool deleteBox = false;
 public:
-	GoldKey(const std::string& texId = "", const std::string& name = "");
-	~GoldKey() override = default;
+	Box(const std::string& texId = "", const std::string& name = "");
+	~Box() override = default;
 
 	void Init() override;
 	void Reset() override;

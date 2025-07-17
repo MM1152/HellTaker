@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Enemy.h"
 #include "GameScene.h"
+#include "Player.h"
+#include "Huddle.h"
 Enemy::Enemy(const std::string texId, const std::string name)
 	:Obstacle(texId , name)
 {
@@ -39,4 +41,17 @@ void Enemy::Move(int upX, int upY)
 	animator.Play(ANI_PATH"enemyKicked.csv");
 	Obstacle::Move(upX, upY);
 	
+}
+
+void Enemy::CheckUnderHuddle()
+{
+	for (auto huddle : player->GetObstacleList()) {
+		if (huddle->GetType() == SpriteTypes::HUDLE || huddle->GetType() == SpriteTypes::DOWNUPHUDDLE || huddle->GetType() ==		SpriteTypes::UPDOWNHUDLE) {
+			Huddle* hud = (Huddle*)huddle;
+			if (huddle->GetXY().x == x && huddle->GetXY().y == y && hud->GetHitAble()) {
+				SetActive(false);
+			}
+		}
+		
+	}
 }

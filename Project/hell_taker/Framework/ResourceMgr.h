@@ -25,12 +25,11 @@ public:
 		for (const std::string id : ids) {
 			Load(id);
 		}
-	}
+	}			
 
 	T& Get(const std::string id) {
 		if (map.find(id) == map.end()) {
-			std::cout << "FAIL TO LOAD " << id << std::endl;
-			return empty;
+			Load(id);
 		}
 
 		return *map[id];
