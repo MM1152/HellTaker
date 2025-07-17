@@ -7,6 +7,7 @@ class Obstacle;
 class TextGo;
 class ChangeMapUI;
 class InteractiveViewer;
+class Boss;
 class GameScene : public Scene
 {
 protected:
@@ -30,7 +31,8 @@ protected:
 	SpriteGo* moveCountUIBackGround;
 	SpriteGo* mapIndexUI;
 	SpriteGo* mapIndexUIBackGround;
-	SpriteGo* bossmapBackGround;
+	Boss* bossmapBackGround;
+
 
 	InteractiveViewer* interactive;
 
@@ -39,8 +41,6 @@ protected:
 
 	void CameraShake();
 public:
-
-
 	GameScene();
 	~GameScene() = default;
 

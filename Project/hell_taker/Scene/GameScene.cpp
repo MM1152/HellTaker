@@ -16,6 +16,7 @@
 #include "InteractiveViewer.h"
 #include "UpDownHudle.h"
 #include "Box.h"
+#include "Boss.h"
 GameScene::GameScene()
 	:Scene(SceneIds::SceneGame)
 {
@@ -78,7 +79,7 @@ void GameScene::Init()
 	backGround = new SpriteGo(MAP_IMAGE(MAP.GetMapIndex() + 1));
 	backGround->SetSortingLayer(SortingLayers::BACKGROUND);
 
-	bossmapBackGround = new SpriteGo(SPRITE_PATH"boss_EXPORT20001.png");
+	bossmapBackGround = new Boss(SPRITE_PATH"boss_EXPORT_HALF0042.png");
 	bossmapBackGround->SetSortingLayer(SortingLayers::FORGROUND);
 
 	player = new Player(UTILS.textureMap[SpriteTypes::PLAYER]);
@@ -184,9 +185,9 @@ void GameScene::Reset()
 
 	if (MAP.GetMapIndex() == 5) {
 		bossmapBackGround->SetActive(true);
-		bossmapBackGround->SetScale({ 0.99f , 1 });
+		/*bossmapBackGround->SetScale({ -0.99f , 1 });
 		bossmapBackGround->SetOrigin(Origins::MC);
-		bossmapBackGround->SetPosition({ 1920 / 2 - 20.f , 1080 / 2 - 233.f });
+		bossmapBackGround->SetPosition({ 1920 / 2 - 20.f , 1080 / 2 - 233.f });*/
 		
 		mapIndexUI->SetActive(false);
 		mapIndexText->SetActive(false);

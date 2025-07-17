@@ -123,6 +123,9 @@
     <ClCompile Include="Effect\KickEffect.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\GameObject.h">
@@ -240,6 +243,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Effect\KickEffect.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
