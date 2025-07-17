@@ -43,6 +43,7 @@ void SceneMapEditor::Init()
 	texIds.push_back(UTILS.textureMap[SpriteTypes::BOX]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::UPDOWNHUDLE]);
 	texIds.push_back(UTILS.textureMap[SpriteTypes::BOSSMAPTILE]);
+	
 #pragma endregion
 
 
@@ -77,6 +78,7 @@ void SceneMapEditor::Init()
 	ButtonSprite* downUpHuddle = new ButtonSprite(UTILS.textureMap[SpriteTypes::DOWNUPHUDDLE]);
 	ButtonSprite* bossMapTile = new ButtonSprite(UTILS.textureMap[SpriteTypes::BOSSMAPTILE]);
 	ButtonSprite* bossOutTile = new ButtonSprite(UTILS.textureMap[SpriteTypes::BOSSOUTTILE]);
+	ButtonSprite* bossLayser = new ButtonSprite(UTILS.textureMap[SpriteTypes::BOSSMAPLASER]);
 
 	InputText* inputWidth = new InputText(FONT_PATH"Amiri-Regular.ttf");
 	InputText* inputHeigth = new InputText(FONT_PATH"Amiri-Regular.ttf");
@@ -260,6 +262,13 @@ void SceneMapEditor::Init()
 		
 		type = Types::NONE;
 		});
+	bossLayser->SetPosition({ 1920 - 150.f , 500.f });
+	bossLayser->SetCallBack([this]() {
+		spriteType = SpriteTypes::BOSSMAPLASER;
+		isForGround = true;
+
+		type = Types::NONE;
+	});
 
 	enemyButton->SetPosition({ 1920 - 450.f , 600 });
 	enemyButton->SetCallBack([this]() {
@@ -321,6 +330,8 @@ void SceneMapEditor::Init()
 		isForGround = false;
 		type = Types::WALL;
 	});
+	
+
 #pragma endregion
 
 	mapImage->SetScale({ 0.7f , 0.7f });
@@ -353,7 +364,7 @@ void SceneMapEditor::Init()
 	AddGameObject(downUpHuddle);
 	AddGameObject(bossMapTile);
 	AddGameObject(bossOutTile);
-	
+	AddGameObject(bossLayser);
 #pragma endregion
 
 

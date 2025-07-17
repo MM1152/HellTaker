@@ -12,9 +12,12 @@ bool Player::CheckBound(int row, int height)
     if (!MoveAbleObject::CheckBound(row , height)) {
         return false;
     }
-       
+    
     moveCount--;
     if (inputKey.x != 0) SetScale({ std::abs(GetScale().x) * inputKey.x , GetScale().y });
+
+    if(MAP.GetMapIndex() == 5) return true;
+
     for (auto obs : obstacleList) {
         if (obs->GetType() == SpriteTypes::UPDOWNHUDLE || obs->GetType() == SpriteTypes::DOWNUPHUDDLE) {
             ((UpDownHudle*)obs)->Play();
@@ -133,24 +136,23 @@ void Player::Update(float dt)
     }
 
     if (!isPlayAnimation && !MAP.isClear) {
-        
+    
         if (INPUT_MGR.GetKeyDown(KEY::Left)) {
             inputKey = { -1,0 };
             Move(-1, 0);
         }
-        if (INPUT_MGR.GetKeyDown(KEY::Right)) {
+        else if (INPUT_MGR.GetKeyDown(KEY::Right)) {
             inputKey = { 1,0 };
             Move(1, 0);
         }
-        if (INPUT_MGR.GetKeyDown(KEY::Down)) {
+        else if (INPUT_MGR.GetKeyDown(KEY::Down)) {
             inputKey = { 0,1 };
             Move(0, 1);
         }
-        if (INPUT_MGR.GetKeyDown(KEY::Up)) {
+        else if (INPUT_MGR.GetKeyDown(KEY::Up)) {
             inputKey = { 0,-1 };
             Move(0, -1);
-        }
-       
+        }  
     }
     
 }

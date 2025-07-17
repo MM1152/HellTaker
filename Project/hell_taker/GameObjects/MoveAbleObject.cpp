@@ -37,7 +37,7 @@ void MoveAbleObject::Update(float dt)
 	SpriteGo::Update(dt);
 	if (isMoveAble) {
 		SetPosition(UTILS.Lerp(curPos, targetPos, t));
-		t += smooth;
+		t += smooth * dt;
 		if (t >= 1) {
 			t = 0;
 			isMoveAble = false;

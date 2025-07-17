@@ -17,6 +17,7 @@
 #include "UpDownHudle.h"
 #include "Box.h"
 #include "Boss.h"
+#include "LayserBlock.h"
 GameScene::GameScene()
 	:Scene(SceneIds::SceneGame)
 {
@@ -28,6 +29,7 @@ void GameScene::Init()
 	worldView.setCenter({ 1920 / 2 , 1080 / 2 });
 	uiView.setSize({ 1920 , 1080 });
 	uiView.setCenter({ 1920 / 2 , 1080 / 2 });
+
 	fontIds.push_back(FONT_PATH"Amiri-Regular.ttf");
 	fontIds.push_back(FONT_PATH"CrimsonPro-Medium.ttf");
 
@@ -162,7 +164,6 @@ void GameScene::Update(float dt)
 		MAP.SetMapIndex(MAP.GetMapIndex() - 1);
 		ResetScene();
 	}
-	std::cout << INPUT_MGR.GetMousePosition().x << ", " << INPUT_MGR.GetMousePosition().y << std::endl;
 
 	CameraShake();
 	
@@ -178,7 +179,6 @@ void GameScene::Update(float dt)
 
 void GameScene::Draw(sf::RenderWindow& window)
 {
-	window.setView(worldView);
 	Scene::Draw(window);
 }
 
@@ -202,6 +202,7 @@ void GameScene::Reset()
 	}
 	else {
 		bossmapBackGround->SetActive(false);
+
 		backGround->ChangeTexture(MAP_IMAGE(MAP.GetMapIndex() + 1));
 		backGround->SetPosition({ 0, 0 });
 		mapIndexUI->SetActive(true);
@@ -256,8 +257,8 @@ void GameScene::Reset()
 					}
 					else if (backGroundMapData[i][j] == (int)SpriteTypes::BOSSMAPTILE) {
 						ob = new Obstacle(UTILS.textureMap[SpriteTypes::BOSSMAPTILE]);
-						
 					}
+					
 					AddObs(ob, (SpriteTypes)backGroundMapData[i][j], gridSize, i, j);
 					
 				}
@@ -303,6 +304,11 @@ void GameScene::Reset()
 					else if (curSpriteType == (int)SpriteTypes::GOLDKEY) {
 						ob = new GoldKey(UTILS.textureMap[SpriteTypes::GOLDKEY]);
 						ob->plusPos = { gridSize.x + 20.f , gridSize.y + 10.f };
+					}
+					else if (curSpriteType == (int)SpriteTypes::BOSSMAPLASER) {
+						ob = new LayserBlock(UTILS.textureMap[SpriteTypes::BOSSMAPLASER]);
+						ob->SetSortingOrder(i + 2);
+						
 					}
 	
 					AddObs(ob, (SpriteTypes)curSpriteType, gridSize, i, j);

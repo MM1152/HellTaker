@@ -3,6 +3,7 @@
 
 #define RESOURCE_PATH "Resources/"
 #define SPRITE_PATH "Resources/Sprite/"
+#define TEXTURE_PATH "Resources/Texture2D/"
 #define FONT_PATH "Resources/Font/"
 #define ANI_PATH "Resources/Animation/"
 #define INTERATIVE_DATA_PATH "InterativeViewerData/"

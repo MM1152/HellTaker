@@ -18,12 +18,11 @@ void BossHuddle::Reset()
 	SetScale({ 0.8f , 0.8f });
 	animator.SetEvent("bossHuddle", 8, [this]() {
 		hitAble = true;
-	});
-	animator.SetEvent("bossHuddle", 8, [this]() {
 		if (callBack) {
-			callBack(GetXY().x , GetXY().y + 1);
+			callBack(GetXY().x, GetXY().y + 1);
 		}
 	});
+
 	animator.SetEvent("bossHuddle", -1, [this]() {
 		hitAble = false;
 		animator.Stop();

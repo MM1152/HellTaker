@@ -14,7 +14,7 @@ protected:
 	sf::Vector2f targetPos={ 0,0 };
 	sf::Vector2f curPos = { 0,0 };
 	float t = 0;
-	float smooth = 0.1;
+	float smooth = 10;
 	virtual bool CheckBound(int row , int height);
 
 public:

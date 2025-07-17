@@ -16,6 +16,7 @@ void Utils::Init()
 	textureMap.insert({ SpriteTypes::DOWNUPHUDDLE , SPRITE_PATH"assets100V20120.png" });
 	textureMap.insert({ SpriteTypes::BOSSMAPTILE , SPRITE_PATH"bossFloor.png" });
 	textureMap.insert({ SpriteTypes::BOSSOUTTILE , SPRITE_PATH"BossOutTile.png" });
+	textureMap.insert({ SpriteTypes::BOSSMAPLASER , TEXTURE_PATH"labLaser0001.png" });
 }
 void Utils::SetOrigins(sf::Sprite& sp , Origins ori)
 {
