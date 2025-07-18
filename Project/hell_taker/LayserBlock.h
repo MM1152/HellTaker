@@ -32,5 +32,6 @@ public:
 
 	void SetShoot();
 	void SetPosition(sf::Vector2f pos) override;
+	void SetMapData(sf::Vector2f gridSize, int x, int y, SpriteTypes objectId) override;
 };
 

@@ -91,3 +91,9 @@ void LayserBlock::SetPosition(sf::Vector2f pos)
 	layser->SetPosition({ GetPosition().x + 50.f , GetPosition().y + 40.f });
 }
 
+void LayserBlock::SetMapData(sf::Vector2f gridSize, int x, int y, SpriteTypes objectId)
+{
+	ImmovableObstacle::SetMapData(gridSize, x, y, objectId);
+	layser->SetHeight(y);
+}
+

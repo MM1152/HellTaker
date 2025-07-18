@@ -2,6 +2,7 @@
 #include "Singleton.h"
 
 class Scene;
+class TextGo;
 class SceneMgr : public Singleton<SceneMgr>
 {
 protected:
@@ -12,6 +13,13 @@ protected:
 	SceneIds nextScene = SceneIds::None;
 
 	std::unordered_map<SceneIds, Scene*> scenes;
+
+	bool showFPS = false;
+	TextGo* fps;
+	float timer = 0.f;
+	float currentTimer = 0.f;
+	float prevTimer = 0.f;
+	
 
 	SceneMgr() = default;
 	~SceneMgr() = default;

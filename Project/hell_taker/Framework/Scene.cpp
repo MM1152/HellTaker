@@ -101,6 +101,22 @@ void Scene::RemoveGameObject(GameObject* obj)
 	delete obj;
 }
 
+GameObject* Scene::FindGameObject(const std::string& name)
+{
+	auto findIter = gameObjects.begin();
+
+	while (findIter != gameObjects.end()) {
+		if ((*findIter)->GetName() == name) {
+			return (*findIter);
+		}
+		else {
+			findIter++;
+		}
+	}
+	return nullptr;
+}
+
+
 //std::vector<std::vector<int>>& Scene::TranslateMapData(const std::vector<std::vector<float>>& mapData)
 //{
 //	infos.clear();

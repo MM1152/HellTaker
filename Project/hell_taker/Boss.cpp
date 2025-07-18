@@ -113,6 +113,11 @@ void Boss::Reset()
     rightAni.Play(ANI_PATH"bossWakeUp.csv" , true);
     leftAni.Play(ANI_PATH"bossWakeUp.csv" , true);
 
+    for (auto huddle : bossHuddles) {
+        huddle->SetActive(false);
+        bossHuddlsPool.push_back(huddle);
+    }
+    bossHuddles.clear();
 }
 
 void Boss::Update(float dt)

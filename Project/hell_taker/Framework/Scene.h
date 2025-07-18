@@ -30,7 +30,7 @@ public:
 
 	void AddGameObject(GameObject* obj);
 	void RemoveGameObject(GameObject* obj);
-
+	GameObject* FindGameObject(const std::string& name);
 	//std::vector<std::vector<int>>& TranslateMapData(const std::vector<std::vector<float>>& mapData);
 	//sf::Vector2f GetGridSize() { return gridSize; };
 	//sf::Vector2f GetGridCount() { return gridCount; };

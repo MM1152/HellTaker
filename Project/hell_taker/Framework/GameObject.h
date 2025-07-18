@@ -49,6 +49,7 @@ public:
 	SortingLayers GetSortingLayer() { return sortingLayer; };
 	bool GetActive() { return isActive; };
 	sf::Vector2f GetScale() { return scale; };
+	std::string GetName() { return name; };
 	virtual sf::FloatRect GetLocalBound() = 0;
 	virtual sf::FloatRect GetGlobalBound() = 0;
 };

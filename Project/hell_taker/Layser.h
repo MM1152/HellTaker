@@ -1,5 +1,7 @@
 #pragma once
 #include "SpriteGo.h"
+
+class Player;
 class Layser : public SpriteGo
 {
 protected:
@@ -10,9 +12,14 @@ protected:
 	float maxTime = 0.5f;
 	float middleTimer = 0.3f;
 	float t = 0;
-
+	float duration = 0.1f;
+	
 	bool hitAble = false;
 	bool isScaleUp = true;
+
+	int height = 0;
+
+	Player* player;
 public:
 	Layser(const std::string& texId = "" , const std::string name = "");
 	~Layser() override = default;
@@ -21,7 +28,7 @@ public:
 	void Update(float dt) override;
 	void Shoot();
 	void Draw(sf::RenderWindow& window) override;
-
+	void SetHeight(int height) { this->height = height; };
 	float GetTimer(){ return timer; };
 };
 

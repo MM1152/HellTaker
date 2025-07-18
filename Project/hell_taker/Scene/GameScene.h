@@ -54,5 +54,6 @@ public:
 
 	void ResetScene();
 	void SetCameraShake();
+	
 };
 

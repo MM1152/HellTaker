@@ -81,7 +81,7 @@ void GameScene::Init()
 	backGround = new SpriteGo(MAP_IMAGE(MAP.GetMapIndex() + 1));
 	backGround->SetSortingLayer(SortingLayers::BACKGROUND);
 
-	player = new Player(UTILS.textureMap[SpriteTypes::PLAYER]);
+	player = new Player(UTILS.textureMap[SpriteTypes::PLAYER] , "Player");
 	player->SetGameScene(this);
 	interactive = new InteractiveViewer(FONT_PATH"CrimsonPro-Medium.ttf");
 	interactive->SetGameScene(this);
