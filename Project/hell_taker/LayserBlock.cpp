@@ -15,15 +15,14 @@ LayserBlock::LayserBlock(const std::string& texId, const std::string& name)
 
 void LayserBlock::Init()
 {
+	layser = new Layser(TEXTURE_PATH"W_chapter2.png");
+	layser->Init();
 	
 	ImmovableObstacle::Init();
 }
 
 void LayserBlock::Reset()
 {
-	layser = new Layser(TEXTURE_PATH"W_chapter2.png");
-
-	layser->Init();
 	layser->Reset();
 
 	layserSprite.setTexture(TEXTURE_MGR.Get(TEXTURE_PATH"Soft.png"));
@@ -55,11 +54,14 @@ void LayserBlock::Update(float dt)
 		}
 	}
 
-	if (INPUT_MGR.GetKeyDown(KEY::S)) {
-		layser->Shoot();
-	}
 
 	layser->Update(dt);
+	if (layser->GetTimer() >= 0.5f && oneTime) {
+		if (shootNextLayser) {
+			shootNextLayser();
+			oneTime = false;
+		}
+	}
 	ImmovableObstacle::Update(dt);
 }
 
@@ -78,7 +80,8 @@ void LayserBlock::Draw(sf::RenderWindow& window)
 
 void LayserBlock::SetShoot()
 {
-	isShoot = true;
+	layser->Shoot();
+	oneTime = true;
 }
 
 void LayserBlock::SetPosition(sf::Vector2f pos)

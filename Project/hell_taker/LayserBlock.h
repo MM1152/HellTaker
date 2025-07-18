@@ -16,9 +16,11 @@ protected:
 	bool isSizeUp = false;
 	bool isShoot = false;
 
-
+	bool oneTime = true;
 	void Shoot();
 public:
+	std::function<void()> shootNextLayser;
+
 	LayserBlock(const std::string& texId = "", const std::string& name = "");
 	~LayserBlock() override = default;
 

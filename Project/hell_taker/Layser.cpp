@@ -9,7 +9,13 @@ Layser::Layser(const std::string& texId, const std::string name)
 void Layser::Reset()
 {
 	SpriteGo::Reset();
+	SetActive(false);
 	SetOrigin(Origins::LC);
+
+	timer = 0.0f;
+	maxTime = 0.5f;
+	middleTimer = 0.3f;
+	t = 0;
 }
 
 void Layser::Update(float dt)

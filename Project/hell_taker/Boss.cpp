@@ -79,12 +79,17 @@ void Boss::Init()
             spawnHuddleX = 6;
             spawnHuddleY = 6;
         }
+        else if (attackCount == 4) {
+            ShootLayser();
+        }
     });
 
 }
 
 void Boss::Reset()
 {
+    layserBlocks.clear();
+    layserIdx = 0;
     attackCount = 0;
     huddleCount = 7;
     spawnHuddleX = 6;
@@ -207,10 +212,25 @@ void Boss::SetNextHuddle(int row , int height)
         leftAni.Play(ANI_PATH"bossAttack1.csv");
         startAnimation = true;
     }
+    
 
     if (height <= workAbleMaxHeight ) {
         Attack1(1, row, height);
     }
+}
+
+void Boss::ShootLayser()
+{
+    if (layserIdx >= layserOrder.size()) return;
+    layserBlocks[layserOrder[layserIdx++] - 1]->SetShoot();  
+}
+
+void Boss::SetLayserBlock(LayserBlock* layser)
+{
+    layserBlocks.push_back(layser); 
+    layser->shootNextLayser = [this]() {
+        ShootLayser();
+    };
 }
 
 

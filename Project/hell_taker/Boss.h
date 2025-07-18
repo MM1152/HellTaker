@@ -3,6 +3,7 @@
 #include "Animator.h";
 #include "BossHuddle.h"
 #include "Player.h"
+#include "LayserBlock.h"
 
 class GameScene;
 class Boss : public GameObject
@@ -33,8 +34,12 @@ protected:
 
 	std::list<BossHuddle*> bossHuddlsPool;
 	std::list<BossHuddle*> bossHuddles;
+	std::vector<LayserBlock*> layserBlocks;
 
 	Player* player;
+
+	int layserIdx;
+	std::vector<int> layserOrder = { 1 , 3 , 2 , 1 , 4 ,  2, 3 };
 public:
 
 
@@ -59,7 +64,7 @@ public:
 	void Attack1(int count ,int row, int height);
 	void SetNextHuddle(int row, int height);
 	void SetPlayer(Player* player) { this->player = player; };
-
-
+	void ShootLayser();
+	void SetLayserBlock(LayserBlock* layser);
 };
 

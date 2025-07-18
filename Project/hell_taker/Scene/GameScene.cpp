@@ -308,6 +308,7 @@ void GameScene::Reset()
 					else if (curSpriteType == (int)SpriteTypes::BOSSMAPLASER) {
 						ob = new LayserBlock(UTILS.textureMap[SpriteTypes::BOSSMAPLASER]);
 						ob->SetSortingOrder(i + 2);
+						bossmapBackGround->SetLayserBlock((LayserBlock*)ob);
 						
 					}
 	
