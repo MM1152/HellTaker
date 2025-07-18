@@ -79,6 +79,7 @@ void SceneMapEditor::Init()
 	ButtonSprite* bossMapTile = new ButtonSprite(UTILS.textureMap[SpriteTypes::BOSSMAPTILE]);
 	ButtonSprite* bossOutTile = new ButtonSprite(UTILS.textureMap[SpriteTypes::BOSSOUTTILE]);
 	ButtonSprite* bossLayser = new ButtonSprite(UTILS.textureMap[SpriteTypes::BOSSMAPLASER]);
+	ButtonSprite* boss = new ButtonSprite(UTILS.textureMap[SpriteTypes::BOSS]);
 
 	InputText* inputWidth = new InputText(FONT_PATH"Amiri-Regular.ttf");
 	InputText* inputHeigth = new InputText(FONT_PATH"Amiri-Regular.ttf");
@@ -291,6 +292,13 @@ void SceneMapEditor::Init()
 		type = Types::NONE;
 	});
 
+	boss->SetPosition({ 1920 - 150.f , 600 });
+	boss->SetCallBack([this] {
+		spriteType = SpriteTypes::BOSS;
+		isForGround = true;
+		type = Types::NONE;
+	});
+
 	goldKeyButton->SetPosition({ 1920 - 450.f , 700 });
 	goldKeyButton->SetCallBack([this]() {
 		spriteType = SpriteTypes::GOLDKEY;
@@ -331,6 +339,7 @@ void SceneMapEditor::Init()
 		type = Types::WALL;
 	});
 	
+	
 
 #pragma endregion
 
@@ -365,6 +374,7 @@ void SceneMapEditor::Init()
 	AddGameObject(bossMapTile);
 	AddGameObject(bossOutTile);
 	AddGameObject(bossLayser);
+	AddGameObject(boss);
 #pragma endregion
 
 

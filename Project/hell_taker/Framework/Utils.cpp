@@ -17,6 +17,7 @@ void Utils::Init()
 	textureMap.insert({ SpriteTypes::BOSSMAPTILE , SPRITE_PATH"bossFloor.png" });
 	textureMap.insert({ SpriteTypes::BOSSOUTTILE , SPRITE_PATH"BossOutTile.png" });
 	textureMap.insert({ SpriteTypes::BOSSMAPLASER , TEXTURE_PATH"labLaser0001.png" });
+	textureMap.insert({ SpriteTypes::BOSS , SPRITE_PATH"boss.png" });
 }
 void Utils::SetOrigins(sf::Sprite& sp , Origins ori)
 {
@@ -30,6 +31,17 @@ void Utils::SetOrigins(sf::Sprite& sp , Origins ori)
 }
 
 void Utils::SetOrigins(sf::Text& sp, Origins ori)
+{
+	sf::FloatRect rect = sp.getLocalBounds();
+
+	sf::Vector2f origin;
+	origin.x = rect.width * (((int)ori % 3) * 0.5f);
+	origin.y = rect.height * (((int)ori / 3) * 0.5f);
+
+	sp.setOrigin(origin);
+}
+
+void Utils::SetOrigins(sf::Shape& sp, Origins ori)
 {
 	sf::FloatRect rect = sp.getLocalBounds();
 

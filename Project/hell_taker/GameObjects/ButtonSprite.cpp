@@ -46,7 +46,7 @@ void ButtonSprite::Draw(sf::RenderWindow& window)
 void ButtonSprite::Reset()
 {
 	sprite.setTexture(TEXTURE_MGR.Get(texId));
-
+	sprite.setTextureRect(sf::IntRect(0, 0, 75, 75));
 	if (sprite.getLocalBounds().width == 0) {
 		rect.setSize({ 75, 75 });
 	}

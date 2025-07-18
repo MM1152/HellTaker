@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "Boss.h"
 #include "GameScene.h"
+#include "BossLayser.h"         
 Boss::Boss(const std::string& texId, const std::string& name)
-    :GameObject(name)
+    :ImmovableObstacle(texId, name)
     ,texId(texId)
 {
 }
@@ -44,6 +45,13 @@ void Boss::SetScale(sf::Vector2f scale)
 
 void Boss::Init()
 {
+    bossLayser = new BossLayser(30, "");
+    bossLayser->SetActive(false);
+    bossLayser->Reset();
+  
+    bossLayser->SetPosition({ 1920 / 2 - 19.f, 1080 / 2 - 50.f });
+    bossLayser->Init();
+    
     rightAni.SetTarget(&right);
     leftAni.SetTarget(&left);
 
@@ -52,6 +60,13 @@ void Boss::Init()
         leftAni.Play(ANI_PATH"bossAttack1.csv");
     });
     
+    rightAni.SetEvent("bossSkill", 5, [this]() {
+        bossLayser->Shoot();
+    });
+    rightAni.SetEvent("bossSkill", -1, [this]() {
+        rightAni.Stop();
+        leftAni.Stop();
+    });
     rightAni.SetEvent("bossAttack1", -1, [this]() {
         attackCount++;
         
@@ -88,6 +103,8 @@ void Boss::Init()
 
 void Boss::Reset()
 {
+    bossLayser->Reset();
+
     layserBlocks.clear();
     layserIdx = 0;
     attackCount = 0;
@@ -107,8 +124,8 @@ void Boss::Reset()
     UTILS.SetOrigins(right, Origins::RT);
     UTILS.SetOrigins(left, Origins::RT);
 
-    right.setPosition({ 1920 / 2 - 20.f , 0 });
-    left.setPosition({ 1920 / 2 - 20.f, 0 });
+    right.setPosition({ 1920 / 2 - 20.f , -30.f });
+    left.setPosition({ 1920 / 2 - 20.f, -30.f });
 
     rightAni.Play(ANI_PATH"bossWakeUp.csv" , true);
     leftAni.Play(ANI_PATH"bossWakeUp.csv" , true);
@@ -122,11 +139,15 @@ void Boss::Reset()
 
 void Boss::Update(float dt)
 {
+    if (MAP.isClear) return;
+
     if (GetActive()) {
         leftAni.Update(dt);
         rightAni.Update(dt);
     }
   
+    bossLayser->Update(dt);
+
     auto iter = bossHuddles.begin();
 
     while (iter != bossHuddles.end()) {
@@ -139,6 +160,8 @@ void Boss::Update(float dt)
             iter++;
         }
     }
+
+    
 }
 
 void Boss::Exit()
@@ -162,7 +185,7 @@ void Boss::Draw(sf::RenderWindow& window)
 {
     window.draw(right);
     window.draw(left);
-
+    bossLayser->Draw(window);
     for (auto huddle : bossHuddles) {
         if (huddle->GetActive()) {
             huddle->Draw(window);
@@ -226,7 +249,12 @@ void Boss::SetNextHuddle(int row , int height)
 
 void Boss::ShootLayser()
 {
-    if (layserIdx >= layserOrder.size()) return;
+    if (layserIdx >= layserOrder.size()) {
+        leftAni.Play(ANI_PATH"bossSkill.csv");
+        rightAni.Play(ANI_PATH"bossSkill.csv");
+        return;
+    }
+        
     layserBlocks[layserOrder[layserIdx++] - 1]->SetShoot();  
 }
 

@@ -15,7 +15,8 @@ protected:
 	std::unordered_map<SceneIds, Scene*> scenes;
 
 	bool showFPS = false;
-	TextGo* fps;
+	sf::Text fps;
+	sf::Font font;
 	float timer = 0.f;
 	float currentTimer = 0.f;
 	float prevTimer = 0.f;

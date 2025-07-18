@@ -83,11 +83,15 @@ void GameScene::Init()
 
 	player = new Player(UTILS.textureMap[SpriteTypes::PLAYER] , "Player");
 	player->SetGameScene(this);
+	player->SetSortingLayer(SortingLayers::DEFAULT);
+	player->SetSortingOrder(5);
+	
 	interactive = new InteractiveViewer(FONT_PATH"CrimsonPro-Medium.ttf");
 	interactive->SetGameScene(this);
 
 	bossmapBackGround = new Boss(SPRITE_PATH"boss_EXPORT_HALF0042.png");
-	bossmapBackGround->SetSortingLayer(SortingLayers::FORGROUND);
+	bossmapBackGround->SetSortingLayer(SortingLayers::DEFAULT);
+	bossmapBackGround->SetSortingOrder(4);
 	bossmapBackGround->SettingGameScene(this);
 	bossmapBackGround->SetPlayer(player);		
 
@@ -214,7 +218,7 @@ void GameScene::Reset()
 		moveCountUIBackGround->SetActive(true);
 	}
 
-	MAP.isClear = false;
+	
 
 	moveCountUI->SetPosition({ 0,1080 - moveCountUI->GetLocalBound().height });
 	mapIndexUI->SetPosition({ 1920, 1080 - moveCountUI->GetLocalBound().height });
@@ -311,13 +315,14 @@ void GameScene::Reset()
 						bossmapBackGround->SetLayserBlock((LayserBlock*)ob);
 						
 					}
-	
-					AddObs(ob, (SpriteTypes)curSpriteType, gridSize, i, j);
+					if (ob) {
+						AddObs(ob, (SpriteTypes)curSpriteType, gridSize, i, j);
+					}
+					
 				}
 			}
 		}
 	}
-
 }
 
 void GameScene::Exit()
@@ -348,12 +353,9 @@ void GameScene::AddObs(Obstacle* ob, SpriteTypes types , sf::Vector2f gridSize ,
 void GameScene::ResetScene()
 {
 	changeMapUI->Play();
-
 	for (auto& i : player->GetObstacleList()) {
 		RemoveGameObject(i);
 	}
-
-	Reset();
 }
 
 void GameScene::SetCameraShake() {

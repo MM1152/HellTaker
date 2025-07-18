@@ -13,14 +13,11 @@ void Layser::Reset()
 	SetActive(false);
 	SetOrigin(Origins::LC);
 
-	timer = 0.0f;
-	maxTime = 0.5f;
-	middleTimer = 0.3f;
 	t = 0;
 	
 	isScaleUp = false;
-	
 	player = (Player*)SCENE_MGR.GetCurrentScene()->FindGameObject("Player");
+	
 }
 
 void Layser::Update(float dt)
@@ -67,6 +64,8 @@ void Layser::Update(float dt)
 			player->SetMoveCount(-1);
 			player->Die();
 		}
+
+		
 	}
 }
 

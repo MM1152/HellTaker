@@ -13,6 +13,7 @@ public:
 	void Init();
 	void SetOrigins(sf::Sprite& sp , Origins ori);
 	void SetOrigins(sf::Text& sp, Origins ori);
+	void SetOrigins(sf::Shape& sp, Origins ori);
 
 	void WriteMapDataFile(const std::string filePath , std::vector<std::vector<float>> write);
 	float Lerp(float x, float y, float t);

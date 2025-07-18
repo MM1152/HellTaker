@@ -22,6 +22,7 @@ enum class SpriteTypes {
 	BOSSMAPTILE,
 	BOSSOUTTILE,
 	BOSSMAPLASER,
+	BOSS,
 	NONE,
 	SPRITECOUNT,
 };

@@ -5,6 +5,7 @@ class Player;
 class Layser : public SpriteGo
 {
 protected:
+	sf::CircleShape circle;
 	sf::Vector2f maxSize = { 14.5f , 0.6f };
 	sf::Vector2f minsize = { 0.f , 0.f };
 
@@ -13,7 +14,6 @@ protected:
 	float middleTimer = 0.3f;
 	float t = 0;
 	float duration = 0.1f;
-	
 	bool hitAble = false;
 	bool isScaleUp = true;
 
@@ -28,6 +28,7 @@ public:
 	void Update(float dt) override;
 	void Shoot();
 	void Draw(sf::RenderWindow& window) override;
+	//void SetInfo(sf::Vector2f maxSize , sf::Vector2f minSize , float maxTime , float middleTime , float duration , float activeDuration);
 	void SetHeight(int height) { this->height = height; };
 	float GetTimer(){ return timer; };
 };

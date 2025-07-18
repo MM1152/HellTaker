@@ -16,8 +16,6 @@ bool Player::CheckBound(int row, int height)
     moveCount--;
     if (inputKey.x != 0) SetScale({ std::abs(GetScale().x) * inputKey.x , GetScale().y });
 
-    if(MAP.GetMapIndex() == 5) return true;
-
     for (auto obs : obstacleList) {
         if (obs->GetType() == SpriteTypes::UPDOWNHUDLE || obs->GetType() == SpriteTypes::DOWNUPHUDDLE) {
             ((UpDownHudle*)obs)->Play();
@@ -29,7 +27,6 @@ bool Player::CheckBound(int row, int height)
         }
     }
 
-    if (Die()) return false;
     bool moveAble = true;
     for (auto obs : obstacleList) {
         if (height == obs->GetXY().y && row == obs->GetXY().x) {
@@ -55,12 +52,17 @@ bool Player::CheckBound(int row, int height)
             else if (obs->GetObjectId() == SpriteTypes::BOX && !isGetKey) {
                 moveAble = false;
             }
+            else if (obs->GetObjectId() == SpriteTypes::BOSSMAPLASER) {
+                moveAble = false;
+            }
+            else if (obs->GetObjectId() == SpriteTypes::BOSS) {
+                moveAble = false;
+            }
 
-            isPlayAnimation = true;
+            //isPlayAnimation = true;
         }
     }
-    
-    if (isDie) return false;   
+     
     if (!moveAble) {
         ChangeAnimation(ANI_PATH"playerKick.csv");
         PlayEffectAnimation(EffectType::Kick);
@@ -108,11 +110,10 @@ void Player::Init()
         isPlayAnimation = false;
        });
     animator.SetEvent("playerDie", -1, [this]() {
+        animator.Stop();
         if (changeMapAnimationFunc) {
             changeMapAnimationFunc();
         }
-        isDie = false;
-        isPlayAnimation = false;
     });
 
     for (auto effect : effectAnimation) {
@@ -122,11 +123,10 @@ void Player::Init()
 
 void Player::Update(float dt)
 {
-    if (Die()) true;
+    animator.Update(dt);
     
     MoveAbleObject::Update(dt);
-
-    animator.Update(dt);
+  
     for (auto effect : effectAnimation) {
         effect.second->Update(dt);
     }
@@ -216,6 +216,7 @@ void Player::ChangeAnimation(const std::string& id , bool resetTextureRect)
 
 void Player::Move(int upX, int upY)
 {   
+    if (Die()) return;
     if (CheckBound(upX + x, upY + y)) {
         //if(inputKey.x != 0) SetScale({ std::abs(GetScale().x) * inputKey.x , GetScale().y });
         ChangeAnimation(ANI_PATH"playerMove.csv");
@@ -247,13 +248,13 @@ void Player::Move(int upX, int upY)
 
 bool Player::Die()
 {
-    if (moveCount < 0 && !isDie) {
+    if (moveCount <= 0 && !isDie) {
         ChangeAnimation(ANI_PATH"playerDie.csv", true);
-        SetPosition({ GetPosition().x , GetPosition().y - 170.f });
+        SetPosition({ GetPosition().x , GetPosition().y - 300.f});
         isDie = true;
         isPlayAnimation = true;
 
-        return true;
+        return isDie;
     }
-    return false;
+    return isDie;
 }

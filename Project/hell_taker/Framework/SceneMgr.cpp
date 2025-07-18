@@ -7,7 +7,9 @@
 
 void SceneMgr::Init()
 {
-	fps = new TextGo(FONT_PATH"Amiri-Regular.ttf");
+	
+	font.loadFromFile(FONT_PATH"Amiri-Regular.ttf");
+	fps.setFont(font);
 
 	scenes.insert({ SceneIds::SceneGame , new GameScene() });
 	scenes.insert({ SceneIds::Dev1 , new SceneDev1() });
@@ -18,11 +20,7 @@ void SceneMgr::Init()
 
 	currentScene = startScene;
 	scenes[currentScene]->Reset();
-
-	fps->Init();
-	fps->Reset();
-
-	fps->SetFillColor(sf::Color::Green);
+	fps.setFillColor(sf::Color::Green);
 }
 
 void SceneMgr::Update(float dt)
@@ -35,6 +33,13 @@ void SceneMgr::Update(float dt)
 	}
 	scenes[currentScene]->Update(dt);
 
+	if (timer >= 1 && showFPS) {
+		float dtInMs = dt * 1000.f;
+		float fpss = 1000.f / dtInMs;
+
+		fps.setString("FPS: " + std::to_string(static_cast<int>(fpss)));
+		timer = 0;
+	}
 
 	if (INPUT_MGR.GetKeyDown(KEY::F)) {
 		showFPS = !showFPS;
@@ -42,20 +47,15 @@ void SceneMgr::Update(float dt)
 
 	timer += dt;
 
-	if (timer >= 1) {
-		float dtInMs = dt * 1000.f;
-		float fpss = 1000.f / dtInMs;
-
-		fps->SetString("FPS: " + std::to_string(static_cast<int>(fpss)));
-		timer = 0;
-	}
+	
 }
 
 void SceneMgr::Draw(sf::RenderWindow& window)
 {
 	scenes[currentScene]->Draw(window);
+
 	if (showFPS) {
-		fps->Draw(window);
+		window.draw(fps);
 	}
 }
 

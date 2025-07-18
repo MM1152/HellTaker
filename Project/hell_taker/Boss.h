@@ -4,9 +4,12 @@
 #include "BossHuddle.h"
 #include "Player.h"
 #include "LayserBlock.h"
+#include "Layser.h"
+
 
 class GameScene;
-class Boss : public GameObject
+class BossLayser;
+class Boss : public ImmovableObstacle
 {
 protected:
 	int workAbleRow = 5;
@@ -37,6 +40,7 @@ protected:
 	std::vector<LayserBlock*> layserBlocks;
 
 	Player* player;
+	BossLayser* bossLayser;
 
 	int layserIdx;
 	std::vector<int> layserOrder = { 1 , 3 , 2 , 1 , 4 ,  2, 3 };
