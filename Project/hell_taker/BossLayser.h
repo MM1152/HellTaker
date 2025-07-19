@@ -1,11 +1,16 @@
 #pragma once
 #include "GameObject.h"
+
+class Player;
 class BossLayser : public GameObject
 {
 protected:
-	sf::CircleShape layser;
-	sf::RectangleShape warningSign;
+	Player* player;
 
+	sf::CircleShape layser;
+	sf::CircleShape translayser;
+
+	sf::RectangleShape warningSign;
 	sf::RectangleShape brightBackGorund;
 
 	sf::Vector2f maxSize = { 18 , 8 };
@@ -19,7 +24,14 @@ protected:
 	float duration = 1.f;
 	float activeDuration = 8.f;
 	
+	bool minSizeUp = false;
+
 	bool isScaleUp = false;		
+
+	int minRow;
+	int maxRow;
+
+	bool hitAble = false;
 public:
 	BossLayser(float radious, const std::string& name);
 	~BossLayser() override = default;
@@ -40,6 +52,8 @@ public:
 	sf::FloatRect GetGlobalBound() override;
 
 	void Shoot();
+	void SetRow(int minRow , int maxRow);
+	void SetPlayer(Player* player) { this->player = player; };
 };
 
 

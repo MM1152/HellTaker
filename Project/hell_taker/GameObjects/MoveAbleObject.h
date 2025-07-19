@@ -24,6 +24,8 @@ public:
 
 	void SetPosition(const sf::Vector2f pos) override;
 	virtual void SetMapData(sf::Vector2f gridSize , int x , int y , SpriteTypes objectId);
+	void SetObjectType(SpriteTypes sp) { objectId = sp; };
+	void SetXY(sf::Vector2i pos) { x = pos.x; y = pos.y; };
 	SpriteTypes GetObjectId() { return objectId; };
 	sf::Vector2i GetXY() { return { x , y }; };
 	void Update(float dt) override;

@@ -5,6 +5,7 @@
 #define SPRITE_PATH "Resources/Sprite/"
 #define TEXTURE_PATH "Resources/Texture2D/"
 #define FONT_PATH "Resources/Font/"
+#define SOUND_PATH "Resources/AudioClip/"
 #define ANI_PATH "Resources/Animation/"
 #define INTERATIVE_DATA_PATH "InterativeViewerData/"
 #define KEY sf::Keyboard::Key 
@@ -31,6 +32,7 @@
 #include "InputMgr.h"
 #include "ResourceMgr.h"
 #include "Utils.h"
+#include "SoundMgr.h"
 #include "Map.h"
 
 std::string MAP_DATA(int x);

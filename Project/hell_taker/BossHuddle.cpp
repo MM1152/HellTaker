@@ -16,7 +16,7 @@ void BossHuddle::Reset()
 {
 	Huddle::Reset();
 	SetScale({ 0.8f , 0.8f });
-	animator.SetEvent("bossHuddle", 8, [this]() {
+	animator.SetEvent("bossHuddle", 7, [this]() {
 		hitAble = true;
 		if (callBack) {
 			callBack(GetXY().x, GetXY().y + 1);

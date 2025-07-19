@@ -43,7 +43,6 @@ void MoveAbleObject::Update(float dt)
 			isMoveAble = false;
 		}
 	}
-	std::cout << dt << std::endl;
 }
 
 void MoveAbleObject::Move(int upX, int upY)

@@ -14,6 +14,7 @@ bool Player::CheckBound(int row, int height)
     }
     
     moveCount--;
+    SOUND_MGR.Play(SoundTypes::PLAYER_MOVE);
     if (inputKey.x != 0) SetScale({ std::abs(GetScale().x) * inputKey.x , GetScale().y });
 
     for (auto obs : obstacleList) {
@@ -57,6 +58,7 @@ bool Player::CheckBound(int row, int height)
             }
             else if (obs->GetObjectId() == SpriteTypes::BOSS) {
                 moveAble = false;
+                obs->Interaction();
             }
 
             //isPlayAnimation = true;
@@ -250,7 +252,7 @@ bool Player::Die()
 {
     if (moveCount <= 0 && !isDie) {
         ChangeAnimation(ANI_PATH"playerDie.csv", true);
-        SetPosition({ GetPosition().x , GetPosition().y - 300.f});
+        SetPosition({ GetPosition().x , GetPosition().y - 180.f});
         isDie = true;
         isPlayAnimation = true;
 

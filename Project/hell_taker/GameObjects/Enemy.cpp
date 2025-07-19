@@ -33,12 +33,15 @@ void Enemy::Update(float dt)
 
 void Enemy::Move(int upX, int upY)
 {
+
 	if (MAP.GetTileData(y + upY , x + upX)!= 1) {
 		SetActive(false);
 		//GameScene::mapData[y][x] = 1;
 		return;
 	}
+	SOUND_MGR.Play(SoundTypes::ENEMY_KICK);
 	animator.Play(ANI_PATH"enemyKicked.csv");
+	
 	Obstacle::Move(upX, upY);
 	
 }

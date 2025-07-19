@@ -25,6 +25,7 @@ GameScene::GameScene()
 
 void GameScene::Init()
 {
+	
 	worldView.setSize({ 1920 , 1080 });
 	worldView.setCenter({ 1920 / 2 , 1080 / 2 });
 	uiView.setSize({ 1920 , 1080 });
@@ -144,6 +145,7 @@ void GameScene::Init()
 	player->SetChangeMapFunc([this]() {
 		ResetScene();
 	});
+
 	Scene::Init();
 }
 
@@ -189,6 +191,13 @@ void GameScene::Draw(sf::RenderWindow& window)
 void GameScene::Reset()
 {
 	Scene::Reset();
+	shakeLeft = false;
+	shakeRight = false;
+
+	if (!changeScene) {
+		SOUND_MGR.Play(SoundTypes::GAMESCENE_BACKGROUND, true);
+		changeScene = true;
+	}
 
 	if (MAP.GetMapIndex() == 5) {
 		bossmapBackGround->SetActive(true);
@@ -203,6 +212,8 @@ void GameScene::Reset()
 		moveCountText->SetActive(false);
 		moveCountUI->SetActive(false);
 		moveCountUIBackGround->SetActive(false);
+
+		player->AddObstacle(bossmapBackGround);
 	}
 	else {
 		bossmapBackGround->SetActive(false);
@@ -312,13 +323,17 @@ void GameScene::Reset()
 					else if (curSpriteType == (int)SpriteTypes::BOSSMAPLASER) {
 						ob = new LayserBlock(UTILS.textureMap[SpriteTypes::BOSSMAPLASER]);
 						ob->SetSortingOrder(i + 2);
-						bossmapBackGround->SetLayserBlock((LayserBlock*)ob);
-						
+						bossmapBackGround->SetLayserBlock((LayserBlock*)ob);	
 					}
+					else if (curSpriteType == (int)SpriteTypes::BOSS) {
+						bossmapBackGround->SetXY({ j,i});
+						bossmapBackGround->SetObjectType((SpriteTypes)curSpriteType);
+					}
+					
+
 					if (ob) {
 						AddObs(ob, (SpriteTypes)curSpriteType, gridSize, i, j);
 					}
-					
 				}
 			}
 		}
@@ -330,8 +345,12 @@ void GameScene::Exit()
 	Scene::Exit();
 	
 	for (auto& i : player->GetObstacleList()) {
+		if (i->GetType() == SpriteTypes::BOSS) continue;
 		RemoveGameObject(i);
 	}
+
+	SOUND_MGR.Stop(SoundTypes::GAMESCENE_BACKGROUND);
+	changeScene = false;
 }
 
 void GameScene::Release()
@@ -348,12 +367,15 @@ void GameScene::AddObs(Obstacle* ob, SpriteTypes types , sf::Vector2f gridSize ,
 	ob->SetMapData(gridSize, j, i, types);
 	
 	player->AddObstacle(ob);
+	
+	
 }
 
 void GameScene::ResetScene()
 {
 	changeMapUI->Play();
 	for (auto& i : player->GetObstacleList()) {
+		if (i->GetType() == SpriteTypes::BOSS) continue;
 		RemoveGameObject(i);
 	}
 }

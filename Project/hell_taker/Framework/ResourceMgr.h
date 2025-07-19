@@ -47,3 +47,4 @@ public:
 #define TEXTURE_MGR ResourceMgr<sf::Texture>::Instance()
 #define FONT_MGR ResourceMgr<sf::Font>::Instance()
 #define ANIMATION_MGR ResourceMgr<AnimationClip>::Instance()
+#define SOUNDBUFFER_MGR ResourceMgr<sf::SoundBuffer>::Instance()

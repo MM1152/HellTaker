@@ -47,6 +47,7 @@ void Boss::Init()
 {
     bossLayser = new BossLayser(30, "");
     bossLayser->SetActive(false);
+    bossLayser->SetRow(workAbleRow + 2 , workAbleMaxRow - 2);
     bossLayser->Reset();
   
     bossLayser->SetPosition({ 1920 / 2 - 19.f, 1080 / 2 - 50.f });
@@ -62,10 +63,12 @@ void Boss::Init()
     
     rightAni.SetEvent("bossSkill", 5, [this]() {
         bossLayser->Shoot();
+        useSkill = true;
     });
     rightAni.SetEvent("bossSkill", -1, [this]() {
         rightAni.Stop();
         leftAni.Stop();
+        useSkill = false;
     });
     rightAni.SetEvent("bossAttack1", -1, [this]() {
         attackCount++;
@@ -98,13 +101,15 @@ void Boss::Init()
             ShootLayser();
         }
     });
+    
+
 
 }
 
 void Boss::Reset()
 {
     bossLayser->Reset();
-
+    useSkill = false;
     layserBlocks.clear();
     layserIdx = 0;
     attackCount = 0;
@@ -126,15 +131,16 @@ void Boss::Reset()
 
     right.setPosition({ 1920 / 2 - 20.f , -30.f });
     left.setPosition({ 1920 / 2 - 20.f, -30.f });
-
-    rightAni.Play(ANI_PATH"bossWakeUp.csv" , true);
-    leftAni.Play(ANI_PATH"bossWakeUp.csv" , true);
+    
+    hitAble = true;
 
     for (auto huddle : bossHuddles) {
         huddle->SetActive(false);
         bossHuddlsPool.push_back(huddle);
     }
     bossHuddles.clear();
+    
+    bossLayser->SetPlayer(player);
 }
 
 void Boss::Update(float dt)
@@ -148,6 +154,15 @@ void Boss::Update(float dt)
   
     bossLayser->Update(dt);
 
+    if (useSkill) {
+        shakeTimer -= dt;
+        if (shakeTimer < 0) {
+            gameScene->SetCameraShake();
+            shakeTimer = 0.3f;
+        }
+    }
+
+
     auto iter = bossHuddles.begin();
 
     while (iter != bossHuddles.end()) {
@@ -160,7 +175,7 @@ void Boss::Update(float dt)
             iter++;
         }
     }
-
+    
     
 }
 
@@ -249,6 +264,7 @@ void Boss::SetNextHuddle(int row , int height)
 
 void Boss::ShootLayser()
 {
+    if (MAP.isClear) return;
     if (layserIdx >= layserOrder.size()) {
         leftAni.Play(ANI_PATH"bossSkill.csv");
         rightAni.Play(ANI_PATH"bossSkill.csv");
@@ -264,6 +280,15 @@ void Boss::SetLayserBlock(LayserBlock* layser)
     layser->shootNextLayser = [this]() {
         ShootLayser();
     };
+}
+
+void Boss::Interaction()
+{
+    if (hitAble) {
+        rightAni.Play(ANI_PATH"bossWakeUp.csv", true);
+        leftAni.Play(ANI_PATH"bossWakeUp.csv", true);
+        hitAble = false;
+    }
 }
 
 

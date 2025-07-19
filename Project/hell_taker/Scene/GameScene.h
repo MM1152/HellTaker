@@ -33,12 +33,12 @@ protected:
 	SpriteGo* mapIndexUIBackGround;
 	Boss* bossmapBackGround;
 		
-
 	InteractiveViewer* interactive;
 
 	TextGo* moveCountText;
 	TextGo* mapIndexText;
 
+	bool changeScene = false;
 	void CameraShake();
 public:
 	GameScene();

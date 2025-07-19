@@ -179,6 +179,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameObjects\SpriteGo.cpp" />
     <ClCompile Include="Framework\Scene.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SoundMgr.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -228,6 +230,8 @@
     <ClInclude Include="Scene\SceneDev1.h" />
     <ClInclude Include="Scene\GameScene.h" />
     <ClInclude Include="Framework\Scene.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundMgr.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Framework\Utils.h" />
     <ClInclude Include="GameObjects\TextGo.h" />

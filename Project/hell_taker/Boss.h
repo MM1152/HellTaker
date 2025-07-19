@@ -42,8 +42,12 @@ protected:
 	Player* player;
 	BossLayser* bossLayser;
 
+	bool hitAble = true;
 	int layserIdx;
 	std::vector<int> layserOrder = { 1 , 3 , 2 , 1 , 4 ,  2, 3 };
+
+	bool useSkill = false;
+	float shakeTimer = 0.3f;
 public:
 
 
@@ -70,5 +74,6 @@ public:
 	void SetPlayer(Player* player) { this->player = player; };
 	void ShootLayser();
 	void SetLayserBlock(LayserBlock* layser);
+	void Interaction() override;
 };
 

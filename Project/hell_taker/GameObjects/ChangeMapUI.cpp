@@ -49,6 +49,7 @@ void ChangeMapUI::Init()
 		});
 	animator.SetEvent("changeMap", 1, [this]() {
 		gameScene->Reset();
+		SOUND_MGR.Play(SoundTypes::CHANGE_MAP);
 	});
 	//animator.SetEvent("changeMap", 17, [this]() {
 	//	gameScene->ResetScene();

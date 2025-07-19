@@ -6,6 +6,7 @@ void Framework::Init(sf::Vector2f windowSize)
 	window.create(sf::VideoMode(windowSize.x, windowSize.y) , "HELL TAKER");
     UTILS.Init();
     MAP.Init();
+    SOUND_MGR.Init();
 	SCENE_MGR.Init();
 	INPUT_MGR.Init();
     
