@@ -188,6 +188,7 @@
     <ClCompile Include="Framework\Utils.cpp" />
     <ClCompile Include="GameObjects\TextGo.cpp" />
     <ClCompile Include="GameObjects\UpDownHudle.cpp" />
+    <ClCompile Include="Stone.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Boss.h" />
@@ -236,6 +237,7 @@
     <ClInclude Include="Framework\Utils.h" />
     <ClInclude Include="GameObjects\TextGo.h" />
     <ClInclude Include="GameObjects\UpDownHudle.h" />
+    <ClInclude Include="Stone.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

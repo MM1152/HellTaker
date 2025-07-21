@@ -61,6 +61,9 @@ void Boss::Init()
         leftAni.Play(ANI_PATH"bossAttack1.csv");
     });
     
+    rightAni.SetEvent("bossSkill", 1, [this]() {
+        SOUND_MGR.Play(SoundTypes::BOSS_BEAM);
+        });
     rightAni.SetEvent("bossSkill", 5, [this]() {
         bossLayser->Shoot();
         useSkill = true;
@@ -69,6 +72,9 @@ void Boss::Init()
         rightAni.Stop();
         leftAni.Stop();
         useSkill = false;
+    });
+    rightAni.SetEvent("bossAttack1", 5, [this]() {
+        SOUND_MGR.Play(SoundTypes::BOSS_ATTACK);
     });
     rightAni.SetEvent("bossAttack1", -1, [this]() {
         attackCount++;
@@ -285,6 +291,8 @@ void Boss::SetLayserBlock(LayserBlock* layser)
 void Boss::Interaction()
 {
     if (hitAble) {
+        SOUND_MGR.Play(SoundTypes::BOSS_HIT);
+        SOUND_MGR.Play(SoundTypes::BOSS_WAKEUP);
         rightAni.Play(ANI_PATH"bossWakeUp.csv", true);
         leftAni.Play(ANI_PATH"bossWakeUp.csv", true);
         hitAble = false;

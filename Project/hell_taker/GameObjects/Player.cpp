@@ -231,6 +231,7 @@ void Player::Move(int upX, int upY)
             if (obs->GetXY().x == x && obs->GetXY().y == y && ((Huddle*)obs)->GetHitAble()) {
                 isHit = true;
                 gameScene->SetCameraShake();
+                SOUND_MGR.Play(SoundTypes::SPIKE_HIT);
                 moveCount--;
             }
         }
@@ -252,6 +253,7 @@ bool Player::Die()
 {
     if (moveCount <= 0 && !isDie) {
         ChangeAnimation(ANI_PATH"playerDie.csv", true);
+        SOUND_MGR.Play(SoundTypes::PLAYER_DEATH);
         SetPosition({ GetPosition().x , GetPosition().y - 180.f});
         isDie = true;
         isPlayAnimation = true;

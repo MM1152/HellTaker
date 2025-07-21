@@ -47,7 +47,7 @@ void GoldKey::Update(float dt)
 void GoldKey::Interaction()
 {
 	getKey = true;
-	
+	SOUND_MGR.Play(SoundTypes::KEY_PICKUP);
 }
 
 

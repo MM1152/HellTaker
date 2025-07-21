@@ -24,7 +24,7 @@ void Box::Update(float dt)
 {
 	ImmovableObstacle::Update(dt);
 	if (deleteBox) {
-		effect.Update(dt);
+		effect.Update(dt); 
 	}
 }
 

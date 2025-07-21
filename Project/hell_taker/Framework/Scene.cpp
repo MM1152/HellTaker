@@ -93,7 +93,7 @@ void Scene::AddGameObject(GameObject* obj)
 
 	if (!isInput)
 		gameObjects.push_back(obj);
-}
+}	
 
 void Scene::RemoveGameObject(GameObject* obj)
 {

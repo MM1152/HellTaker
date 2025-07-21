@@ -36,6 +36,7 @@ void Enemy::Move(int upX, int upY)
 
 	if (MAP.GetTileData(y + upY , x + upX)!= 1) {
 		SetActive(false);
+		SOUND_MGR.Play(SoundTypes::ENEMY_DIE);
 		//GameScene::mapData[y][x] = 1;
 		return;
 	}

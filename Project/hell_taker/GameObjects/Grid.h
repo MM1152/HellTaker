@@ -39,9 +39,8 @@ protected:
 
 	sf::Sprite forgroundTile;
 	sf::Sprite backGroundTile;
+
 public:
-
-
 	Grid(const sf::Vector2f gridSize , const std::string name = "");
 	~Grid() override = default;
 	// GameObject을(를) 통해 상속됨

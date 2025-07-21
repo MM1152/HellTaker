@@ -18,6 +18,7 @@
 #include "Box.h"
 #include "Boss.h"
 #include "LayserBlock.h"
+#include "Stone.h"
 GameScene::GameScene()
 	:Scene(SceneIds::SceneGame)
 {
@@ -294,7 +295,7 @@ void GameScene::Reset()
 				else{
 					Obstacle* ob = nullptr;
 					if (curSpriteType == (int)SpriteTypes::OBSTACLE) {
-						ob = new Obstacle(UTILS.textureMap[SpriteTypes::OBSTACLE]);
+						ob = new Stone(UTILS.textureMap[SpriteTypes::OBSTACLE]);
 						//ob->SetScale({ 0.8f , 0.8f });
 						ob->plusPos = { 10.f , 10.f };
 					}
