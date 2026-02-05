@@ -70,22 +70,22 @@
 <table align="center">
 <tr>
 <td align="center">
-  <img src="" height="400"/><br>
-  <sub>인게임 퍼즐 플레이</sub>
+  <img src="https://github.com/user-attachments/assets/8d96315e-50c4-42d4-b892-2a312ced5847" height="400"/><br>
+  <sub>NPC 상호작용</sub>
 </td>
 <td align="center">
-  <img src="" height="400"/><br>
-  <sub>오브젝트 상호작용(상자 밀기 등)</sub>
+  <img src="https://github.com/user-attachments/assets/22b2869a-25c6-4a22-acd6-7c6fb8746bb0" height="400"/><br>
+  <sub>장애물 상호작용</sub>
 </td>
 </tr>
 <tr>
 <td align="center">
-  <img src="" height="400"/><br>
-  <sub>맵 툴(에디터)</sub>
+  <img src="https://github.com/user-attachments/assets/af8a9337-d686-4cf9-b906-cf09397252ce" height="400"/><br>
+  <sub>스테이지 데이터 로드</sub>
 </td>
 <td align="center">
-  <img src="" height="400"/><br>
-  <sub>스테이지 데이터 로드/플레이</sub>
+  <img src="https://github.com/user-attachments/assets/abbaffe2-adc4-426d-b07c-625fb9fd2cfd" height="400"/><br>
+  <sub>맵 툴</sub>
 </td>
 </tr>
 </table>
