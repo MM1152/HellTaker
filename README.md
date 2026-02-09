@@ -14,7 +14,6 @@ MM1152/HellTaker/
 └── Project/
     ├── hell_taker/                    # 💻 소스 코드 디렉토리
     │   ├── main.cpp                   # 프로그램 진입점
-    │   ├── stdafx.h / stdafx.cpp      # 사전 컴파일된 헤더
     │   │
     │   ├── Framework/                 # 🎮 게임 엔진 프레임워크
     │   │   ├── Framework.h/cpp        # 메인 게임 루프 & 초기화
