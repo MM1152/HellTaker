@@ -11,7 +11,6 @@
 ## 📂 HellTaker/ 폴더 구조
 ```
 MM1152/HellTaker/
-├z── README.md
 └── Project/
     ├── hell_taker/                    # 💻 소스 코드 디렉토리
     │   ├── main.cpp                   # 프로그램 진입점
@@ -78,6 +77,33 @@ MM1152/HellTaker/
     └── hell_taker-bin/                # 🚀 빌드된 실행 파일 디렉토리
 ```
 
+## 🔑 주요 코드 파일
+
+### 🗺️ 맵 (Map) 시스템
+
+| 파일 | 설명 | 링크 |
+|------|------|------|
+| `Map.h` | 맵 데이터 관리자 싱글톤 (맵별 그리드, 이동횟수, 클리어 상태) | [📄 보기](https://github.com/MM1152/HellTaker/blob/main/Project/hell_taker/Framework/Map.h) |
+| `Utils.cpp` | CSV 기반 맵 데이터 저장/로드, Lerp 보간, Origin 설정 | [📄 보기](https://github.com/MM1152/HellTaker/blob/main/Project/hell_taker/Framework/Utils.cpp) |
+| `Utils.h` | 유틸리티 함수 헤더 (파일 I/O, 보간, 스프라이트 관리) | [📄 보기](https://github.com/MM1152/HellTaker/blob/main/Project/hell_taker/Framework/Utils.h) |
+
+### ✨ 애니메이션 & 이펙트 시스템
+
+| 파일 | 설명 | 링크 |
+|------|------|------|
+| `Animator.cpp` | 프레임 기반 이벤트 시스템, 콜백 등록 (람다 활용) | [📄 보기](https://github.com/MM1152/HellTaker/blob/main/Project/hell_taker/Framework/Animator.cpp) |
+| `Animator.h` | Animator 클래스 헤더 (이벤트 맵, FPS 제어) | [📄 보기](https://github.com/MM1152/HellTaker/blob/main/Project/hell_taker/Framework/Animator.h) |
+| `AnimationClip.cpp` | CSV에서 애니메이션 데이터 로드 (ID, FPS, 프레임) | [📄 보기](https://github.com/MM1152/HellTaker/blob/main/Project/hell_taker/Framework/AnimationClip.cpp) |
+| `Effect 폴더` | 이동/피격/킥 이펙트 구현 (MoveEffect, HitEffect 등) | [📁 보기](https://github.com/MM1152/HellTaker/tree/main/Project/hell_taker/Effect) |
+
+### 🎮 입력 & 씬 관리
+
+| 파일 | 설명 | 링크 |
+|------|------|------|
+| `InputMgr.cpp` | 키보드/마우스 입력 상태 관리 (Down/Held/Up) | [📄 보기](https://github.com/MM1152/HellTaker/blob/main/Project/hell_taker/Framework/InputMgr.cpp) |
+| `SceneMgr.cpp` | 씬 전환 시스템, FPS 표시, 게임 루프 관리 | [📄 보기](https://github.com/MM1152/HellTaker/blob/main/Project/hell_taker/Framework/SceneMgr.cpp) |
+| `GameObject.h` | 게임 오브젝트 추상 베이스 클래스 (위치, 회전, 렌더 순서) | [📄 보기](https://github.com/MM1152/HellTaker/blob/main/Project/hell_taker/Framework/GameObject.h) |
+| `Scene.h` | 씬 베이스 클래스 (GameObject 리스트, 카메라 뷰) | [📄 보기](https://github.com/MM1152/HellTaker/blob/main/Project/hell_taker/Framework/Scene.h) |
 ---
 
 ### 🗂️ 개요
